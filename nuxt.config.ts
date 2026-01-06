@@ -16,6 +16,10 @@ export default defineNuxtConfig({
       ssr: false,
     }
   },
+  devServer: {
+    host: 'http://web.holiday-palace.test',
+    port: 3000
+  },
   modules: [
     '@nuxt/eslint',
     '@nuxt/image',
@@ -25,7 +29,8 @@ export default defineNuxtConfig({
     '@vueuse/nuxt'
   ],
   sanctum: {
-    baseUrl: 'http://localhost:25102',
+    baseUrl: 'http://holiday-palace.test',
+    mode: 'cookie',
     // logLevel: 5,
     endpoints: {
       login: '/api/login',
@@ -40,10 +45,9 @@ export default defineNuxtConfig({
       enabled: true,
       allow404WithoutAuth: true,
       prepend: true
-    }
+    },
   },
   css: ['./app/assets/main.css',
-    './node_modules/ol/ol.css'
   ],
   vite: {
     plugins: [

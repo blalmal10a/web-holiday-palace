@@ -5,7 +5,6 @@
 	const toast = useToast()
 
 	const open = ref(false)
-	const projectStore = useProjectStore()
 	const links = [
 		[
 			{
@@ -66,13 +65,7 @@
 					tooltip
 					popover
 				/>
-				<UNavigationMenu
-					:collapsed="collapsed"
-					:items="projectStore.list"
-					orientation="vertical"
-					tooltip
-					popover
-				/>
+			
 				<UNavigationMenu
 					:collapsed="collapsed"
 					:items="links[1]"

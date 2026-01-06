@@ -17,8 +17,8 @@ export const auth = reactive({
   loadingSubmitUpdateProfile: false,
   form: {
     name: '',
-    email: '',
-    password: '',
+    email: 'admin@example.email',
+    password: 'admin@example.email',
     password_confirmation: '',
     remember: false,
   },
