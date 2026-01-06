@@ -17,17 +17,17 @@
 			},
 		],
 		[
-			{
-				label: "Forms",
-				icon: "i-lucide-clipboard-list",
-				defaultOpen: true,
-				onSelect: () => {
-					open.value = false
-				},
-				children: [
+			// {
+			// 	label: "Forms",
+			// 	icon: "i-lucide-clipboard-list",
+			// 	defaultOpen: true,
+			// 	onSelect: () => {
+			// 		open.value = false
+			// 	},
+			// 	children: [
 		
-				],
-			},
+			// 	],
+			// },
 		],
 	] satisfies NavigationMenuItem[][]
 	onMounted(async () => {
@@ -53,8 +53,12 @@
 					}"
 					to="/"
 				>
-					<Logo class="w-16 dark:text-white text-black" />
-					<h3 v-if="!collapsed" class="text-3xl">HOLIDAY PALACE</h3>
+				<UIcon name="i-lucide-chess-queen" class="w-12 h-12 text-red-200" 
+				:class="{
+					'mr-6': !collapsed
+				}"
+				/>
+					<h3 v-if="!collapsed" class="text-lg font-bold" style="font-family: 'Brush Script MT', cursive;">HOLIDAY PALACE</h3>
 				</NuxtLink>
 			</template>
 			<template #default="{collapsed}">
