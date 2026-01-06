@@ -1,0 +1,33 @@
+{
+  "name": "web-holiday-palace",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@nuxt/eslint": "1.10.0",
+    "@nuxt/image": "1.11.0",
+    "@nuxt/ui": "4.1.0",
+    "@pinia/nuxt": "0.11.3",
+    "@tailwindcss/vite": "^4.1.16",
+    "@vueuse/nuxt": "14.0.0",
+    "change-case": "^5",
+    "eslint": "^9.0.0",
+    "nuxt": "^4.2.0",
+    "nuxt-auth-sanctum": "1.4.2",
+    "object-to-formdata": "^4.5.1",
+    "tailwindcss": "^4.1.16",
+    "typescript": "^5.6.3",
+    "vue": "^3.5.22",
+    "vue-router": "^4.6.3",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "baseline-browser-mapping": "^2.9.11"
+  }
+}
