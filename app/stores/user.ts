@@ -3,6 +3,7 @@ export const useUserStore = defineStore('user', {
     loadingGetUsers: false,
     loadingSubmitUserForm: false,
     loadingDeleteUser: false,
+    update_password: false,
     pagination: {
       page: 1,
       pageSize: 10,
@@ -13,7 +14,7 @@ export const useUserStore = defineStore('user', {
       name: '',
       email: '',
       password: '',
-      password_confirmation: ''
+      password_confirmation: '',
     } as UserForm,
   }),
 
@@ -29,7 +30,10 @@ export const useUserStore = defineStore('user', {
     },
     setLoading(key: 'loadingGetUsers' | 'loadingSubmitUserForm' | 'loadingDeleteUser', value: boolean) {
       this[key] = value;
-    }
+    },
+    setUpdatePassword(value: boolean) {
+      this.update_password = value;
+    },
   }
 })
 2

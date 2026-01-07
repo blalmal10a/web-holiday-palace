@@ -8,6 +8,9 @@ onMounted(() => {
 	if (!store.form.id && useRoute().params.id != "add") {
 		model.fetchDetail()
 	}
+	if (useRoute().params.id == 'add') {
+		store.update_password = true;
+	}
 })
 
 </script>
@@ -18,7 +21,7 @@ onMounted(() => {
 	>
 		<u-card style="min-width: min(400px, 90vw)">
 			<u-form
-				:schema="userFormSchema"
+				:schema="userFormSchema(store.update_password)"
 				:state="store.form"
 				@submit="model.submitForm()"
 				class="space-y-4 w-full"
@@ -43,28 +46,47 @@ onMounted(() => {
 						type="email"
 					/>
 				</u-form-field>
-				<u-form-field
-					label="password"
-					name="password"
+				<u-switch
+					v-if="store.form.id"
+					v-model="store.update_password"
+					label="Update password"
+					@update:model-value="(val) => {
+						if (!val) {
+							store.setForm({
+								...store.form,
+								password: '',
+								password_confirmation: '',
+							})
+						}
+					}
+					"
 				>
-					<u-input
-						v-model="store.form.password"
-						icon="i-lucide-lock"
-						type="password"
-						autocomplete="new-password"
-					/>
-				</u-form-field>
-				<u-form-field
-					label="confirm password"
-					name="password_confirmation"
-				>
-					<u-input
-						v-model="store.form.password_confirmation"
-						icon="i-lucide-lock"
-						type="password"
-						autocomplete="new-password"
-					/>
-				</u-form-field>
+
+				</u-switch>
+				<template v-if="!store.form.id || store.update_password">
+					<u-form-field
+						label="password"
+						name="password"
+					>
+						<u-input
+							v-model="store.form.password"
+							icon="i-lucide-lock"
+							type="password"
+							autocomplete="new-password"
+						/>
+					</u-form-field>
+					<u-form-field
+						label="confirm password"
+						name="password_confirmation"
+					>
+						<u-input
+							v-model="store.form.password_confirmation"
+							icon="i-lucide-lock"
+							type="password"
+							autocomplete="new-password"
+						/>
+					</u-form-field>
+				</template>
 				<div class="text-right space-x-2">
 					<u-button
 						variant="outline"

@@ -74,15 +74,27 @@ export function useUser() {
     }
 }
 
-export const userFormSchema = z.object({
-    name: z.string().min(3),
-    email: z.string().email(),
-    password: z.string().min(4),
-    password_confirmation: z.string().min(4),
-}).refine((data) => data.password === data.password_confirmation, {
-    message: "Passwords do not match",
-    path: ["password_confirmation"]
-})
+export const userFormSchema = (updatePassword: boolean) => {
+    const baseSchema = z.object({
+        name: z.string().min(3),
+        email: z.email(),
+    });
+
+    if (updatePassword) {
+        return baseSchema.extend({
+            password: z.string().min(4),
+            password_confirmation: z.string().min(4),
+        }).refine((data) => {
+            return data.password === data.password_confirmation;
+        }, {
+            message: "Passwords do not match",
+            path: ["password_confirmation"]
+        });
+    }
+
+    return baseSchema;
+};
+
 
 // 2. Export Columns (Used in Table components)
 export const userColumns: ColumnDef<any>[] = [
