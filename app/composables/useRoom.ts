@@ -39,7 +39,7 @@ export function useRoom() {
         try {
             const response = await api.patch(`/rooms/${store.form.id}`, store.form)
             store.setData(response)
-            router.push({ name: 'index' })
+            router.push({ name: 'rooms' })
         } catch (error) {
             console.error('Submission failed', error)
         } finally {
