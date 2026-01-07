@@ -50,7 +50,7 @@ onMounted(() => {
 					v-if="store.form.id"
 					v-model="store.update_password"
 					label="Update password"
-					@update:model-value="(val) => {
+					@update:model-value="(val: boolean) => {
 						if (!val) {
 							store.setForm({
 								...store.form,
