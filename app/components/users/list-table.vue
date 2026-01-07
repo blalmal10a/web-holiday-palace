@@ -5,6 +5,7 @@ const model = useUser();
 store.setPagination({
 	page: Number(useRoute().query.page) || 1,
 	pageSize: Number(useRoute().query.pageSize) || 10,
+	staff_only: false,
 })
 model.fetchData();
 
@@ -60,7 +61,7 @@ model.fetchData();
 				:items="[10, 15, 50, 100]"
 				@update:model-value="($event) => {
 					store.setPagination({
-						page: store.pagination.page,
+						...store.pagination,
 						pageSize: $event,
 					})
 					model.fetchData();

@@ -24,7 +24,7 @@ export const useUserStore = defineStore('user', {
     setForm(payload: UserForm) {
       this.form = payload;
     },
-    setPagination(payload: { page: number; pageSize: number; staff_only: false }) {
+    setPagination(payload: { page: number; pageSize: number; staff_only: boolean }) {
       this.pagination = payload;
     },
     setLoading(key: 'loadingGetUsers' | 'loadingSubmitUserForm' | 'loadingDeleteUser', value: boolean) {
