@@ -1,15 +1,20 @@
 <script lang="ts" setup>
-
-const toast = useToast()
-const store = useUserStore()
-const model = useUser();
-
+const store = useRoomStore()
+const model = useRoom();
+const user = useUser();
+const userStore = useUserStore();
 onMounted(() => {
 	if (!store.form.id && useRoute().params.id != "add") {
 		model.fetchDetail()
 	}
 })
-
+userStore.pagination.staff_only = true;
+user.fetchData()
+onBeforeUnmount(
+	() => {
+		userStore.pagination.staff_only = false;
+	}
+)
 </script>
 <template>
 	<div
@@ -34,36 +39,28 @@ onMounted(() => {
 					/>
 				</u-form-field>
 				<u-form-field
-					label="email"
-					name="email"
+					label="rate"
+					name="rate"
 				>
 					<u-input
-						v-model="store.form.email"
-						icon="i-lucide-mail"
-						type="email"
+						v-model="store.form.rate"
+						icon="i-lucide-indian-rupee"
+						type="number"
+						step="0.01"
 					/>
 				</u-form-field>
 				<u-form-field
-					label="password"
-					name="password"
+					label="Staff"
+					name="staff_id"
 				>
-					<u-input
-						v-model="store.form.password"
-						icon="i-lucide-lock"
-						type="password"
-						autocomplete="new-password"
+					<USelectMenu
+						class="w-full"
+						v-model="store.form.staff_id"
+						value-key="id"
+						label-key="name"
+						:items="userStore.data.data"
 					/>
-				</u-form-field>
-				<u-form-field
-					label="confirm password"
-					name="password_confirmation"
-				>
-					<u-input
-						v-model="store.form.password_confirmation"
-						icon="i-lucide-lock"
-						type="password"
-						autocomplete="new-password"
-					/>
+
 				</u-form-field>
 				<div class="text-right space-x-2">
 					<u-button
