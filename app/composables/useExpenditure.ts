@@ -5,7 +5,6 @@ export function useExpenditure() {
     const router = useRouter()
     const route = useRoute()
 
-    // storeToRefs allows us to destructure state while keeping reactivity
     const { data, form, loadingGetExpenditures, loadingSubmitExpenditureForm, loadingDeleteExpenditure } = storeToRefs(store)
 
     const fetchData = async () => {
@@ -37,9 +36,14 @@ export function useExpenditure() {
     const submitForm = async () => {
         store.setLoading('loadingSubmitExpenditureForm', true)
         try {
-            const response = await api.patch(`/expenditures/${store.form.id}`, store.form)
+            let method = store.form.id ? 'PATCH' : 'POST';
+            let url = `/expenditures`
+            if (store.form.id) {
+                url = `/expenditures/${store.form.id}`
+            }
+            const response = await api.request(url, store.form, method)
             store.setData(response)
-            router.push({ name: 'index' })
+            router.push({ name: 'hotels-expenditures' })
         } catch (error) {
             console.error('Submission failed', error)
         } finally {
@@ -60,13 +64,11 @@ export function useExpenditure() {
     }
 
     return {
-        // State
         data,
         form,
         loadingGetExpenditures,
         loadingSubmitExpenditureForm,
         loadingDeleteExpenditure,
-        // Actions
         fetchData,
         fetchDetail,
         submitForm,
@@ -74,27 +76,37 @@ export function useExpenditure() {
     }
 }
 
-export const expenditureFormSchema = z.object({
-    name: z.string().min(3),
-    email: z.email(),
-    password: z.string().min(4),
-    password_confirmation: z.string().min(4),
-}).refine((data) => data.password === data.password_confirmation, {
-    message: "Passwords do not match",
-    path: ["password_confirmation"]
-})
+export const expenditreFormSchema = () => {
+    const baseSchema = z.object({
+        date: z.date(),
+        name: z.string()
+            .optional()
+            .nullable(),
+        item: z.string().min(1),
+        rate: z.number().min(1),
+        quantity: z.number().min(1),
+        staff_id: z.string().min(1).optional(),
+    });
 
-// 2. Export Columns (Used in Table components)
-export const expenditureColumns: ColumnDef<any>[] = [
-    { header: 'Expenditure no.', accessorKey: 'name' },
+    return baseSchema;
+};
+
+
+export const expenditureColumns: ColumnDef<Expenditure>[] = [
     {
-        header: 'Staff',
-        accessorFn: (row) => row.staff?.name ?? 'N/A',
+        header: 'Name',
+        accessorFn: (row) => (row.staff?.name || row.name) ?? 'N/A',
         // 
+    },
+    {
+        header: 'Item',
+        accessorFn: (row) => row.item,
     },
     {
         header: 'Rate',
         cell: ({ row }) => `${toRupees(row.original.rate)}`,
     },
+    { header: 'Quantity', accessorKey: 'quantity' },
+    { header: 'Amount', cell: ({ row }) => `${toRupees(row.original.amount)}` },
     { id: 'actions' }
 ]
