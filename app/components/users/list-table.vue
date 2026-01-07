@@ -43,6 +43,7 @@ model.fetchData();
 					>
 					</u-button>
 					<u-button
+						:disabled="row.original.id === useAuth().user?.id"
 						variant="outline"
 						size="sm"
 						color="error"
