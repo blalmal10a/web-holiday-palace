@@ -5,7 +5,8 @@ const route = useRoute()
 const toast = useToast()
 
 const open = ref(false)
-const links = [
+
+const links = computed(() => [
 	[
 		{
 			label: "Home",
@@ -16,7 +17,7 @@ const links = [
 			onSelect: () => {
 				open.value = false
 			},
-			active: useRoute().name === 'hotels-users-id-form' || useRoute().name === 'index',
+			active: useRoute().name === 'index' || useRoute().name === 'hotels-users-id-form',
 		},
 		{
 			label: "Rooms",
@@ -28,6 +29,18 @@ const links = [
 				open.value = false
 			},
 			active: useRoute().name === 'hotels-rooms-id-form' || useRoute().name === 'hotels-rooms',
+
+		},
+		{
+			label: "Menu",
+			icon: "i-lucide-utensils",
+			to: {
+				name: 'hotels-menu-items'
+			},
+			onSelect: () => {
+				open.value = false
+			},
+			active: useRoute().name === 'hotels-menu-items-id-form' || useRoute().name === 'hotels-menu-items',
 
 		},
 	],
@@ -44,7 +57,7 @@ const links = [
 		// 	],
 		// },
 	],
-] satisfies NavigationMenuItem[][]
+])
 onMounted(async () => {
 
 })
