@@ -8,11 +8,11 @@ onMounted(() => {
 		model.fetchDetail()
 	}
 })
-userStore.pagination.staff_only = true;
+userStore.pagination.exclude_clients = true;
 user.fetchData()
 onBeforeUnmount(
 	() => {
-		userStore.pagination.staff_only = false;
+		userStore.pagination.exclude_clients = false;
 	}
 )
 </script>

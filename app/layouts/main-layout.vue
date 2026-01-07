@@ -43,6 +43,18 @@ const links = computed(() => [
 			active: useRoute().name === 'hotels-menu-items-id-form' || useRoute().name === 'hotels-menu-items',
 
 		},
+		{
+			label: "Expenditure",
+			icon: "i-lucide-indian-rupee",
+			to: {
+				name: 'hotels-expenditures'
+			},
+			onSelect: () => {
+				open.value = false
+			},
+			active: useRoute().name === 'hotels-expenditures-id-form' || useRoute().name === 'hotels-expenditures',
+
+		},
 	],
 	[
 		// {
