@@ -38,8 +38,8 @@
 						variant="outline"
 						size="sm"
 						color="error"
-						@click=""
 						icon="i-lucide-trash"
+						@click="userStore.confirmDeleteUser(row.original.id)"
 					>
 					</u-button>
 				</div>

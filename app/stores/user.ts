@@ -55,10 +55,11 @@ async function submitUserForm() {
   }
 }
 
-async function confirmDeleteUser() {
+async function confirmDeleteUser(id: string) {
   try {
     useUserStore().loadingDeleteUser = true;
-    const data = await api.delete(`/users/${useRoute().params.id}`);
+    const data = await api.delete(`/users/${id}`);
+    useUserStore().data = data;
   } catch (error) {
     // 
   } finally {
