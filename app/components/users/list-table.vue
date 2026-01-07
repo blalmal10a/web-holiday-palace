@@ -53,7 +53,29 @@ model.fetchData();
 				</div>
 			</template>
 		</UTable>
-		<div class="flex justify-end border-t border-default pt-4 px-4">
+		<div class="flex justify-end border-t border-default pt-4 px-4 space-x-2">
+			<USelect
+				v-if="store.data.total > 1"
+				v-model="store.pagination.pageSize"
+				:items="[10, 15, 50, 100]"
+				@update:model-value="($event) => {
+					store.setPagination({
+						page: store.pagination.page,
+						pageSize: $event,
+					})
+					model.fetchData();
+					useRouter().push({
+						name: 'index',
+						query: {
+							page: store.pagination.page,
+							pageSize: $event,
+						}
+					})
+				}"
+			>
+
+			</USelect>
+
 			<UPagination
 				v-if="store.data.total > store.pagination.pageSize"
 				:page="store.pagination.page"

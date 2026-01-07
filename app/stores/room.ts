@@ -16,6 +16,9 @@ export const useRoomStore = defineStore('room', {
     setData(payload: PaginationRoom) {
       this.data = payload;
     },
+    setPagination(payload: { page: number; pageSize: number }) {
+      this.pagination = payload;
+    },
     setForm(payload: Room) {
       this.form = payload;
     },
