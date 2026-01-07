@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 definePageMeta({
 	layout: "main-layout",
-	pageTitle: "Users",
+	pageTitle: "Rooms",
 	ancestors: [],
 })
 
