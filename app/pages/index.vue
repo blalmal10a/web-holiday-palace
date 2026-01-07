@@ -3,9 +3,11 @@
 		layout: "main-layout",
 		pageTitle: "Home",
 	})
+	const userStore = useUserStore()
+	userStore.getUsers({}, useToast())
 </script>
 <template>
-	<div class="h-full flex justify-center relative">
-		<ExamplesCombined class="h-full w-full" />
+	<div class="">
+		<UTable :data="userStore.data.data" :columns="userColumns" />
 	</div>
 </template>
