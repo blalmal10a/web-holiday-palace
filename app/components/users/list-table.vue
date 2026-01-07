@@ -15,7 +15,7 @@ user.fetchData();
 			"
 		>
 			<template #actions-cell="{ row }">
-				<div class="flex space-x-2">
+				<div class="flex space-x-2 justify-end">
 					<u-button
 						variant="outline"
 						size="sm"
