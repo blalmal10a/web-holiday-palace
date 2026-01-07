@@ -86,7 +86,7 @@ export const menuItemFormSchema = z.object({
 
 // 2. Export Columns (Used in Table components)
 export const menuItemColumns: ColumnDef<MenuItem>[] = [
-    { header: 'Menu', accessorKey: 'name' },
+    { header: 'Item', accessorKey: 'name' },
     {
         header: 'Rate',
         cell: ({ row }) => `${toRupees(row.original.rate)}`,
