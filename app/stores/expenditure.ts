@@ -9,7 +9,7 @@ export const useExpenditureStore = defineStore('expenditure', {
     },
     data: {} as PaginationExpenditure,
     form: {
-    } as Expenditure,
+    } as ExpenditureForm,
   }),
 
   actions: {
