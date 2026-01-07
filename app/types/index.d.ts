@@ -48,3 +48,16 @@ interface Pagination {
 interface PaginationUser extends Pagination {
     data: User[]
 }
+
+interface Room {
+    id: string;
+    name: string;
+    rate: number;
+    staff_id: string;
+    staff: User | undefined;
+    images: string[] | undefined;
+}
+
+interface PaginationRoom extends Pagination {
+    data: Room[]
+}
