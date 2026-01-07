@@ -42,6 +42,23 @@ async function sanctumRequest<T = any>(
 }
 
 const api = {
+  request: async <T = any>(
+    path: string,
+    options: SanctumRequestOptions = {},
+    method: string = 'GET',
+  ): ApiResponse<T> => {
+
+    if (path.startsWith('/')) {
+      path = path.slice(1);
+    }
+    path = `api/${path}`;
+    const sanctumClient = useSanctumClient();
+
+    return await sanctumClient<T>(path, {
+      method,
+      ...options
+    } as any);
+  },
   get: async <T = any>(
     path: string,
     options: SanctumRequestOptions = {}
