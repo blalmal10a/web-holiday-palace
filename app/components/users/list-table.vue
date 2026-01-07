@@ -39,7 +39,7 @@ user.fetchData();
 						size="sm"
 						color="error"
 						icon="i-lucide-trash"
-						@click="useConfirmDeleteStore().open(row.original.name, '/users', row.original.id, 'User')"
+						@click="useConfirmDeleteStore().open(row.original.name, '/users', row.original.id, 'User', useUserStore())"
 					>
 						<!-- @click="user.deleteUser(row.original.id)" -->
 					</u-button>
