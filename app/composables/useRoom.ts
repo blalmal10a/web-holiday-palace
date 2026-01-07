@@ -11,7 +11,11 @@ export function useRoom() {
     const fetchData = async () => {
         store.setLoading('loadingGetRooms', true)
         try {
-            const response = await api.get('/rooms')
+            const response = await api.get('/rooms', {
+                params: {
+                    ...store.pagination
+                }
+            })
             store.setData(response)
         } catch (error) {
             console.error('Failed to fetch rooms', error)
