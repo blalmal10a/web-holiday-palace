@@ -27,7 +27,7 @@ onMounted(() => {
 				class="space-y-4 w-full"
 			>
 				<u-form-field
-					label="name"
+					label="Name"
 					name="name"
 				>
 					<u-input
