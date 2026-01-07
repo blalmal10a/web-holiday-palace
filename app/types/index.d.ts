@@ -61,3 +61,15 @@ interface Room {
 interface PaginationRoom extends Pagination {
     data: Room[]
 }
+
+interface MenuItem {
+    id: string;
+    name: string;
+    rate: number;
+    unit: string;
+    images: string[] | undefined;
+}
+
+interface PaginationMenuItem extends Pagination {
+    data: MenuItem[]
+}
