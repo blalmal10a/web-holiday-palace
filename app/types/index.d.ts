@@ -81,10 +81,14 @@ interface Expenditure {
     quantity: number;
     amount: number;
     date: string;
-    staff_id: string | null;
+    staff_id: string | null | undefined;
     staff: User | undefined;
-    name: string | null;
-    phone: string | null;
+    name: string | null | undefined;
+    phone: string | null | undefined;
+}
+
+interface ExpenditureForm extends Expenditure {
+    id: string | undefined | null;
 }
 
 interface PaginationExpenditure extends Pagination {
