@@ -63,6 +63,9 @@ export const userColumns: ColumnDef<User>[] = [
     header: 'Email',
     accessorKey: 'email',
   },
+  {
+    id: 'actions',
+  }
 ]
 
 export const userFormSchema = z.object({

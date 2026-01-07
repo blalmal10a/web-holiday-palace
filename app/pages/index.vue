@@ -16,7 +16,36 @@
 					console.log(e)
 				}
 			"
-			@select="
+		>
+			<template #actions-cell="{row}">
+				<div class="flex space-x-2">
+					<u-button
+						variant="outline"
+						size="sm"
+						color="neutral"
+						@click="
+							useRouter().push({
+								name: 'hotels-users-id-form',
+								params: {
+									id: row.original.id,
+								},
+							})
+						"
+						icon="i-lucide-edit"
+					>
+					</u-button>
+					<u-button
+						variant="outline"
+						size="sm"
+						color="error"
+						@click=""
+						icon="i-lucide-trash"
+					>
+					</u-button>
+				</div>
+			</template>
+		</UTable>
+		<!-- @select="
 				(val, {original}) => {
 					userStore.form = {
 						...original,
@@ -31,7 +60,6 @@
 						},
 					})
 				}
-			"
-		/>
+			" -->
 	</div>
 </template>
