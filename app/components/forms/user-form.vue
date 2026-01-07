@@ -57,7 +57,20 @@
 						autocomplete="new-password"
 					/>
 				</u-form-field>
-				<div class="text-right">
+				<div class="text-right space-x-2">
+					<u-button
+						variant="outline"
+						color="neutral"
+						:loading="auth.loadingSubmitUpdateProfile"
+						class=""
+						@click="
+							useRouter().push({
+								name: 'index',
+							})
+						"
+					>
+						Cancel
+					</u-button>
 					<u-button
 						:loading="auth.loadingSubmitUpdateProfile"
 						class=""
