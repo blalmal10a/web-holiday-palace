@@ -5,6 +5,7 @@ export const useUserStore = defineStore('user', {
   state: () => ({
     loadingGetUsers: false,
     loadingSubmitUserForm: false,
+    loadingDeleteUser: false,
     data: {} as PaginationUser,
     form: {} as UserForm,
   }),
@@ -12,6 +13,7 @@ export const useUserStore = defineStore('user', {
     getUsers,
     getDetail,
     submitUserForm,
+    confirmDeleteUser,
   }
 })
 
@@ -50,6 +52,17 @@ async function submitUserForm() {
     // 
   } finally {
     useUserStore().loadingSubmitUserForm = false;
+  }
+}
+
+async function confirmDeleteUser() {
+  try {
+    useUserStore().loadingDeleteUser = true;
+    const data = await api.delete(`/users/${useRoute().params.id}`);
+  } catch (error) {
+    // 
+  } finally {
+    useUserStore().loadingDeleteUser = false;
   }
 }
 
