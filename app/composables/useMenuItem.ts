@@ -39,7 +39,7 @@ export function useMenuItem() {
         try {
             const response = await api.patch(`/menuItems/${store.form.id}`, store.form)
             store.setData(response)
-            router.push({ name: 'index' })
+            router.push({ name: 'menu-items' })
         } catch (error) {
             console.error('Submission failed', error)
         } finally {
