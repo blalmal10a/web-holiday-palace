@@ -9,14 +9,30 @@ model.fetchData();
 </script>
 <template>
 	<div class="">
+		<div class="flex justify-between px-3">
+			<div class="text-xl">
+
+			</div>
+			<div>
+				<u-button
+					:to="{
+						name: 'hotels-menu-items-id-form',
+						params: {
+							id: 'add'
+						}
+					}"
+					icon="i-lucide-plus"
+					size="sm"
+					variant="soft"
+					color="info"
+				>
+					Add expense
+				</u-button>
+			</div>
+		</div>
 		<UTable
 			:data="store.data.data"
 			:columns="menuItemColumns"
-			@update:pagination="
-				(e) => {
-					console.log(e)
-				}
-			"
 		>
 			<template #actions-cell="{ row }">
 				<div class="flex space-x-2 justify-end">
@@ -55,7 +71,7 @@ model.fetchData();
 				v-if="store.data.total > 1"
 				v-model="store.pagination.pageSize"
 				:items="[10, 15, 50, 100]"
-				@update:model-value="($event) => {
+				@update:model-value="($event: number) => {
 					store.setPagination({
 						page: store.pagination.page,
 						pageSize: $event,
@@ -76,7 +92,7 @@ model.fetchData();
 				:page="store.pagination.page"
 				:items-per-page="store.pagination.pageSize"
 				:total="store.data.total"
-				@update:page="async ($event) => {
+				@update:page="async ($event: number) => {
 					store.pagination.page = $event;
 					model.fetchData();
 					useRouter().push({
