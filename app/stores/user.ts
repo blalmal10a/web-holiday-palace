@@ -14,7 +14,7 @@ export const useUserStore = defineStore('user', {
 
   actions: {
     // Basic setters to update state from the composable
-    setUsers(payload: PaginationUser) {
+    setData(payload: PaginationUser) {
       this.data = payload;
     },
     setForm(payload: UserForm) {

@@ -14,21 +14,21 @@ user.fetchData();
 				}
 			"
 		>
-			<template #actions-cell="{row}">
+			<template #actions-cell="{ row }">
 				<div class="flex space-x-2">
 					<u-button
 						variant="outline"
 						size="sm"
 						color="neutral"
 						@click="
-	() => {
-		useUserStore().setForm(row.original);
+							() => {
+								useUserStore().setForm(row.original);
 								useRouter().push({
-								name: 'hotels-users-id-form',
-								params: {
-									id: row.original.id,
-								},
-							})
+									name: 'hotels-users-id-form',
+									params: {
+										id: row.original.id,
+									},
+								})
 							}
 						"
 						icon="i-lucide-edit"
@@ -39,8 +39,9 @@ user.fetchData();
 						size="sm"
 						color="error"
 						icon="i-lucide-trash"
-						@click="user.deleteUser(row.original.id)"
+						@click="useConfirmDeleteStore().open(row.original.name, '/users', row.original.id, 'User')"
 					>
+						<!-- @click="user.deleteUser(row.original.id)" -->
 					</u-button>
 				</div>
 			</template>

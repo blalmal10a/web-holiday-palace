@@ -12,7 +12,7 @@ export function useUser() {
         store.setLoading('loadingGetUsers', true)
         try {
             const response = await api.get('/users')
-            store.setUsers(response)
+            store.setData(response)
         } catch (error) {
             console.error('Failed to fetch users', error)
         } finally {
@@ -34,7 +34,7 @@ export function useUser() {
         store.setLoading('loadingSubmitUserForm', true)
         try {
             const response = await api.patch(`/users/${store.form.id}`, store.form)
-            store.setUsers(response)
+            store.setData(response)
             router.push({ name: 'index' })
         } catch (error) {
             console.error('Submission failed', error)
@@ -47,7 +47,7 @@ export function useUser() {
         store.setLoading('loadingDeleteUser', true)
         try {
             const response = await api.delete(`/users/${id}`)
-            store.setUsers(response)
+            store.setData(response)
         } catch (error) {
             console.error('Delete failed', error)
         } finally {
