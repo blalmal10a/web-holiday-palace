@@ -17,7 +17,7 @@ export default defineNuxtConfig({
     }
   },
   devServer: {
-    host: 'http://web.holiday-palace.test',
+    host: 'web.holiday-palace.test',
     port: 3000
   },
   modules: [
