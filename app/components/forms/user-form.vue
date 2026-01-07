@@ -1,19 +1,18 @@
 <script lang="ts" setup>
+
+	const toast = useToast()
+const userStore = useUserStore()
+const user = useUser();
 	useHead({
 		title: "Settings",
 	})
-	onMounted(() => {
-		//
+
+onMounted(() => {
+		if (!userStore.form.id && useRoute().params.id != "add") {
+			user.fetchDetail()
+		}
 	})
 
-	const toast = useToast()
-	async function onSubmit() {
-		await auth.onSubmitUpdateProfile()
-		toast.add({
-			title: "Profile updated successfully",
-		})
-	}
-	const userStore = useUserStore()
 </script>
 <template>
 	<div
@@ -24,7 +23,7 @@
 			<u-form
 				:schema="userFormSchema"
 				:state="userStore.form"
-				@submit="userStore.submitUserForm()"
+				@submit="user.submitForm()"
 				class="space-y-4 w-full"
 			>
 				<u-form-field label="name" name="name">

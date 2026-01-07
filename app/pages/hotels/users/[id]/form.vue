@@ -4,12 +4,7 @@
 		pageTitle: "Users",
 		ancestors: [],
 	})
-	const userStore = useUserStore()
-	onMounted(() => {
-		if (!userStore.form.id && useRoute().params.id != "add") {
-			userStore.getDetail()
-		}
-	})
+
 </script>
 <template>
 	<div>

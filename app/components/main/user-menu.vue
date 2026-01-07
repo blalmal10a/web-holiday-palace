@@ -29,13 +29,13 @@
 	]
 	const neutrals = ["slate", "gray", "zinc", "neutral", "stone"]
 
-	const user: User | null = useAuth().user
+const user = useSanctumUser<User>();
 
 	const items = computed<DropdownMenuItem[][]>(() => [
 		[
 			{
 				type: "label",
-				label: useAuth().user?.name ?? "",
+				label: user.value?.name ?? "",
 			},
 		],
 		[
