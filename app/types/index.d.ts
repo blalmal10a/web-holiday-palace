@@ -73,3 +73,20 @@ interface MenuItem {
 interface PaginationMenuItem extends Pagination {
     data: MenuItem[]
 }
+
+interface Expenditure {
+    id: string;
+    item: string;
+    rate: number;
+    quantity: number;
+    amount: number;
+    date: string;
+    staff_id: string | null;
+    staff: User | undefined;
+    name: string | null;
+    phone: string | null;
+}
+
+interface PaginationExpenditure extends Pagination {
+    data: Expenditure[]
+}
