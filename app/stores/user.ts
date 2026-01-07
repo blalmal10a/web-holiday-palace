@@ -1,12 +1,17 @@
 import { defineStore } from 'pinia'
 import type { ColumnDef } from '@tanstack/vue-table'
+import z from 'zod';
 export const useUserStore = defineStore('user', {
   state: () => ({
     loadingGetUsers: false,
+    loadingSubmitUserForm: false,
     data: {} as PaginationUser,
+    form: {} as UserForm,
   }),
   actions: {
     getUsers,
+    getDetail,
+    submitUserForm,
   }
 })
 
@@ -23,6 +28,32 @@ async function getUsers(props: any, toast: any) {
   }
 }
 
+async function getDetail() {
+  try {
+    const data = await api.get('/users/' + useRoute().params.id);
+    useUserStore().form = data;
+  } catch (error) {
+    console.log('error: ', error)
+  }
+}
+
+async function submitUserForm() {
+  try {
+    useUserStore().loadingSubmitUserForm = true;
+    const form = useUserStore().form;
+    const data = await api.patch(`/users/${form.id}`, form)
+    useUserStore().data = data;
+    useRouter().push({
+      name: 'index',
+    })
+  } catch (error) {
+    // 
+  } finally {
+    useUserStore().loadingSubmitUserForm = false;
+  }
+}
+
+
 export const userColumns: ColumnDef<User>[] = [
   {
     header: 'Name',
@@ -33,3 +64,15 @@ export const userColumns: ColumnDef<User>[] = [
     accessorKey: 'email',
   },
 ]
+
+export const userFormSchema = z.object({
+  name: z.string().min(3),
+  email: z.email(),
+  password: z.string().min(4),
+  password_confirmation: z.string().min(4),
+})
+  .refine((data) => data.password === data.password_confirmation, {
+    message: "Passwords do not match",
+    path: ["password_confirmation"]
+  })
+
