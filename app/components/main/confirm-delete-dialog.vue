@@ -13,6 +13,7 @@
                     variant="outline"
                     label="Cancel"
                     :disabled="useConfirmDeleteStore().loadingDelete"
+                    @click="useConfirmDeleteStore().close()"
                 />
                 <UButton
                     color="error"

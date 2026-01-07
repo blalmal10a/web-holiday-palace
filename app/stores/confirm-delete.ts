@@ -19,7 +19,7 @@ export const useConfirmDeleteStore = defineStore('confirm-delete', {
             this.targetStore = markRaw(store)
         },
         close() {
-            this.show = false;
+            this.$reset();
         },
         async delete() {
             try {
