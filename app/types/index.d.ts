@@ -7,6 +7,12 @@ interface User {
     roles: Role[];
 }
 
+interface UserForm extends User {
+    roles: undefined | null;
+    password: string;
+    password_confirmation: string;
+}
+
 interface Role {
     id: number;
     name: string;
