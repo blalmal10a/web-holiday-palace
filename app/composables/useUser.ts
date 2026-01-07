@@ -11,7 +11,11 @@ export function useUser() {
     const fetchData = async () => {
         store.setLoading('loadingGetUsers', true)
         try {
-            const response = await api.get('/users')
+            const response = await api.get('/users', {
+                params: {
+                    ...store.pagination
+                }
+            })
             store.setData(response)
         } catch (error) {
             console.error('Failed to fetch users', error)

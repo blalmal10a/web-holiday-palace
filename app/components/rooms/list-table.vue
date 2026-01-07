@@ -1,12 +1,12 @@
 <script setup lang="ts">
-const roomStore = useRoomStore()
-const room = useRoom();
-room.fetchData();
+const store = useRoomStore()
+const model = useRoom();
+model.fetchData();
 </script>
 <template>
 	<div class="">
 		<UTable
-			:data="roomStore.data.data"
+			:data="store.data.data"
 			:columns="roomColumns"
 			@update:pagination="
 				(e) => {
@@ -46,5 +46,24 @@ room.fetchData();
 				</div>
 			</template>
 		</UTable>
+		<div class="flex justify-end border-t border-default pt-4 px-4">
+			<UPagination
+				v-if="store.data.total > store.pagination.pageSize"
+				:page="store.pagination.page"
+				:items-per-page="store.pagination.pageSize"
+				:total="store.data.total"
+				@update:page="async ($event) => {
+					store.pagination.page = $event;
+					model.fetchData();
+					useRouter().push({
+						name: 'index',
+						query: {
+							page: $event,
+							pageSize: store.pagination.pageSize,
+						}
+					})
+				}"
+			/>
+		</div>
 	</div>
 </template>

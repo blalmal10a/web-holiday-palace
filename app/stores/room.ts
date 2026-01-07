@@ -3,13 +3,16 @@ export const useRoomStore = defineStore('room', {
     loadingGetRooms: false,
     loadingSubmitRoomForm: false,
     loadingDeleteRoom: false,
+    pagination: {
+      page: 1,
+      pageSize: 10,
+    },
     data: {} as PaginationRoom,
     form: {
     } as Room,
   }),
 
   actions: {
-    // Basic setters to update state from the composable
     setData(payload: PaginationRoom) {
       this.data = payload;
     },

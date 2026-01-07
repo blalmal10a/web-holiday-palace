@@ -1,12 +1,19 @@
 <script setup lang="ts">
-const userStore = useUserStore()
-const user = useUser();
-user.fetchData();
+const store = useUserStore()
+const model = useUser();
+
+store.setPagination({
+	page: Number(useRoute().query.page) || 1,
+	pageSize: Number(useRoute().query.pageSize) || 10,
+})
+model.fetchData();
+
 </script>
 <template>
 	<div class="">
 		<UTable
-			:data="userStore.data.data"
+			:loading="store.loadingGetUsers"
+			:data="store.data.data"
 			:columns="userColumns"
 			@update:pagination="
 				(e) => {
@@ -46,5 +53,24 @@ user.fetchData();
 				</div>
 			</template>
 		</UTable>
+		<div class="flex justify-end border-t border-default pt-4 px-4">
+			<UPagination
+				v-if="store.data.total > store.pagination.pageSize"
+				:page="store.pagination.page"
+				:items-per-page="store.pagination.pageSize"
+				:total="store.data.total"
+				@update:page="async ($event) => {
+					store.pagination.page = $event;
+					model.fetchData();
+					useRouter().push({
+						name: 'index',
+						query: {
+							page: $event,
+							pageSize: store.pagination.pageSize,
+						}
+					})
+				}"
+			/>
+		</div>
 	</div>
 </template>
