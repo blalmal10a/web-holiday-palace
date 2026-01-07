@@ -62,7 +62,7 @@ model.fetchData();
 					})
 					model.fetchData();
 					useRouter().push({
-						name: 'index',
+						name: 'hotels-rooms',
 						query: {
 							page: store.pagination.page,
 							pageSize: $event,
