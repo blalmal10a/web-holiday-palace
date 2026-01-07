@@ -16,6 +16,7 @@ const links = [
 			onSelect: () => {
 				open.value = false
 			},
+			active: useRoute().name === 'hotels-users-id-form' || useRoute().name === 'index',
 		},
 		{
 			label: "Rooms",
@@ -26,6 +27,8 @@ const links = [
 			onSelect: () => {
 				open.value = false
 			},
+			active: useRoute().name === 'hotels-rooms-id-form' || useRoute().name === 'hotels-rooms',
+
 		},
 	],
 	[
