@@ -70,7 +70,7 @@ onBeforeUnmount(
 						class=""
 						@click="
 							useRouter().push({
-								name: 'index',
+								name: 'hotels-rooms',
 							})
 							"
 					>
