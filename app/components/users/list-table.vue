@@ -8,6 +8,18 @@
 		exclude_clients: false,
 	})
 	model.fetchData()
+
+	async function updatePage($event: number) {
+		store.pagination.page = $event
+		model.fetchData()
+		useRouter().push({
+			name: "index",
+			query: {
+				page: $event,
+				pageSize: store.pagination.pageSize,
+			},
+		})
+	}
 </script>
 <template>
 	<div class="">
@@ -102,20 +114,7 @@
 				:page="store.pagination.page"
 				:items-per-page="store.pagination.pageSize"
 				:total="store.data.total"
-				@update:page="() => {
-					async ($event: number) => {
-						store.pagination.page = $event
-						model.fetchData()
-						useRouter().push({
-							name: 'index',
-							query: {
-								page: $event,
-								pageSize: store.pagination.pageSize,
-							},
-						})
-					}
-				}
-				"
+				@update:page="updatePage"
 			/>
 		</div>
 	</div>
