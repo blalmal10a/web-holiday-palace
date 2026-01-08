@@ -1,25 +1,35 @@
 <script setup lang="ts">
-const store = useRoomStore()
-const model = useRoom();
-store.setPagination({
-	page: Number(useRoute().query.page) || 1,
-	pageSize: Number(useRoute().query.pageSize) || 10,
-})
-model.fetchData();
+	const store = useRoomStore()
+	const model = useRoom()
+	store.setPagination({
+		page: Number(useRoute().query.page) || 1,
+		pageSize: Number(useRoute().query.pageSize) || 10,
+	})
+	model.fetchData()
+
+	async function updatePage($event: number) {
+		store.pagination.page = $event
+		model.fetchData()
+		useRouter().push({
+			name: "index",
+			query: {
+				page: $event,
+				pageSize: store.pagination.pageSize,
+			},
+		})
+	}
 </script>
 <template>
 	<div class="">
 		<div class="flex justify-between px-3">
-			<div class="text-xl">
-
-			</div>
+			<div class="text-xl"></div>
 			<div>
 				<u-button
 					:to="{
 						name: 'hotels-rooms-id-form',
 						params: {
-							id: 'add'
-						}
+							id: 'add',
+						},
 					}"
 					icon="i-lucide-plus"
 					size="sm"
@@ -30,11 +40,8 @@ model.fetchData();
 				</u-button>
 			</div>
 		</div>
-		<UTable
-			:data="store.data.data"
-			:columns="roomColumns"
-		>
-			<template #actions-cell="{ row }">
+		<UTable :data="store.data.data" :columns="roomColumns">
+			<template #actions-cell="{row}">
 				<div class="flex space-x-2 justify-end">
 					<u-button
 						variant="outline"
@@ -42,7 +49,7 @@ model.fetchData();
 						color="neutral"
 						@click="
 							() => {
-								useRoomStore().setForm(row.original);
+								useRoomStore().setForm(row.original)
 								useRouter().push({
 									name: 'hotels-rooms-id-form',
 									params: {
@@ -59,7 +66,15 @@ model.fetchData();
 						size="sm"
 						color="error"
 						icon="i-lucide-trash"
-						@click="useConfirmDeleteStore().open(row.original.name, '/rooms', row.original.id, 'Room', useRoomStore())"
+						@click="
+							useConfirmDeleteStore().open(
+								row.original.name,
+								'/rooms',
+								row.original.id,
+								'Room',
+								useRoomStore(),
+							)
+						"
 					>
 						<!-- @click="room.deleteRoom(row.original.id)" -->
 					</u-button>
@@ -92,17 +107,7 @@ model.fetchData();
 				:page="store.pagination.page"
 				:items-per-page="store.pagination.pageSize"
 				:total="store.data.total"
-				@update:page="async ($event: number) => {
-					store.pagination.page = $event;
-					model.fetchData();
-					useRouter().push({
-						name: 'index',
-						query: {
-							page: $event,
-							pageSize: store.pagination.pageSize,
-						}
-					})
-				}"
+				@update:page="updatePage"
 			/>
 		</div>
 	</div>
