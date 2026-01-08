@@ -102,8 +102,8 @@
 				:page="store.pagination.page"
 				:items-per-page="store.pagination.pageSize"
 				:total="store.data.total"
-				@update:page="
-					;async ($event: number) => {
+				@update:page="() => {
+					async ($event: number) => {
 						store.pagination.page = $event
 						model.fetchData()
 						useRouter().push({
@@ -114,6 +114,7 @@
 							},
 						})
 					}
+				}
 				"
 			/>
 		</div>

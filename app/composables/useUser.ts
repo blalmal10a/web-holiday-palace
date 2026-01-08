@@ -37,7 +37,12 @@ export function useUser() {
     const submitForm = async () => {
         store.setLoading('loadingSubmitUserForm', true)
         try {
-            const response = await api.patch(`/users/${store.form.id}`, store.form)
+            let method = store.form.id ? 'PATCH' : 'POST';
+            let url = `/users`
+            if (store.form.id) {
+                url = `/users/${store.form.id}`
+            }
+            const response = await api.request(url, store.form, method,)
             store.setData(response)
             router.push({ name: 'index' })
         } catch (error) {
