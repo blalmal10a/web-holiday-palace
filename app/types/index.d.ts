@@ -6,7 +6,11 @@ interface User {
     phone: string | null | undefined;
     roles: Role[];
 }
-
+interface Image {
+    id: string;
+    path: string;
+    url: string;
+}
 interface UserForm extends User {
     roles: undefined | null;
     password: string;
@@ -67,7 +71,8 @@ interface MenuItem {
     name: string;
     rate: number;
     unit: string;
-    images: string[] | undefined;
+    images: string[] | File[];
+    new_files: File[]
 }
 
 interface PaginationMenuItem extends Pagination {

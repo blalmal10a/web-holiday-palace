@@ -7,6 +7,9 @@
 			model.fetchDetail()
 		}
 	})
+	function onUploadFile($event: any) {
+		console.log($event)
+	}
 </script>
 <template>
 	<div
@@ -48,7 +51,12 @@
 						step="0.01"
 					/>
 				</u-form-field>
-
+				<u-form-field style="max-width: 400px" label="Image" name="images">
+					<UFileUpload
+						multiple
+						@update:model-value="onUploadFile"
+					></UFileUpload>
+				</u-form-field>
 				<div class="text-right space-x-2">
 					<u-button
 						variant="outline"
