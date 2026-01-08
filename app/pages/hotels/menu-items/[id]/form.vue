@@ -1,14 +1,13 @@
 <script lang="ts" setup>
-definePageMeta({
-	layout: "main-layout",
-	pageTitle: "Menu",
-	ancestors: [],
-})
-
+	definePageMeta({
+		layout: "main-layout",
+		pageTitle: "Menu",
+		ancestors: [],
+	})
 </script>
 <template>
 	<div>
-		<FormsMenuItem />
+		<FormsMenuItemForm />
 	</div>
 </template>
 
