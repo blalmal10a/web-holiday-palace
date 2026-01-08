@@ -42,23 +42,32 @@ async function sanctumRequest<T = any>(
 }
 
 const api = {
-  request: async <T = any>(
+  // request: async <T = any>(
+  //   path: string,
+  //   data: any = {},
+  //   method: string = 'GET',
+  //   options: SanctumRequestOptions = {
+  //   },
+  // ): ApiResponse<T> => {
+
+  //   if (path.startsWith('/')) {
+  //     path = path.slice(1);
+  //   }
+  //   path = `api/${path}`;
+  //   const sanctumClient = useSanctumClient();
+
+  //   return await sanctumClient<T>(path, {
+  //     method,
+  //     ...options
+  //   } as any);
+  // },
+  request: <T = any>(
     path: string,
-    options: SanctumRequestOptions = {},
+    data: any = {},
     method: string = 'GET',
-  ): ApiResponse<T> => {
-
-    if (path.startsWith('/')) {
-      path = path.slice(1);
-    }
-    path = `api/${path}`;
-    const sanctumClient = useSanctumClient();
-
-    return await sanctumClient<T>(path, {
-      method,
-      ...options
-    } as any);
-  },
+    options: SanctumRequestOptions = {}
+  ): ApiResponse<T> =>
+    sanctumRequest<T>(path, data, options, method),
   get: async <T = any>(
     path: string,
     options: SanctumRequestOptions = {}
