@@ -33,13 +33,17 @@ export function useRoom() {
             console.error('Failed to fetch room detail', error)
         }
     }
-
     const submitForm = async () => {
         store.setLoading('loadingSubmitRoomForm', true)
         try {
-            const response = await api.patch(`/rooms/${store.form.id}`, store.form)
+            let method = store.form.id ? 'PATCH' : 'POST';
+            let url = `/rooms`
+            if (store.form.id) {
+                url = `/rooms/${store.form.id}`
+            }
+            const response = await api.request(url, store.form, method,)
             store.setData(response)
-            router.push({ name: 'rooms' })
+            router.push({ name: 'hotels-rooms' })
         } catch (error) {
             console.error('Submission failed', error)
         } finally {
@@ -74,15 +78,14 @@ export function useRoom() {
     }
 }
 
-export const roomFormSchema = z.object({
-    name: z.string().min(3),
-    email: z.email(),
-    password: z.string().min(4),
-    password_confirmation: z.string().min(4),
-}).refine((data) => data.password === data.password_confirmation, {
-    message: "Passwords do not match",
-    path: ["password_confirmation"]
-})
+export const roomFormSchema = () => {
+    const baseSchema = z.object({
+        name: z.string().min(1),
+        rate: z.number().min(1),
+        staff_id: z.string(),
+    })
+    return baseSchema;
+}
 
 // 2. Export Columns (Used in Table components)
 export const roomColumns: ColumnDef<any>[] = [
