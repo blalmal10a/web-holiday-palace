@@ -1,28 +1,25 @@
 <script setup lang="ts">
-const store = useUserStore()
-const model = useUser();
+	const store = useUserStore()
+	const model = useUser()
 
-store.setPagination({
-	page: Number(useRoute().query.page) || 1,
-	pageSize: Number(useRoute().query.pageSize) || 10,
-	exclude_clients: false,
-})
-model.fetchData();
-
+	store.setPagination({
+		page: Number(useRoute().query.page) || 1,
+		pageSize: Number(useRoute().query.pageSize) || 10,
+		exclude_clients: false,
+	})
+	model.fetchData()
 </script>
 <template>
 	<div class="">
 		<div class="flex justify-between px-3">
-			<div class="text-xl">
-
-			</div>
+			<div class="text-xl"></div>
 			<div>
 				<u-button
 					:to="{
-						name: 'hotels-expenditures-id-form',
+						name: 'hotels-users-id-form',
 						params: {
-							id: 'add'
-						}
+							id: 'add',
+						},
 					}"
 					icon="i-lucide-plus"
 					size="sm"
@@ -38,7 +35,7 @@ model.fetchData();
 			:data="store.data.data"
 			:columns="userColumns"
 		>
-			<template #actions-cell="{ row }">
+			<template #actions-cell="{row}">
 				<div class="flex space-x-2 justify-end">
 					<u-button
 						variant="outline"
@@ -46,7 +43,7 @@ model.fetchData();
 						color="neutral"
 						@click="
 							() => {
-								useUserStore().setForm(row.original);
+								useUserStore().setForm(row.original)
 								useRouter().push({
 									name: 'hotels-users-id-form',
 									params: {
@@ -64,9 +61,16 @@ model.fetchData();
 						size="sm"
 						color="error"
 						icon="i-lucide-trash"
-						@click="useConfirmDeleteStore().open(row.original.name, '/users', row.original.id, 'User', useUserStore())"
+						@click="
+							useConfirmDeleteStore().open(
+								row.original.name,
+								'/users',
+								row.original.id,
+								'User',
+								useUserStore(),
+							)
+						"
 					>
-						<!-- @click="user.deleteUser(row.original.id)" -->
 					</u-button>
 				</div>
 			</template>
@@ -91,7 +95,6 @@ model.fetchData();
 					})
 				}"
 			>
-
 			</USelect>
 
 			<UPagination
@@ -99,17 +102,19 @@ model.fetchData();
 				:page="store.pagination.page"
 				:items-per-page="store.pagination.pageSize"
 				:total="store.data.total"
-				@update:page="async ($event: number) => {
-					store.pagination.page = $event;
-					model.fetchData();
-					useRouter().push({
-						name: 'index',
-						query: {
-							page: $event,
-							pageSize: store.pagination.pageSize,
-						}
-					})
-				}"
+				@update:page="
+					;async ($event: number) => {
+						store.pagination.page = $event
+						model.fetchData()
+						useRouter().push({
+							name: 'index',
+							query: {
+								page: $event,
+								pageSize: store.pagination.pageSize,
+							},
+						})
+					}
+				"
 			/>
 		</div>
 	</div>
