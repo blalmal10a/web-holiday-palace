@@ -37,7 +37,7 @@ export function useMenuItem() {
     const submitForm = async () => {
         store.setLoading('loadingSubmitMenuItemForm', true)
         try {
-            const response = await api.patch(`/menuItems/${store.form.id}`, store.form)
+            const response = await api.patch(`/menu-items/${store.form.id}`, store.form)
             store.setData(response)
             router.push({ name: 'menu-items' })
         } catch (error) {
@@ -50,7 +50,7 @@ export function useMenuItem() {
     const deleteMenuItem = async (id: string) => {
         store.setLoading('loadingDeleteMenuItem', true)
         try {
-            const response = await api.delete(`/menuItems/${id}`)
+            const response = await api.delete(`/menu-items/${id}`)
             store.setData(response)
         } catch (error) {
             console.error('Delete failed', error)
