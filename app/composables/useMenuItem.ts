@@ -37,9 +37,14 @@ export function useMenuItem() {
     const submitForm = async () => {
         store.setLoading('loadingSubmitMenuItemForm', true)
         try {
-            const response = await api.patch(`/menu-items/${store.form.id}`, store.form)
+            let method = store.form.id ? 'PATCH' : 'POST';
+            let url = `/menu-items`
+            if (store.form.id) {
+                url = `/menu-items/${store.form.id}`
+            }
+            const response = await api.request(url, store.form, method,)
             store.setData(response)
-            router.push({ name: 'menu-items' })
+            router.push({ name: 'hotels-menu-items' })
         } catch (error) {
             console.error('Submission failed', error)
         } finally {
@@ -74,15 +79,15 @@ export function useMenuItem() {
     }
 }
 
-export const menuItemFormSchema = z.object({
-    name: z.string().min(3),
-    email: z.email(),
-    password: z.string().min(4),
-    password_confirmation: z.string().min(4),
-}).refine((data) => data.password === data.password_confirmation, {
-    message: "Passwords do not match",
-    path: ["password_confirmation"]
-})
+export const menuItemFormSchema = () => {
+    const baseSchema = z.object({
+        name: z.string().min(3),
+        rate: z.number().min(1),
+        unit: z.string(),
+    })
+
+    return baseSchema;
+}
 
 // 2. Export Columns (Used in Table components)
 export const menuItemColumns: ColumnDef<MenuItem>[] = [
@@ -106,3 +111,29 @@ export const menuItemUnits: Record<string, string> = {
     'piece': 'Piece',
     'bottle': 'Bottle',
 }
+export const menuItemUnitsList = [
+    {
+        value: 'plate',
+        label: 'Plate',
+    },
+    {
+        value: 'cup',
+        label: 'Cup',
+    },
+    {
+        value: 'bowl',
+        label: 'Bowl',
+    },
+    {
+        value: 'box',
+        label: 'Box',
+    },
+    {
+        value: 'piece',
+        label: 'Piece',
+    },
+    {
+        value: 'bottle',
+        label: 'Bottle',
+    }
+]
