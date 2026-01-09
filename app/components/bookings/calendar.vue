@@ -108,13 +108,7 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
         <BookingsFullScreenModal />
     </div>
 </template>
-<style>
-table,
-th,
-td {
-    /* border: 1px solid; */
-}
-
+<style scoped>
 table {
     border-collapse: collapse;
 }
@@ -124,7 +118,5 @@ td:first-child {
     position: sticky;
     left: 0;
     z-index: 10;
-    /* Keeps it above other cells during scroll */
-    /* Required to prevent transparency */
 }
 </style>
