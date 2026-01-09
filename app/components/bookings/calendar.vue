@@ -34,17 +34,12 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
                             <div class=" h-24 flex items-center justify-center border border-default">
                                 HP
                             </div>
-                            <!-- <div>Days
-                                <UIcon name="i-lucide-arrow-right"></UIcon>
-                            </div>
-                            <USeparator />
-                            <div>Room <UIcon name="i-lucide-arrow-down"></UIcon>
-                            </div> -->
+
                         </th>
                         <template v-for="date in calendarStore.dateList">
-                            <th class="text-left p-4 border-default border text-sm">
+                            <th class="text-center p-4 border-default border text-sm ">
                                 {{ format(date, 'Do MMM') }}
-                                <div class="text-center">
+                                <div>
                                     ({{ format(date, 'EEE') }})
                                 </div>
                             </th>
@@ -68,7 +63,7 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
                                 class="bg-default"
                             >
                                 <div class="p-4 border border-default">
-                                    <div class="p-4 whitespace-nowrap  h-16">
+                                    <div class="p-4 whitespace-nowrap  h-10">
                                         {{ cell.room.name }}
                                     </div>
                                 </div>
@@ -91,7 +86,7 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
                             >
                                 <div class="p-4 border border-default">
                                     <div
-                                        class="  rounded-lg p-1 whitespace-nowrap  flex items-center h-16"
+                                        class="  rounded-lg p-1 whitespace-nowrap  flex items-center h-10"
                                         :class="{
                                             'bg-blue-500': !!cell.bookingInfo
                                         }"
