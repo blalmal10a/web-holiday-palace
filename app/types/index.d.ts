@@ -111,3 +111,30 @@ interface ExpenditureForm extends Expenditure {
 interface PaginationExpenditure extends Pagination {
     data: Expenditure[]
 }
+
+
+interface Booking {
+    id: string;
+    client_id: string;
+    client: User;
+    staff_id: string;
+    staff: User;
+    no_of_adults: number;
+    no_of_children: number;
+    room_id: string;
+    room: Room;
+    check_in_date: string;
+    checkout_date: string;
+    deposit: number;
+}
+
+interface BookingForm extends Booking {
+    id?: string | undefined;
+    client?: nullable | undefined | User;
+    staff?: nullable | undefined | User;
+    room?: nullable | undefined | Room;
+}
+
+interface PaginationBooking extends Pagination {
+    data: Booking[]
+}

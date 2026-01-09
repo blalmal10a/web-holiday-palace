@@ -1,0 +1,130 @@
+<script lang="ts" setup>
+	const store = useBookingStore()
+	const model = useBooking()
+
+	const user = useUser()
+	const userStore = useUserStore()
+
+	const room = useRoom()
+	const roomStore = useRoomStore()
+
+	const imageFiles = ref<File[]>([])
+	onMounted(() => {
+		if (!store.form.id && useRoute().params.id != "add") {
+			model.fetchDetail()
+		}
+	})
+
+	user.fetchData()
+	room.fetchData()
+	onBeforeUnmount(() => {
+		userStore.pagination.exclude_clients = false
+	})
+</script>
+<template>
+	<div
+		class="flex flex-col items-center"
+		style="height: calc(100dvh - 200px); overflow: visible"
+	>
+		<u-card style="min-width: min(400px, 90vw)">
+			<u-form
+				:schema="bookingFormSchema()"
+				:state="store.form"
+				@submit="model.submitForm(imageFiles)"
+				class="space-y-4 w-full"
+			>
+				<u-form-field label="Client" name="client_id">
+					<USelectMenu
+						class="w-full"
+						v-model="store.form.client_id"
+						value-key="id"
+						label-key="name"
+						:items="userStore.data.data"
+					/>
+				</u-form-field>
+				<u-form-field label="Room" name="room_id">
+					<USelectMenu
+						class="w-full"
+						v-model="store.form.room_id"
+						@update:model-value="
+							($event: string) => {
+								console.log($event)
+								const room = roomStore.data.data.find((room: Room) => room.id === $event);
+								if (room) {
+									store.form.staff_id = room.staff_id;
+								}
+							}
+						"
+						value-key="id"
+						label-key="name"
+						:items="roomStore.data.data"
+					/>
+				</u-form-field>
+
+				<u-form-field label="No. of adults" name="form.no_of_adults">
+					<u-input
+						v-model="store.form.no_of_adults"
+						icon="i-lucide-indian-rupee"
+						type="number"
+					/>
+				</u-form-field>
+				<u-form-field label="no. of children" name="no_of_children">
+					<u-input
+						v-model="store.form.no_of_children"
+						icon="i-lucide-indian-rupee"
+						type="number"
+					/>
+				</u-form-field>
+				<u-form-field label="Check in date" name="check_in_date">
+					<u-input
+						v-model="store.form.check_in_date"
+						icon="i-lucide-layers"
+						type="date"
+					/>
+				</u-form-field>
+				<u-form-field label="Check out date" name="checkout_date">
+					<u-input
+						v-model="store.form.checkout_date"
+						icon="i-lucide-layers"
+						type="date"
+					/>
+				</u-form-field>
+				<u-form-field label="Deposit amount" name="deposit">
+					<u-input
+						v-model="store.form.deposit"
+						icon="i-lucide-indian-rupee"
+						type="number"
+					/>
+				</u-form-field>
+				<div class="text-right space-x-2">
+					<u-button
+						variant="outline"
+						color="neutral"
+						:loading="auth.loadingSubmitUpdateProfile"
+						class=""
+						@click="
+							useRouter().push({
+								name: 'hotels-bookings',
+							})
+						"
+					>
+						Cancel
+					</u-button>
+					<u-button
+						:loading="auth.loadingSubmitUpdateProfile"
+						class=""
+						type="submit"
+					>
+						Submit
+					</u-button>
+				</div>
+			</u-form>
+		</u-card>
+	</div>
+</template>
+
+<style scoped>
+	.relative.inline-flex.items-center {
+		width: 100%;
+	}
+</style>
