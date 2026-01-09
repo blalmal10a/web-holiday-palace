@@ -56,6 +56,8 @@ export function useBooking() {
             } else {
                 router.push({ name: 'hotels-bookings' })
             }
+            useCalendarStore().$reset();
+            useCalendarStore().initCalendar(useRoomStore().data.data, useBookingStore().data.data);
         } catch (error) {
             notifyError(error);
             console.error('Submission failed', error)

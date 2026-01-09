@@ -38,7 +38,7 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
 
                         </th>
                         <template v-for="date in calendarStore.dateList">
-                            <th class="text-center p-4 border-default border text-sm ">
+                            <th class="text-center p-4 border-default border text-sm whitespace-nowrap">
                                 {{ format(date, 'Do MMM') }}
                                 <div>
                                     ({{ format(date, 'EEE') }})
