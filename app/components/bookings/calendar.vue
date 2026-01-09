@@ -30,8 +30,10 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
             <table>
                 <thead>
                     <tr>
-                        <th class="border border-default">
-                            HP
+                        <th class=" bg-default ">
+                            <div class=" h-24 flex items-center justify-center border border-default">
+                                HP
+                            </div>
                             <!-- <div>Days
                                 <UIcon name="i-lucide-arrow-right"></UIcon>
                             </div>
@@ -63,10 +65,12 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
                         >
                             <td
                                 v-if="cellIndex == 0"
-                                class="border-default border"
+                                class="bg-default"
                             >
-                                <div class="p-4 whitespace-nowrap bg-default">
-                                    {{ cell.room.name }}
+                                <div class="p-4 border border-default">
+                                    <div class="p-4 whitespace-nowrap  h-16">
+                                        {{ cell.room.name }}
+                                    </div>
                                 </div>
                             </td>
 
@@ -85,15 +89,11 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
 
                                 }"
                             >
-                                <div
-                                    class="p-4 border border-default"
-                                    style="height: 70px"
-                                >
+                                <div class="p-4 border border-default">
                                     <div
-                                        v-if="cell.bookingInfo"
-                                        class=" bg-blue-500 rounded-lg p-1 whitespace-nowrap h-full flex items-center"
+                                        class="  rounded-lg p-1 whitespace-nowrap  flex items-center h-16"
                                         :class="{
-
+                                            'bg-blue-500': !!cell.bookingInfo
                                         }"
                                     >
                                         {{ cell.bookingInfo?.client?.name }}

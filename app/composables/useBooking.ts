@@ -49,7 +49,11 @@ export function useBooking() {
             }
             const response = await api.request(url, store.form, method,)
             store.setData(response)
-            router.push({ name: 'hotels-bookings' })
+            if (useRoute().name === 'hotels-bookings-calendar') {
+                useCalendarStore().showBookingForm = false;
+            } else {
+                router.push({ name: 'hotels-bookings' })
+            }
         } catch (error) {
             console.error('Submission failed', error)
         } finally {
