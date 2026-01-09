@@ -14,7 +14,7 @@ export const useCalendarStore = defineStore('calendar', {
             let endDate = format(addDays(startDate, 7), 'yyyy-MM-dd');
             this.dateList = getBookingDateList(startDate, endDate)
             let mappedBookings = mapBooking(bookingList)
-            console.log(mappedBookings)
+
             roomList.forEach(room => {
                 let currentRow = []
                 currentRow.push({
