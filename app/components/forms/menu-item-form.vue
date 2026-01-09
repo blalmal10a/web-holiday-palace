@@ -52,11 +52,7 @@
 					/>
 				</u-form-field>
 				<u-form-field style="max-width: 400px" label="Image" name="images">
-					<UFileUpload
-						v-model="imageFiles"
-						multiple
-						@update:model-value="onUploadFile"
-					></UFileUpload>
+					<UFileUpload v-model="imageFiles" multiple></UFileUpload>
 				</u-form-field>
 				<div style="max-width: 400px" class="grid grid-cols-3 gap-2 px-4">
 					<template v-for="(image, index) in store.form.images">
