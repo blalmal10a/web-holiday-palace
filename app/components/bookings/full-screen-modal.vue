@@ -8,7 +8,7 @@
             v-model:open="calendarStore.showBookingForm"
             fullscreen
         >
-            <template #title>title of modal</template>
+            <template #title>Booking Form</template>
             <template #body>
                 <BookingForm is-modal />
             </template>

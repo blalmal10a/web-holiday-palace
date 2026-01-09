@@ -25,8 +25,17 @@ onMounted(async () => {
 	store.form.date_list = getBookingDateList(store.form.check_in_date, store.form.checkout_date);
 })
 userStore.pagination.exclude_admin = true;
-user.fetchData()
-room.fetchData()
+await user.fetchData()
+await room.fetchData()
+if (props.isModal) {
+	populateStaff(store.form.room_id)
+}
+function populateStaff($event: string) {
+	const room = roomStore.data.data.find((room: Room) => room.id === $event);
+	if (room) {
+		store.form.staff_id = room.staff_id;
+	}
+}
 onBeforeUnmount(() => {
 	userStore.pagination.exclude_clients = false
 	store.$reset();
@@ -41,6 +50,7 @@ onBeforeUnmount(() => {
 					:state="store.form"
 					@submit="model.submitForm(imageFiles)"
 					class="space-y-4 w-full"
+					@error="($event) => console.log($event)"
 				>
 					<u-form-field
 						label="Client"
@@ -61,15 +71,7 @@ onBeforeUnmount(() => {
 						<USelectMenu
 							class="w-full"
 							v-model="store.form.room_id"
-							@update:model-value="
-								($event: string) => {
-									console.log($event)
-									const room = roomStore.data.data.find((room: Room) => room.id === $event);
-									if (room) {
-										store.form.staff_id = room.staff_id;
-									}
-								}
-							"
+							@update:model-value="populateStaff"
 							value-key="id"
 							label-key="name"
 							:items="roomStore.data.data"
@@ -157,7 +159,9 @@ onBeforeUnmount(() => {
 				</u-form>
 
 			</u-card>
-
+			<pre>
+	{{ store.form }}
+</pre>
 		</div>
 
 	</div>

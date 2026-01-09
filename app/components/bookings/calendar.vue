@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { addDays, format } from 'date-fns';
+
 // 019ba356-e5fc-736a-bee3-8563b525d98b
 const id = "019ba356-e5fc-736a-bee3-8563b525d98b";
 const roomStore = useRoomStore()
@@ -26,13 +28,13 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
 </script>
 <template>
     <div>
-        <div class="w-full overflow-auto">
+        <div class="w-full overflow-auto pt-4">
             <table>
                 <thead>
                     <tr>
                         <th></th>
                         <template v-for="date in calendarStore.dateList">
-                            <th class="text-left p-4">{{ date }}</th>
+                            <th class="text-left p-4 border-default border">{{ date }}</th>
                         </template>
                     </tr>
                 </thead>
@@ -48,7 +50,10 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
                             v-for="(cell, cellIndex) in row"
                             :key="cellIndex"
                         >
-                            <td v-if="cellIndex == 0">
+                            <td
+                                v-if="cellIndex == 0"
+                                class="border-default border"
+                            >
                                 <div class="p-4 whitespace-nowrap bg-default">
                                     {{ cell.room.name }}
                                 </div>
@@ -58,9 +63,11 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
                                 v-if="shouldRender(cellIndex, cell)"
                                 :colspan="cell.cellLength"
                                 @click="() => {
-                                    console.log('click')
                                     if (cell.bookingInfo)
                                         bookingStore.setForm(cell.bookingInfo)
+                                    bookingStore.form.room_id = cell.room.id;
+                                    bookingStore.form.check_in_date = cell.date;
+                                    bookingStore.form.checkout_date = format(addDays(cell.date, 1), 'yyyy-MM-dd');
                                     calendarStore.showBookingForm = true;
 
                                 }"
