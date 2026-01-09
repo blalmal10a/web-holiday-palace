@@ -60,6 +60,15 @@ interface Room {
     staff_id: string;
     staff: User | undefined;
     images: Image[];
+}
+
+interface RoomForm {
+    id: string | null | undefined;
+    name: string;
+    rate: number;
+    staff_id: string;
+    staff: User | undefined;
+    images: Image[];
     deleted_image_ids: string[]
     image_files: File[]
 }

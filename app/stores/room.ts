@@ -9,7 +9,7 @@ export const useRoomStore = defineStore('room', {
     },
     data: {} as PaginationRoom,
     form: {
-    } as Room,
+    } as RoomForm,
   }),
 
   actions: {
@@ -19,7 +19,7 @@ export const useRoomStore = defineStore('room', {
     setPagination(payload: { page: number; pageSize: number }) {
       this.pagination = payload;
     },
-    setForm(payload: Room) {
+    setForm(payload: RoomForm) {
       this.form = payload;
     },
     setLoading(key: 'loadingGetRooms' | 'loadingSubmitRoomForm' | 'loadingDeleteRoom', value: boolean) {
