@@ -54,6 +54,7 @@ async function login() {
     await login(auth.form);
   } catch (error) {
     notifyError(error);
+    notifyError(error);
   } finally {
     auth.loadingSubmitLogin = false;
   }
@@ -68,6 +69,7 @@ async function onSubmitUpdateProfile() {
     // notify.success("Profile updated successfully");
 
   } catch (error) {
+    notifyError(error);
     notifyError(error);
   } finally {
     auth.loadingSubmitUpdateProfile = false;

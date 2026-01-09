@@ -18,6 +18,7 @@ export function useMenuItem() {
             })
             store.setData(response)
         } catch (error) {
+            notifyError(error);
             console.error('Failed to fetch menuItems', error)
         } finally {
             store.setLoading('loadingGetMenuItems', false)
@@ -30,6 +31,7 @@ export function useMenuItem() {
             const response = await api.get(`/menu-items/${menuItemId}`)
             store.setForm(response)
         } catch (error) {
+            notifyError(error);
             console.error('Failed to fetch menuItem detail', error)
         }
     }
@@ -52,6 +54,7 @@ export function useMenuItem() {
 
             router.push({ name: 'hotels-menu-items' })
         } catch (error) {
+            notifyError(error);
             console.error('Submission failed', error)
         } finally {
             store.setLoading('loadingSubmitMenuItemForm', false)
@@ -64,6 +67,7 @@ export function useMenuItem() {
             const response = await api.delete(`/menu-items/${id}`)
             store.setData(response)
         } catch (error) {
+            notifyError(error);
             console.error('Delete failed', error)
         } finally {
             store.setLoading('loadingDeleteMenuItem', false)

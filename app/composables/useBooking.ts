@@ -19,6 +19,7 @@ export function useBooking() {
             })
             store.setData(response)
         } catch (error) {
+            notifyError(error);
             console.error('Failed to fetch bookings', error)
         } finally {
             store.setLoading('loadingGetBookings', false)
@@ -36,6 +37,7 @@ export function useBooking() {
             let bookingForm = response as BookingForm;
             store.setForm(bookingForm)
         } catch (error) {
+            notifyError(error);
             console.error('Failed to fetch booking detail', error)
         }
     }
@@ -55,6 +57,7 @@ export function useBooking() {
                 router.push({ name: 'hotels-bookings' })
             }
         } catch (error) {
+            notifyError(error);
             console.error('Submission failed', error)
         } finally {
             store.setLoading('loadingSubmitBookingForm', false)
@@ -67,6 +70,7 @@ export function useBooking() {
             const response = await api.delete(`/bookings/${id}`)
             store.setData(response)
         } catch (error) {
+            notifyError(error);
             console.error('Delete failed', error)
         } finally {
             store.setLoading('loadingDeleteBooking', false)

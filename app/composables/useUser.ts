@@ -18,6 +18,7 @@ export function useUser() {
             })
             store.setData(response)
         } catch (error) {
+            notifyError(error);
             console.error('Failed to fetch users', error)
         } finally {
             store.setLoading('loadingGetUsers', false)
@@ -30,6 +31,7 @@ export function useUser() {
             const response = await api.get(`/users/${userId}`)
             store.setForm(response)
         } catch (error) {
+            notifyError(error);
             console.error('Failed to fetch user detail', error)
         }
     }
@@ -46,6 +48,7 @@ export function useUser() {
             store.setData(response)
             router.push({ name: 'index' })
         } catch (error) {
+            notifyError(error);
             console.error('Submission failed', error)
         } finally {
             store.setLoading('loadingSubmitUserForm', false)
@@ -58,6 +61,7 @@ export function useUser() {
             const response = await api.delete(`/users/${id}`)
             store.setData(response)
         } catch (error) {
+            notifyError(error);
             console.error('Delete failed', error)
         } finally {
             store.setLoading('loadingDeleteUser', false)

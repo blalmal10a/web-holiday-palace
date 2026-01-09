@@ -30,6 +30,7 @@ export const useConfirmDeleteStore = defineStore('confirm-delete', {
                 }
                 this.$reset();
             } catch (error) {
+                notifyError(error);
                 // notify error
             } finally {
                 this.loadingDelete = false;

@@ -16,8 +16,12 @@ export function useExpenditure() {
                 }
             })
             store.setData(response)
+
         } catch (error) {
+            notifyError(error);
             console.error('Failed to fetch expenditures', error)
+            const { $notify } = useNuxtApp()
+            $notify.error("Failed to fetch expenditures",)
         } finally {
             store.setLoading('loadingGetExpenditures', false)
         }
@@ -29,6 +33,7 @@ export function useExpenditure() {
             const response = await api.get(`/expenditures/${expenditureId}`)
             store.setForm(response)
         } catch (error) {
+            notifyError(error);
             console.error('Failed to fetch expenditure detail', error)
         }
     }
@@ -45,6 +50,7 @@ export function useExpenditure() {
             store.setData(response)
             router.push({ name: 'hotels-expenditures' })
         } catch (error) {
+            notifyError(error);
             console.error('Submission failed', error)
         } finally {
             store.setLoading('loadingSubmitExpenditureForm', false)
@@ -57,6 +63,7 @@ export function useExpenditure() {
             const response = await api.delete(`/expenditures/${id}`)
             store.setData(response)
         } catch (error) {
+            notifyError(error);
             console.error('Delete failed', error)
         } finally {
             store.setLoading('loadingDeleteExpenditure', false)

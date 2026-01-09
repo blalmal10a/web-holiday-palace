@@ -18,6 +18,7 @@ export function useRoom() {
             })
             store.setData(response)
         } catch (error) {
+            notifyError(error);
             console.error('Failed to fetch rooms', error)
         } finally {
             store.setLoading('loadingGetRooms', false)
@@ -30,6 +31,7 @@ export function useRoom() {
             const response = await api.get(`/rooms/${roomId}`)
             store.setForm(response)
         } catch (error) {
+            notifyError(error);
             console.error('Failed to fetch room detail', error)
         }
     }
@@ -46,6 +48,7 @@ export function useRoom() {
             store.setData(response)
             router.push({ name: 'hotels-rooms' })
         } catch (error) {
+            notifyError(error);
             console.error('Submission failed', error)
         } finally {
             store.setLoading('loadingSubmitRoomForm', false)
@@ -58,6 +61,7 @@ export function useRoom() {
             const response = await api.delete(`/rooms/${id}`)
             store.setData(response)
         } catch (error) {
+            notifyError(error);
             console.error('Delete failed', error)
         } finally {
             store.setLoading('loadingDeleteRoom', false)
