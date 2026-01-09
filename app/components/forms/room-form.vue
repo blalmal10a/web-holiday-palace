@@ -3,10 +3,12 @@
 	const model = useRoom()
 	const user = useUser()
 	const userStore = useUserStore()
+	const imageFiles = ref<File[]>([])
 	onMounted(() => {
 		if (!store.form.id && useRoute().params.id != "add") {
 			model.fetchDetail()
 		}
+		store.form.deleted_image_ids = []
 	})
 	userStore.pagination.exclude_clients = true
 	user.fetchData()
@@ -23,7 +25,7 @@
 			<u-form
 				:schema="roomFormSchema()"
 				:state="store.form"
-				@submit="model.submitForm()"
+				@submit="model.submitForm(imageFiles)"
 				class="space-y-4 w-full"
 			>
 				<u-form-field label="Name" name="name">
@@ -46,6 +48,39 @@
 						:items="userStore.data.data"
 					/>
 				</u-form-field>
+
+				<u-form-field style="max-width: 400px" label="Image" name="images">
+					<UFileUpload
+						accept="image/jpeg,image/png"
+						v-model="imageFiles"
+						multiple
+					></UFileUpload>
+				</u-form-field>
+				<div style="max-width: 400px" class="grid grid-cols-3 gap-2 px-4">
+					<template v-for="(image, index) in store.form.images">
+						<div class="bg-elevated relative">
+							<UButton
+								@click="
+									() => {
+										store.form.deleted_image_ids.push(image.id)
+										store.form.images.splice(index, 1)
+									}
+								"
+								variant="outline"
+								color="neutral"
+								class="bg-white rounded-full absolute top-0 right-0 text-black hover:bg-white"
+								style="padding: 2px"
+							>
+								<UIcon size="14" name="i-lucide-x" />
+							</UButton>
+
+							<NuxtImg
+								:src="image.url"
+								style="aspect-ratio: 1; object-fit: cover"
+							/>
+						</div>
+					</template>
+				</div>
 				<div class="text-right space-x-2">
 					<u-button
 						variant="outline"

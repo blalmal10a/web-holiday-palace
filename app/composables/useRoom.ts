@@ -33,7 +33,7 @@ export function useRoom() {
             console.error('Failed to fetch room detail', error)
         }
     }
-    const submitForm = async () => {
+    const submitForm = async (imageFiles: File[]) => {
         store.setLoading('loadingSubmitRoomForm', true)
         try {
             let method = store.form.id ? 'PATCH' : 'POST';
@@ -41,6 +41,7 @@ export function useRoom() {
             if (store.form.id) {
                 url = `/rooms/${store.form.id}`
             }
+            store.form.image_files = imageFiles;
             const response = await api.request(url, store.form, method,)
             store.setData(response)
             router.push({ name: 'hotels-rooms' })

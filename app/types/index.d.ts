@@ -59,8 +59,9 @@ interface Room {
     rate: number;
     staff_id: string;
     staff: User | undefined;
-    images: string[] | undefined;
+    images: Image[];
     deleted_image_ids: string[]
+    image_files: File[]
 }
 
 interface PaginationRoom extends Pagination {
