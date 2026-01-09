@@ -1,4 +1,10 @@
 <script lang="ts" setup>
+const props = defineProps({
+	isModal: {
+		type: Boolean,
+		default: false
+	}
+})
 const store = useBookingStore()
 const model = useBooking()
 
@@ -13,7 +19,7 @@ onMounted(async () => {
 	if (!store.form.date_list) {
 		store.form.date_list = []
 	}
-	if (!store.form.id && useRoute().params.id != "add") {
+	if (!props.isModal && !store.form.id && useRoute().params.id != "add") {
 		await model.fetchDetail()
 	}
 	store.form.date_list = getBookingDateList(store.form.check_in_date, store.form.checkout_date);
@@ -23,14 +29,12 @@ user.fetchData()
 room.fetchData()
 onBeforeUnmount(() => {
 	userStore.pagination.exclude_clients = false
+	store.$reset();
 })
 </script>
 <template>
 	<div>
-		<div
-			class="flex flex-col items-center"
-			style="height: calc(100dvh - 200px); overflow: auto"
-		>
+		<div class="flex flex-col items-center">
 			<u-card style="min-width: min(400px, 90vw)">
 				<u-form
 					:schema="bookingFormSchema()"
@@ -129,10 +133,16 @@ onBeforeUnmount(() => {
 							:loading="auth.loadingSubmitUpdateProfile"
 							class=""
 							@click="
-								useRouter().push({
-									name: 'hotels-bookings',
-								})
-								"
+								() => {
+									if (isModal) {
+										useCalendarStore().showBookingForm = false;
+									} else {
+										useRouter().push({
+											name: 'hotels-bookings',
+										})
+									}
+								}
+							"
 						>
 							Cancel
 						</u-button>
@@ -149,9 +159,7 @@ onBeforeUnmount(() => {
 			</u-card>
 
 		</div>
-		<pre>
-			{{ store.form }}
-		</pre>
+
 	</div>
 </template>
 

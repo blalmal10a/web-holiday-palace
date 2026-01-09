@@ -140,3 +140,12 @@ interface BookingForm extends Booking {
 interface PaginationBooking extends Pagination {
     data: Booking[]
 }
+
+interface CalendarData {
+    room: Room;
+    bookingInfo: BookingForm | null;
+    date: string;
+    start_cell: boolean;
+    end_cell: boolean;
+    cellLength: number;
+}

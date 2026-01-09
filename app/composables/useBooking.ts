@@ -80,7 +80,7 @@ export function useBooking() {
         fetchData,
         fetchDetail,
         submitForm,
-        deleteBooking
+        deleteBooking,
     }
 }
 
@@ -131,4 +131,18 @@ export function getBookingDateList(checkInDate: string, checkOutDate: string) {
         currentDate = addDays(currentDate, 1).toISOString().split('T')[0]!
     }
     return dateList;
+}
+export const mapBooking = (bookings: Booking[]) => {
+    let mappedBookings: Record<string, BookingForm> = {}
+    bookings.forEach(booking => {
+        let dateList = getBookingDateList(booking.check_in_date, booking.checkout_date)
+        if (dateList) {
+            dateList.forEach(date => {
+                let key = booking.room_id
+                key = `${key}-${date}`
+                mappedBookings[key] = booking as BookingForm;
+            });
+        }
+    });
+    return mappedBookings
 }
