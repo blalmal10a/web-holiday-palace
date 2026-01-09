@@ -60,6 +60,7 @@ interface Room {
     staff_id: string;
     staff: User | undefined;
     images: string[] | undefined;
+    deleted_image_ids: string[]
 }
 
 interface PaginationRoom extends Pagination {
@@ -71,8 +72,9 @@ interface MenuItem {
     name: string;
     rate: number;
     unit: string;
-    images: string[] | File[];
+    images: Image[]
     new_files: File[]
+    deleted_image_ids: string[]
 }
 
 interface PaginationMenuItem extends Pagination {

@@ -34,7 +34,7 @@ export function useMenuItem() {
         }
     }
 
-    const submitForm = async () => {
+    const submitForm = async (imageFiles: File[]) => {
         store.setLoading('loadingSubmitMenuItemForm', true)
         try {
             let method = store.form.id ? 'PATCH' : 'POST';
@@ -42,8 +42,14 @@ export function useMenuItem() {
             if (store.form.id) {
                 url = `/menu-items/${store.form.id}`
             }
-            const response = await api.request(url, store.form, method,)
+
+            const response = await api.request(url, {
+                ...store.form,
+                image_files: imageFiles
+            }, method,)
+            store.$reset();
             store.setData(response)
+
             router.push({ name: 'hotels-menu-items' })
         } catch (error) {
             console.error('Submission failed', error)

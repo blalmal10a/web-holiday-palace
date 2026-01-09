@@ -1,15 +1,15 @@
 <script lang="ts" setup>
+	import Index from "~/pages/index.vue"
+
 	const store = useMenuItemStore()
 	const model = useMenuItem()
-
-	onMounted(() => {
+	const imageFiles = ref<File[]>([])
+	onMounted(async () => {
 		if (!store.form.id && useRoute().params.id != "add") {
-			model.fetchDetail()
+			await model.fetchDetail()
 		}
+		store.form.deleted_image_ids = []
 	})
-	function onUploadFile($event: any) {
-		console.log($event)
-	}
 </script>
 <template>
 	<div
@@ -20,7 +20,7 @@
 			<u-form
 				:schema="menuItemFormSchema()"
 				:state="store.form"
-				@submit="model.submitForm()"
+				@submit="model.submitForm(imageFiles)"
 				class="space-y-4 w-full"
 			>
 				<u-form-field label="Item name" name="name">
@@ -53,10 +53,36 @@
 				</u-form-field>
 				<u-form-field style="max-width: 400px" label="Image" name="images">
 					<UFileUpload
+						v-model="imageFiles"
 						multiple
 						@update:model-value="onUploadFile"
 					></UFileUpload>
 				</u-form-field>
+				<div style="max-width: 400px" class="grid grid-cols-3 gap-2 px-4">
+					<template v-for="(image, index) in store.form.images">
+						<div class="bg-elevated relative">
+							<UButton
+								@click="
+									() => {
+										store.form.deleted_image_ids.push(image.id)
+										store.form.images.splice(index, 1)
+									}
+								"
+								variant="outline"
+								color="neutral"
+								class="bg-white rounded-full absolute top-0 right-0 text-black hover:bg-white"
+								style="padding: 2px"
+							>
+								<UIcon size="14" name="i-lucide-x" />
+							</UButton>
+
+							<NuxtImg
+								:src="image.url"
+								style="aspect-ratio: 1; object-fit: cover"
+							/>
+						</div>
+					</template>
+				</div>
 				<div class="text-right space-x-2">
 					<u-button
 						variant="outline"
@@ -65,7 +91,7 @@
 						class=""
 						@click="
 							useRouter().push({
-								name: 'index',
+								name: 'hotels-menu-items',
 							})
 						"
 					>
