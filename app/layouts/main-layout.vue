@@ -7,6 +7,45 @@ const toast = useToast()
 const open = ref(false)
 
 const links = computed(() => [
+
+	[
+		{
+			label: "Calendar",
+			icon: "i-lucide-calendar",
+			to: {
+				name: "hotels-calendar",
+			},
+			onSelect: () => {
+				open.value = false
+			},
+			active:
+				useRoute().name === "hotels-calendar-id-form" ||
+				useRoute().name === "hotels-calendar",
+		},
+		{
+			label: "Expenditure",
+			icon: "i-lucide-indian-rupee",
+			to: {
+				name: "hotels-expenditures",
+			},
+			onSelect: () => {
+				open.value = false
+			},
+			active:
+				useRoute().name === "hotels-expenditures-id-form" ||
+				useRoute().name === "hotels-expenditures",
+		},
+		// {
+		// 	label: "Forms",
+		// 	icon: "i-lucide-clipboard-list",
+		// 	defaultOpen: true,
+		// 	onSelect: () => {
+		// 		open.value = false
+		// 	},
+		// 	children: [
+		// 	],
+		// },
+	],
 	[
 		{
 			label: "Home",
@@ -47,23 +86,10 @@ const links = computed(() => [
 				useRoute().name === "hotels-menu-items-id-form" ||
 				useRoute().name === "hotels-menu-items",
 		},
-		{
-			label: "Expenditure",
-			icon: "i-lucide-indian-rupee",
-			to: {
-				name: "hotels-expenditures",
-			},
-			onSelect: () => {
-				open.value = false
-			},
-			active:
-				useRoute().name === "hotels-expenditures-id-form" ||
-				useRoute().name === "hotels-expenditures",
-		},
 
 		{
 			label: "Bookings",
-			icon: "i-lucide-bed",
+			icon: "i-lucide-list-todo",
 			to: {
 				name: "hotels-bookings",
 			},
@@ -74,31 +100,6 @@ const links = computed(() => [
 				useRoute().name === "hotels-bookings-id-form" ||
 				useRoute().name === "hotels-bookings",
 		},
-		{
-			label: "Calendar",
-			icon: "i-lucide-calendar",
-			to: {
-				name: "hotels-calendar",
-			},
-			onSelect: () => {
-				open.value = false
-			},
-			active:
-				useRoute().name === "hotels-calendar-id-form" ||
-				useRoute().name === "hotels-calendar",
-		},
-	],
-	[
-		// {
-		// 	label: "Forms",
-		// 	icon: "i-lucide-clipboard-list",
-		// 	defaultOpen: true,
-		// 	onSelect: () => {
-		// 		open.value = false
-		// 	},
-		// 	children: [
-		// 	],
-		// },
 	],
 ])
 onMounted(async () => { })

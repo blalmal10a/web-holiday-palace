@@ -1,8 +1,8 @@
 <script setup lang="ts">
-	definePageMeta({
-		layout: "main-layout",
-		pageTitle: "Booking",
-	})
+definePageMeta({
+	layout: "main-layout",
+	pageTitle: "Bookings",
+})
 </script>
 <template>
 	<BookingsListTable />
