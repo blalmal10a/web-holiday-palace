@@ -70,7 +70,7 @@ model.fetchData();
 						size="sm"
 						color="error"
 						icon="i-lucide-trash"
-						@click="useConfirmDeleteStore().open(row.original.name, '/expenditures', row.original.id, 'Expenditure', useExpenditureStore())"
+						@click="useConfirmDeleteStore().open(row.original.name as string, '/expenditures', row.original.id, 'Expenditure', useExpenditureStore())"
 					>
 						<!-- @click="expenditure.deleteExpenditure(row.original.id)" -->
 					</u-button>
