@@ -51,7 +51,7 @@ export function useBooking() {
             }
             const response = await api.request(url, store.form, method,)
             store.setData(response)
-            if (useRoute().name === 'hotels-bookings-calendar') {
+            if (useRoute().name === 'hotels-calendar') {
                 useCalendarStore().showBookingForm = false;
             } else {
                 router.push({ name: 'hotels-bookings' })
@@ -134,7 +134,7 @@ export function getBookingDateList(checkInDate: string, checkOutDate: string) {
     let diff = differenceInDays(checkOutDate, checkInDate);
     let currentDate = checkInDate;
     let dateList = [];
-    for (let dateCount = 0; dateCount < diff; dateCount++) {
+    for (let dateCount = 0; dateCount < diff + 1; dateCount++) {
         dateList.push(currentDate)
         currentDate = addDays(currentDate, 1).toISOString().split('T')[0]!
     }

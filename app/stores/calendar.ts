@@ -14,6 +14,7 @@ export const useCalendarStore = defineStore('calendar', {
             let endDate = format(addDays(startDate, 7), 'yyyy-MM-dd');
             this.dateList = getBookingDateList(startDate, endDate)
             let mappedBookings = mapBooking(bookingList)
+            console.log(mappedBookings)
             roomList.forEach(room => {
                 let currentRow = []
                 currentRow.push({
@@ -26,20 +27,24 @@ export const useCalendarStore = defineStore('calendar', {
                 })
                 this.dateList.forEach((currentDate, index) => {
                     let key = `${room.id}-${currentDate}`
+                    let cellLength = 1;
 
-
-                    let cellLength = 1
+                    let cellStartDate = mappedBookings[key]?.check_in_date
                     if (mappedBookings[key]) {
-                        let cellStartDate = mappedBookings[key]!.check_in_date
+                        cellStartDate = mappedBookings[key]?.check_in_date
                         cellStartDate = isBefore(cellStartDate, startDate) ? startDate : cellStartDate
-                        cellLength = differenceInDays(mappedBookings[key]!.checkout_date, cellStartDate)
+                        cellLength = differenceInDays(mappedBookings[key]!.checkout_date, cellStartDate) + 1;
+                        if (cellLength > this.dateList.length) {
+                            cellLength = this.dateList.length;
+                        }
                     }
+
                     currentRow.push({
                         room: room,
                         bookingInfo: mappedBookings[key],
                         date: currentDate,
-                        start_cell: index === 0,
-                        end_cell: index === (cellLength - 1),
+                        start_cell: currentDate == cellStartDate,
+                        end_cell: index === cellLength,
                         cellLength,
                     });
                 });

@@ -11,16 +11,17 @@ await booking.fetchData();
 calendarStore.$reset();
 calendarStore.initCalendar(roomStore.data.data, bookingStore.data.data)
 function shouldRender(cellIndex: number, cell: CalendarData) {
-    let shouldRender = true;
+    let shouldRender = false;
 
+    if (cell.bookingInfo && cell.start_cell) {
+        shouldRender = true;
+    }
+    if (!cell.bookingInfo) {
+        shouldRender = true;
+    }
     if (cellIndex == 0) {
         shouldRender = false;
     }
-
-    if (cell.bookingInfo && !(cell.start_cell)) {
-        shouldRender = false;
-    }
-
     return shouldRender;
 }
 </script>
