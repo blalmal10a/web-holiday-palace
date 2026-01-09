@@ -1,25 +1,27 @@
 <script setup lang="ts">
-	const store = useUserStore()
-	const model = useUser()
+const store = useUserStore()
+const model = useUser()
 
-	store.setPagination({
-		page: Number(useRoute().query.page) || 1,
-		pageSize: Number(useRoute().query.pageSize) || 10,
-		exclude_clients: false,
-	})
+store.setPagination({
+	page: Number(useRoute().query.page) || 1,
+	pageSize: Number(useRoute().query.pageSize) || 10,
+	exclude_clients: false,
+	exclude_admin: false,
+	exclude_staff: false,
+})
+model.fetchData()
+
+async function updatePage($event: number) {
+	store.pagination.page = $event
 	model.fetchData()
-
-	async function updatePage($event: number) {
-		store.pagination.page = $event
-		model.fetchData()
-		useRouter().push({
-			name: "index",
-			query: {
-				page: $event,
-				pageSize: store.pagination.pageSize,
-			},
-		})
-	}
+	useRouter().push({
+		name: "index",
+		query: {
+			page: $event,
+			pageSize: store.pagination.pageSize,
+		},
+	})
+}
 </script>
 <template>
 	<div class="">
@@ -47,7 +49,7 @@
 			:data="store.data.data"
 			:columns="userColumns"
 		>
-			<template #actions-cell="{row}">
+			<template #actions-cell="{ row }">
 				<div class="flex space-x-2 justify-end">
 					<u-button
 						variant="outline"
@@ -81,7 +83,7 @@
 								'User',
 								useUserStore(),
 							)
-						"
+							"
 					>
 					</u-button>
 				</div>

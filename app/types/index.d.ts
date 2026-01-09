@@ -126,6 +126,7 @@ interface Booking {
     check_in_date: string;
     checkout_date: string;
     deposit: number;
+    date_list?: string[];
 }
 
 interface BookingForm extends Booking {
@@ -133,6 +134,7 @@ interface BookingForm extends Booking {
     client?: nullable | undefined | User;
     staff?: nullable | undefined | User;
     room?: nullable | undefined | Room;
+    date_list: string[];
 }
 
 interface PaginationBooking extends Pagination {

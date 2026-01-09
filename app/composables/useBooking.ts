@@ -1,5 +1,6 @@
 import z from "zod"
 import type { ColumnDef } from '@tanstack/vue-table'
+import { addDays, differenceInDays } from 'date-fns'
 export function useBooking() {
     const store = useBookingStore()
     const router = useRouter()
@@ -27,8 +28,13 @@ export function useBooking() {
     const fetchDetail = async (id?: string) => {
         const bookingId = id || route.params.id as string
         try {
-            const response = await api.get(`/bookings/${bookingId}`)
-            store.setForm(response)
+            const response: Booking = await api.get(`/bookings/${bookingId}`)
+            let checkinDate = response.check_in_date
+            let checkoutDate = response.checkout_date
+            response.date_list = []
+
+            let bookingForm = response as BookingForm;
+            store.setForm(bookingForm)
         } catch (error) {
             console.error('Failed to fetch booking detail', error)
         }
@@ -89,21 +95,40 @@ export const bookingFormSchema = () => {
         check_in_date: z.string(),
         checkout_date: z.string(),
         deposit: z.number(),
+        date_list: z.array(z.string()),
     }) satisfies z.ZodType<BookingForm>
     return baseSchema;
 }
 
 // 2. Export Columns (Used in Table components)
 export const bookingColumns: ColumnDef<any>[] = [
-    { header: 'Booking no.', accessorKey: 'name' },
     {
-        header: 'Staff',
-        accessorFn: (row) => row.staff?.name ?? 'N/A',
+        header: 'Client',
+        accessorFn: (row) => row.client?.name ?? 'N/A',
         // 
     },
     {
-        header: 'Rate',
-        cell: ({ row }) => `${toRupees(row.original.rate)}`,
+        header: 'Check-in',
+        accessorFn: (row) => row.check_in_date,
     },
+    {
+        header: 'Check-out',
+        accessorFn: (row) => row.checkout_date,
+    },
+    // {
+    //     header: 'Staff',
+    //     accessorFn: (row) => row.staff?.name ?? 'N/A',
+    //     // 
+    // },
     { id: 'actions' }
 ]
+export function getBookingDateList(checkInDate: string, checkOutDate: string) {
+    let diff = differenceInDays(checkOutDate, checkInDate);
+    let currentDate = checkInDate;
+    let dateList = [];
+    for (let dateCount = 0; dateCount < diff; dateCount++) {
+        dateList.push(currentDate)
+        currentDate = addDays(currentDate, 1).toISOString().split('T')[0]!
+    }
+    return dateList;
+}

@@ -8,6 +8,8 @@ export const useUserStore = defineStore('user', {
       page: 1,
       pageSize: 10,
       exclude_clients: false,
+      exclude_staff: false,
+      exclude_admin: false,
     },
     data: {} as PaginationUser,
     form: {
@@ -25,7 +27,7 @@ export const useUserStore = defineStore('user', {
     setForm(payload: UserForm) {
       this.form = payload;
     },
-    setPagination(payload: { page: number; pageSize: number; exclude_clients: boolean }) {
+    setPagination(payload: { page: number; pageSize: number; exclude_clients: boolean; exclude_staff: boolean; exclude_admin: boolean }) {
       this.pagination = payload;
     },
     setLoading(key: 'loadingGetUsers' | 'loadingSubmitUserForm' | 'loadingDeleteUser', value: boolean) {

@@ -17,6 +17,7 @@
     "@tailwindcss/vite": "^4.1.16",
     "@vueuse/nuxt": "14.0.0",
     "change-case": "^5",
+    "date-fns": "^4.1.0",
     "eslint": "^9.0.0",
     "nuxt": "^4.2.0",
     "nuxt-auth-sanctum": "1.4.2",
