@@ -3,6 +3,8 @@ export const useBookingStore = defineStore('booking', {
     loadingGetBookings: false,
     loadingSubmitBookingForm: false,
     loadingDeleteBooking: false,
+    cellIndex: null as number | null,
+    openCalendarMenu: [] as boolean[],
     pagination: {
       page: 1,
       pageSize: 10,

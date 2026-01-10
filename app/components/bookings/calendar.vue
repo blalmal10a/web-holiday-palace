@@ -24,9 +24,11 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
     }
     return shouldRender;
 }
+
 </script>
 <template>
     <div>
+        {{ bookingStore.openCalendarMenu }}
         <div class="w-full overflow-auto pt-4">
             <table>
                 <thead>
@@ -74,27 +76,24 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
                                 v-if="shouldRender(cellIndex, cell)"
                                 :colspan="cell.cellLength"
                                 @click="() => {
-                                    if (cell.bookingInfo) {
-                                        bookingStore.setForm(cell.bookingInfo)
-                                    } else {
-                                        bookingStore.form.room_id = cell.room.id;
-                                        bookingStore.form.check_in_date = cell.date;
-                                        bookingStore.form.checkout_date = format(addDays(cell.date, 1), 'yyyy-MM-dd');
-                                    }
-                                    calendarStore.showBookingForm = true;
+                                    // 
 
                                 }"
                             >
-                                <div class="p-4 border border-default">
-                                    <div
-                                        class="  rounded-lg p-1 whitespace-nowrap  flex items-center h-10"
-                                        :class="{
-                                            'bg-blue-500': !!cell.bookingInfo
-                                        }"
-                                    >
-                                        {{ cell.bookingInfo?.client?.name }}
+                                <BookingsCalendarMenu :cell="cell">
+                                    <div class="p-4 border border-default">
+                                        <div
+                                            class="  rounded-lg p-1 whitespace-nowrap  flex items-center h-10 relative"
+                                            :class="{
+                                                'bg-blue-500': !!cell.bookingInfo
+                                            }"
+                                        >
+                                            {{ cell.bookingInfo?.client?.name }} ||
+                                            {{ bookingStore.openCalendarMenu[cellIndex] }}
+
+                                        </div>
                                     </div>
-                                </div>
+                                </BookingsCalendarMenu>
                             </td>
                         </template>
                     </tr>
