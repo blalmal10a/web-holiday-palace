@@ -85,15 +85,18 @@ export function useExpenditure() {
 
 export const expenditreFormSchema = () => {
     const baseSchema = z.object({
-        date: z.date(),
+        id: z.string().optional(),
+        date: z.string(),
+        phone: z.string().optional().nullable(),
         name: z.string()
             .optional()
             .nullable(),
         item: z.string().min(1),
         rate: z.number().min(1),
         quantity: z.number().min(1),
-        staff_id: z.string().min(1).optional(),
-    });
+        amount: z.number().min(1),
+        staff_id: z.string().optional(),
+    }) satisfies z.ZodType<ExpenditureForm>;
 
     return baseSchema;
 };

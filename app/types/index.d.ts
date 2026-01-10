@@ -98,14 +98,17 @@ interface Expenditure {
     quantity: number;
     amount: number;
     date: string;
-    staff_id: string | null | undefined;
+    staff_id: string | undefined;
     staff: User | undefined;
     name: string | null | undefined;
     phone: string | null | undefined;
 }
 
-interface ExpenditureForm extends Expenditure {
-    id: string | undefined | null;
+interface ExpenditureForm extends Omit<Expenditure, 'staff'> {
+    id?: string | undefined;
+    staff_id?: string | undefined
+    name?: string | null | undefined;
+    phone?: string | null | undefined;
 }
 
 interface PaginationExpenditure extends Pagination {
@@ -156,6 +159,7 @@ interface Invoice {
     invoice_no: string;
     date: string;
     booking_id: string;
+    booking: Booking;
     sub_total_amount: number;
     total_amount: number;
     discount_amount: number;
@@ -163,19 +167,31 @@ interface Invoice {
     items: InvoiceItem[];
 }
 
-// $table->uuid('id')->primary();
-// $table->foreignUuid('invoice_id')->constrained()->onDelete('cascade');
-// $table->foreignUuid('booking_id')->nullable(); //when this is not null, it means it is an advance payment
-// $table->string('description', 255)->nullable();
-// $table->decimal('quantity', 8, 2)->default(1);
-// $table->string('unit', 50)->nullable();
-// $table->decimal('rate', 10, 2);
+
 interface InvoiceItem {
     id: string;
     invoice_id: string;
     invoice: Invoice;
     booking_id: string;
     booking: Booking;
+    description: string;
+    quantity: number;
+    unit: string | null;
+    rate: number;
+}
+
+interface InvoiceForm extends Omit<Invoice, 'booking' | 'invoice_no'> {
+    id?: string | undefined;
+    items: InvoiceItemForm[];
+}
+
+interface PaginationInvoice extends Pagination {
+    data: Invoice[]
+}
+interface InvoiceItemForm extends Omit<InvoiceItem, 'invoice' | 'booking'> {
+    id?: string | undefined;
+    invoice_id: string;
+    booking_id: string;
     description: string;
     quantity: number;
     unit: string | null;
