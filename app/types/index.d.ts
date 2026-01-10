@@ -127,6 +127,7 @@ interface Booking {
     checkout_date: string;
     deposit: number;
     date_list?: string[];
+    invoice: Invoice;
 }
 
 interface BookingForm extends Booking {
@@ -148,4 +149,35 @@ interface CalendarData {
     start_cell: boolean;
     end_cell: boolean;
     cellLength: number;
+}
+
+interface Invoice {
+    id: string;
+    invoice_no: string;
+    date: string;
+    booking_id: string;
+    sub_total_amount: number;
+    total_amount: number;
+    discount_amount: number;
+    discount_percent: number;
+    items: InvoiceItem[];
+}
+
+// $table->uuid('id')->primary();
+// $table->foreignUuid('invoice_id')->constrained()->onDelete('cascade');
+// $table->foreignUuid('booking_id')->nullable(); //when this is not null, it means it is an advance payment
+// $table->string('description', 255)->nullable();
+// $table->decimal('quantity', 8, 2)->default(1);
+// $table->string('unit', 50)->nullable();
+// $table->decimal('rate', 10, 2);
+interface InvoiceItem {
+    id: string;
+    invoice_id: string;
+    invoice: Invoice;
+    booking_id: string;
+    booking: Booking;
+    description: string;
+    quantity: number;
+    unit: string | null;
+    rate: number;
 }

@@ -58,6 +58,28 @@ async function updatePage($event: number) {
 								};
 								useBookingStore().setForm(row.original)
 								useRouter().push({
+									name: 'hotels-invoices-id',
+									params: {
+										id: row.original.id,
+									},
+								})
+							}
+						"
+						icon="i-lucide-receipt-indian-rupee"
+					>
+					</u-button>
+					<u-button
+						variant="outline"
+						size="sm"
+						color="neutral"
+						@click="
+							() => {
+								let data = {
+									...row.original,
+									date_list: []
+								};
+								useBookingStore().setForm(row.original)
+								useRouter().push({
 									name: 'hotels-bookings-id-form',
 									params: {
 										id: row.original.id,
