@@ -127,7 +127,7 @@ const invoice = ref<Invoice>(bookingStore.form.invoice);
 
     </div>
 </template>
-<style>
+<style scoped>
 .invoice-container {
     width: 210mm;
     margin: auto;
