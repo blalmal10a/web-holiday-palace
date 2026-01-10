@@ -12,10 +12,7 @@ minRows.value = (minRows.value - bookingStore.form.invoice.items?.length);
 const invoice = ref<Invoice>(bookingStore.form.invoice);
 </script>
 <template>
-    <div
-        class="p-3 bg-white text-black font-new-roman "
-        style="width: 100vw; "
-    >
+    <div class=" bg-white text-black font-new-roman">
         <div
             class="border border-gray-200 rounded-xl invoice-container p-8"
             style=""
