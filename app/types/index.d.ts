@@ -116,32 +116,43 @@ interface PaginationExpenditure extends Pagination {
     data: Expenditure[]
 }
 
-
-interface Booking {
-    id: string;
+interface BookingForm extends Omit<Booking, 'client' | 'staff' | 'room' | 'invoice'> {
+    id?: string;
     client_id: string;
-    client: User;
     staff_id: string;
-    staff: User;
     no_of_adults: number;
     no_of_children: number;
     room_id: string;
-    room: Room;
+    check_in_date: string;
+    checkout_date: string;
+    deposit: number;
+}
+interface Booking extends BookingForm {
+    id: string;
+    client_id: string;
+    client?: User;
+    staff_id: string;
+    staff?: User;
+    no_of_adults: number;
+    no_of_children: number;
+    room_id: string;
+    room?: Room;
     check_in_date: string;
     checkout_date: string;
     deposit: number;
     date_list?: string[];
-    invoice: Invoice;
-}
-
-interface BookingForm extends Omit<Booking, 'client' | 'staff' | 'room' | 'invoice'> {
-    id?: string;
-    client?: User;
-    staff?: User;
-    room?: Room;
-    date_list: string[];
     invoice?: Invoice;
 }
+
+interface BookingDetail extends Booking {
+    client: User;
+    staff: User;
+    room: Room;
+    invoice: Invoice;
+    date_list: string[];
+}
+
+
 
 interface PaginationBooking extends Pagination {
     data: Booking[]
@@ -149,25 +160,30 @@ interface PaginationBooking extends Pagination {
 
 interface CalendarData {
     room: Room;
-    bookingInfo?: BookingForm;
+    bookingInfo?: BookingDetail;
     date: string;
     start_cell: boolean;
     end_cell: boolean;
     cellLength: number;
 }
 
-interface Invoice {
-    id: string;
-    invoice_no: string;
+
+interface InvoiceForm {
+    id?: string;
+    invoice_no?: string;
     date: string;
     booking_id: string;
-    booking: Booking;
     sub_total_amount: number;
     total_amount: number;
     discount_amount: number;
     discount_percent: number;
-    items: InvoiceItem[];
-    payments: Payment[];
+    items: InvoiceItemForm[];
+    payments: PaymentForm[];
+}
+interface Invoice extends InvoiceForm {
+    id: string;
+    invoice_no: string;
+    booking: Booking;
 }
 
 
@@ -181,14 +197,6 @@ interface InvoiceItem {
     quantity: number;
     unit: string;
     rate: number;
-}
-
-interface InvoiceForm extends Omit<Invoice, 'booking' | 'invoice_no'> {
-    id?: string;
-    items: InvoiceItemForm[];
-    payments: PaymentForm[];
-    deleted_item_ids?: string[];
-    deleted_payment_ids?: string[];
 }
 
 interface PaginationInvoice extends Pagination {

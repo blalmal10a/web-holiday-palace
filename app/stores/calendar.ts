@@ -16,10 +16,9 @@ export const useCalendarStore = defineStore('calendar', {
             let mappedBookings = mapBooking(bookingList)
 
             roomList.forEach(room => {
-                let currentRow = []
+                let currentRow: CalendarData[] = []
                 currentRow.push({
                     room: room,
-                    bookingInfo: null,
                     date: '',
                     start_cell: false,
                     end_cell: false,
@@ -46,6 +45,7 @@ export const useCalendarStore = defineStore('calendar', {
                         start_cell: currentDate == cellStartDate,
                         end_cell: index === cellLength,
                         cellLength,
+
                     });
                 });
                 this.data.push(currentRow)

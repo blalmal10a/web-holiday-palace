@@ -8,8 +8,8 @@ const bookingStore = useBookingStore();
 onMounted(() => {
 })
 await booking.fetchDetail();
-minRows.value = (minRows.value - bookingStore.form.invoice.items?.length);
-const invoice = ref<Invoice>(bookingStore.form.invoice);
+minRows.value = (minRows.value - bookingStore.detail.invoice.items?.length);
+const invoice = ref<Invoice>(bookingStore.detail.invoice);
 </script>
 <template>
     <div class=" bg-white text-black font-new-roman">
@@ -63,10 +63,10 @@ const invoice = ref<Invoice>(bookingStore.form.invoice);
                 <div class="w-96 flex">
                     <div>To,</div>
                     <div class="flex-1 pl-2">
-                        <div class="border-b">{{ bookingStore.form.client.name }}
+                        <div class="border-b">{{ bookingStore.detail.client.name }}
                         </div>
-                        <div class="border-b mt-2">{{ format(bookingStore.form.check_in_date, 'Do MMM, yyyy') }} to {{
-                            format(bookingStore.form.checkout_date, 'Do MMM, yyyy') }}</div>
+                        <div class="border-b mt-2">{{ format(bookingStore.detail.check_in_date, 'Do MMM, yyyy') }} to {{
+                            format(bookingStore.detail.checkout_date, 'Do MMM, yyyy') }}</div>
                     </div>
                 </div>
             </div>
@@ -91,7 +91,7 @@ const invoice = ref<Invoice>(bookingStore.form.invoice);
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(item, index) in bookingStore.form.invoice.items">
+                    <tr v-for="(item, index) in bookingStore.detail.invoice.items">
                         <td>{{ index + 1 }}</td>
                         <td colspan="3">
                             {{ item.description }}

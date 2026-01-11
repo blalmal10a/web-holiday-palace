@@ -87,10 +87,9 @@ export const expenditreFormSchema = () => {
     const baseSchema = z.object({
         id: z.string().optional(),
         date: z.string(),
-        phone: z.string().optional().nullable(),
+        phone: z.string().optional(),
         name: z.string()
-            .optional()
-            .nullable(),
+            .optional(),
         item: z.string().min(1),
         rate: z.number().min(1),
         quantity: z.number().min(1),

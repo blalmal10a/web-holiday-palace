@@ -98,16 +98,18 @@ export const InvoiceFormSchema = () => {
         discount_amount: z.number(),
         discount_percent: z.number(),
         items: z.array(
-            z.object({
-                id: z.string().optional(),
-                invoice_id: z.string(),
-                booking_id: z.string().optional(),
-                description: z.string(),
-                quantity: z.number(),
-                unit: z.string().optional(), // Matches "string | null"
-                rate: z.number(),
-            })
+            invoiceItemFormSchema()
+            // z.object({
+            //     id: z.string().optional(),
+            //     invoice_id: z.string(),
+            //     booking_id: z.string().optional(),
+            //     description: z.string(),
+            //     quantity: z.number(),
+            //     unit: z.string().optional(), // Matches "string | null"
+            //     rate: z.number(),
+            // })
         ),
+        payments: z.array(paymentFormSchema())
     }) satisfies z.ZodType<InvoiceForm>;
 };
 

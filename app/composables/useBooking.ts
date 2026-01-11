@@ -35,6 +35,7 @@ export function useBooking() {
             response.date_list = []
 
             let bookingForm = response as BookingForm;
+            store.detail = bookingForm as BookingDetail
             store.setForm(bookingForm)
         } catch (error) {
             notifyError(error);
@@ -143,14 +144,14 @@ export function getBookingDateList(checkInDate: string, checkOutDate: string) {
     return dateList;
 }
 export const mapBooking = (bookings: Booking[]) => {
-    let mappedBookings: Record<string, BookingForm> = {}
+    let mappedBookings: Record<string, BookingDetail> = {}
     bookings.forEach(booking => {
         let dateList = getBookingDateList(booking.check_in_date, booking.checkout_date)
         if (dateList) {
             dateList.forEach(date => {
                 let key = booking.room_id
                 key = `${key}-${date}`
-                mappedBookings[key] = booking as BookingForm;
+                mappedBookings[key] = booking as BookingDetail;
             });
         }
     });
