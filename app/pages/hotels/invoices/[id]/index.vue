@@ -1,6 +1,5 @@
 <template>
     <div class="">
-        <!-- <FormsInvoiceForm />
-        <InvoicesPage /> -->
+        <InvoicesPage />
     </div>
 </template>
