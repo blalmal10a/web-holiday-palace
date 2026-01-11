@@ -71,9 +71,9 @@ onBeforeUnmount(() => {
                 </u-form-field>
 
             </u-card>
-            <UCard style="max-width: 700px; min-width: min(90vw, 700px);">
+            <UCard style="max-width: 700px; min-width: min(85vw, 700px); overflow: auto;">
                 <InvoicesItemList v-if="!loadingInvoiceItems" />
-                <div
+                <!-- <div
                     class=""
                     v-if="loadingInvoiceItems"
                 >
@@ -84,7 +84,7 @@ onBeforeUnmount(() => {
                         <USkeleton class="h-8 " />
 
                     </div>
-                </div>
+                </div> -->
             </UCard>
             <UCard style="max-width: 700px; min-width: min(90vw, 700px);">
 

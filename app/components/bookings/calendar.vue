@@ -28,7 +28,6 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
 </script>
 <template>
     <div>
-        {{ bookingStore.openCalendarMenu }}
         <div class="w-full overflow-auto pt-4">
             <table>
                 <thead>

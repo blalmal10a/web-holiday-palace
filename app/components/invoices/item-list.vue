@@ -18,17 +18,17 @@ function onClickAddItem() {
                 icon="i-lucide-plus"
             ></u-button>
         </div>
-        <table class="w-full mt-2">
+        <table class=" mt-2">
             <thead>
                 <tr>
-                    <th class=" bg-accented">Description</th>
+                    <th class=" bg-accented">Item</th>
                     <th class="bg-accented">Unit</th>
                     <th class="bg-accented">Rate</th>
-                    <th class="bg-accented">Quantity</th>
+                    <th class="bg-accented">Qty.</th>
                     <th class="bg-accented"></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="text-sm">
                 <template v-for="(item, index) in store.form.items">
                     <tr>
                         <td>
