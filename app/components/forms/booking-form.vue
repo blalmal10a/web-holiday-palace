@@ -56,7 +56,7 @@ onBeforeUnmount(() => {
 					name="client_id"
 				>
 					<USelectMenu
-						autofocus
+						:autofocus="!store.form.id"
 						@focus="() => {
 							openClientSelectMenu = true;
 						}"
@@ -141,7 +141,9 @@ onBeforeUnmount(() => {
 						:disabled="store.loadingSubmitBookingForm"
 						@click="
 							() => {
-								useInvoiceStore().showInvoiceFormModal = false;
+								useRouter().push({
+									name: 'hotels-calendar'
+								})
 							}
 						"
 					>
