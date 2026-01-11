@@ -167,6 +167,7 @@ interface Invoice {
     discount_amount: number;
     discount_percent: number;
     items: InvoiceItem[];
+    payments: Payment[];
 }
 
 
