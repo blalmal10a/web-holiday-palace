@@ -10,14 +10,7 @@ function onClickAddItem() {
         size="lg"
     />
     <template v-if="store.form.items?.length">
-        <div class="justify-end flex">
-            <u-button
-                @click="onClickAddItem"
-                size="sm"
-                label="Add item"
-                icon="i-lucide-plus"
-            ></u-button>
-        </div>
+
         <table class=" mt-2">
             <thead class="text-sm">
                 <tr>
@@ -28,7 +21,23 @@ function onClickAddItem() {
                     <th class="bg-accented">Unit</th>
                     <th class="bg-accented">Rate</th>
                     <th class="bg-accented">Qty.</th>
-                    <th class="bg-accented"></th>
+                    <th class="bg-accented text-right ">
+                        <div class="-mb-1">
+                            <u-button
+                                variant="soft"
+                                @click="onClickAddItem"
+                                class="p-0"
+                            >
+                                <div class=" flex items-center justify-center h-full">
+                                    <u-icon
+                                        size="1.5rem"
+                                        name="i-lucide-plus"
+                                    ></u-icon>
+                                </div>
+
+                            </u-button>
+                        </div>
+                    </th>
                 </tr>
             </thead>
             <tbody class="text-xs sm:text-default">

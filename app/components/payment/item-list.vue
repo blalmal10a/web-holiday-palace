@@ -12,21 +12,29 @@ function onClickAddItem() {
         size="lg"
     />
     <template v-if="store.form.payments?.length">
-        <div class="justify-end flex">
-            <u-button
-                @click="onClickAddItem"
-                size="sm"
-                label="Add payment"
-                icon="i-lucide-plus"
-            ></u-button>
-        </div>
         <table class=" mt-2">
             <thead class="text-sm">
                 <tr>
                     <th class=" bg-accented">Date</th>
                     <th class="bg-accented">Amount</th>
                     <th class="bg-accented">Mode</th>
-                    <th class="bg-accented"></th>
+                    <th class="bg-accented text-right ">
+                        <div class="-mb-1">
+                            <u-button
+                                variant="soft"
+                                @click="onClickAddItem"
+                                class="p-0"
+                            >
+                                <div class=" flex items-center justify-center h-full">
+                                    <u-icon
+                                        size="1.5rem"
+                                        name="i-lucide-plus"
+                                    ></u-icon>
+                                </div>
+
+                            </u-button>
+                        </div>
+                    </th>
                 </tr>
             </thead>
             <tbody class="text-xs sm:text-default">

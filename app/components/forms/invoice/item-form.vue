@@ -26,7 +26,7 @@ onMounted(() => {
                     console.log($event);
                 }"
             >
-                <UFieldGroup class="grid grid-cols-2 gap-2">
+                <UFieldGroup class="grid sm:grid-cols-2 gap-2">
                     <UFormField name="description">
                         <u-input-menu
                             open-on-click
@@ -75,6 +75,7 @@ onMounted(() => {
                     </UFormField>
                     <UFormField name="rate">
                         <UInput
+                            class="w-full"
                             placeholder="Rate"
                             v-model="invoiceItem.form.rate"
                             icon="i-lucide-indian-rupee"
@@ -83,6 +84,7 @@ onMounted(() => {
                     </UFormField>
                     <UFormField name="quantity">
                         <UInput
+                            class="w-full"
                             placeholder="Quantity"
                             v-model="invoiceItem.form.quantity"
                             icon="i-lucide-layers"
