@@ -103,7 +103,7 @@ export const InvoiceFormSchema = () => {
                 booking_id: z.string(),
                 description: z.string(),
                 quantity: z.number(),
-                unit: z.string().nullable(), // Matches "string | null"
+                unit: z.string().optional(), // Matches "string | null"
                 rate: z.number(),
             })
         ),

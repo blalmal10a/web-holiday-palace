@@ -3,6 +3,8 @@ export const useInvoiceStore = defineStore('Invoice', {
     loadingGetInvoices: false,
     loadingSubmitInvoiceForm: false,
     loadingDeleteInvoice: false,
+    showInvoiceItemFormModal: false,
+    showInvoicePaymentFormModal: false,
     cellIndex: null as number | null,
     openCalendarMenu: [] as boolean[],
     pagination: {
