@@ -73,7 +73,7 @@ onBeforeUnmount(() => {
             </UCard>
             <UCard style="max-width: 700px; min-width: min(90vw, 700px);">
 
-                <div class="flex justify-end text-right space-x-2">
+                <div class="flex justify-end space-x-2">
                     <u-button
                         size="lg"
                         variant="outline"

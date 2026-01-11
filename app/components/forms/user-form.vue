@@ -87,22 +87,24 @@ onMounted(() => {
 						/>
 					</u-form-field>
 				</template>
-				<div class="text-right space-x-2">
+				<div class="flex justify-end space-x-2">
 					<u-button
+						size="lg"
 						variant="outline"
 						color="neutral"
-						:loading="auth.loadingSubmitUpdateProfile"
-						class=""
+						class="h-full"
+						:disabled="store.loadingSubmitUserForm"
 						@click="
-							useRouter().push({
-								name: 'index',
-							})
-							"
+							() => {
+								useInvoiceStore().showInvoiceFormModal = false;
+							}
+						"
 					>
 						Cancel
 					</u-button>
 					<u-button
-						:loading="auth.loadingSubmitUpdateProfile"
+						size="lg"
+						:loading="store.loadingSubmitUserForm"
 						class=""
 						type="submit"
 					>

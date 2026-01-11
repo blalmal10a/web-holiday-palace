@@ -127,28 +127,24 @@ onBeforeUnmount(() => {
 						type="number"
 					/>
 				</u-form-field>
-				<div class="text-right space-x-2">
+				<div class="flex justify-end space-x-2">
 					<u-button
+						size="lg"
 						variant="outline"
 						color="neutral"
-						:loading="auth.loadingSubmitUpdateProfile"
-						class=""
+						class="h-full"
+						:disabled="store.loadingSubmitBookingForm"
 						@click="
 							() => {
-								if (isModal) {
-									useCalendarStore().showBookingForm = false;
-								} else {
-									useRouter().push({
-										name: 'hotels-bookings',
-									})
-								}
+								useInvoiceStore().showInvoiceFormModal = false;
 							}
 						"
 					>
 						Cancel
 					</u-button>
 					<u-button
-						:loading="auth.loadingSubmitUpdateProfile"
+						size="lg"
+						:loading="store.loadingSubmitBookingForm"
 						class=""
 						type="submit"
 					>

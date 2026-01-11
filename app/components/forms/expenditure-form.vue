@@ -121,20 +121,24 @@ onBeforeUnmount(
 					<div class="text-xs">
 						Amount: {{ toRupees(computedAmount) }}
 					</div>
-					<div class="text-right space-x-2">
+					<div class="flex justify-end space-x-2">
 						<u-button
+							size="lg"
 							variant="outline"
 							color="neutral"
-							:loading="auth.loadingSubmitUpdateProfile"
-							class=""
-							@click="useRouter().push({
-								name: 'hotels-expenditures',
-							})"
+							class="h-full"
+							:disabled="store.loadingSubmitExpenditureForm"
+							@click="
+								() => {
+									useInvoiceStore().showInvoiceFormModal = false;
+								}
+							"
 						>
 							Cancel
 						</u-button>
 						<u-button
-							:loading="auth.loadingSubmitUpdateProfile"
+							size="lg"
+							:loading="store.loadingSubmitExpenditureForm"
 							class=""
 							type="submit"
 						>
