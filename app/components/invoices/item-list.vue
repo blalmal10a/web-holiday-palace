@@ -19,19 +19,22 @@ function onClickAddItem() {
             ></u-button>
         </div>
         <table class=" mt-2">
-            <thead>
+            <thead class="text-sm">
                 <tr>
-                    <th class=" bg-accented">Item</th>
+                    <th
+                        colspan="2"
+                        class=" bg-accented"
+                    >Item</th>
                     <th class="bg-accented">Unit</th>
                     <th class="bg-accented">Rate</th>
                     <th class="bg-accented">Qty.</th>
                     <th class="bg-accented"></th>
                 </tr>
             </thead>
-            <tbody class="text-sm">
+            <tbody class="text-xs sm:text-default">
                 <template v-for="(item, index) in store.form.items">
                     <tr>
-                        <td>
+                        <td colspan="2">
                             {{ item.description }}
                         </td>
                         <td>
@@ -97,12 +100,17 @@ function onClickAddItem() {
 table {
     text-align: left;
     border-collapse: collapse;
+    border: 1px solid #ccc;
 }
 
-th,
-td {
+th {
     border: 1px solid #ccc;
     padding: 0.5rem;
+}
 
+td {
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    padding: 0.5rem;
 }
 </style>
