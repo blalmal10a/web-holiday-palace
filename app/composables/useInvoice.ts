@@ -48,8 +48,9 @@ export function useInvoice() {
             const response = await api.request(url, store.form, method,)
             store.setData(response)
 
-            router.push({ name: 'hotels-invoices' })
             useCalendarStore().$reset();
+            useCalendarStore().initCalendar(useRoomStore().data.data, useBookingStore().data.data);
+            store.showInvoiceFormModal = false;
         } catch (error) {
             notifyError(error);
             console.error('Submission failed', error)
