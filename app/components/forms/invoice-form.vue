@@ -67,27 +67,19 @@ onBeforeUnmount(() => {
             </u-card>
             <UCard style="max-width: 700px; min-width: min(85vw, 700px); overflow: auto;">
                 <InvoicesItemList v-if="!loadingInvoiceItems" />
-                <!-- <div
-                    class=""
-                    v-if="loadingInvoiceItems"
-                >
-                    <USkeleton class="h-10 " />
-                    <div class="grid gap-2 mt-3">
-                        <USkeleton class="h-8 " />
-                        <USkeleton class="h-8 " />
-                        <USkeleton class="h-8 " />
-
-                    </div>
-                </div> -->
+            </UCard>
+            <UCard style="max-width: 700px; min-width: min(85vw, 700px); overflow: auto;">
+                <PaymentItemList v-if="!loadingInvoiceItems" />
             </UCard>
             <UCard style="max-width: 700px; min-width: min(90vw, 700px);">
 
-                <div class="text-right space-x-2">
+                <div class="flex justify-end text-right space-x-2">
                     <u-button
+                        size="lg"
                         variant="outline"
                         color="neutral"
-                        :loading="auth.loadingSubmitUpdateProfile"
-                        class=""
+                        class="h-full"
+                        :disabled="store.loadingSubmitInvoiceForm"
                         @click="
                             () => {
                                 useInvoiceStore().showInvoiceFormModal = false;
@@ -97,7 +89,8 @@ onBeforeUnmount(() => {
                         Cancel
                     </u-button>
                     <u-button
-                        :loading="auth.loadingSubmitUpdateProfile"
+                        size="lg"
+                        :loading="store.loadingSubmitInvoiceForm"
                         class=""
                         type="submit"
                     >
@@ -107,23 +100,8 @@ onBeforeUnmount(() => {
             </UCard>
         </div>
     </u-form>
-    <UModal
-        v-model:open="store.showInvoiceItemFormModal"
-        @after:leave="() => {
-            // reset form
-            invoiceItem.form = {} as InvoiceItemForm;
-        }"
-    >
-        <template #title>
-            Invoice item
-        </template>
-        <template
-            #body
-            aria-describedby="Invoice item form"
-        >
-            <FormsInvoiceItemForm />
-        </template>
-    </UModal>
+    <InvoicesItemFormModal />
+    <InvoicesPaymentFormModal />
 </template>
 
 <style scoped>

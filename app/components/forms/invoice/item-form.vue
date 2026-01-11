@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import InvoiceForm from '../invoice-form.vue';
 
 
 const invoiceStore = useInvoiceStore();

@@ -185,7 +185,9 @@ interface InvoiceItem {
 interface InvoiceForm extends Omit<Invoice, 'booking' | 'invoice_no'> {
     id?: string;
     items: InvoiceItemForm[];
+    payments: PaymentForm[];
     deleted_item_ids?: string[];
+    deleted_payment_ids?: string[];
 }
 
 interface PaginationInvoice extends Pagination {
@@ -199,4 +201,31 @@ interface InvoiceItemForm extends Omit<InvoiceItem, 'invoice' | 'booking'> {
     quantity: number;
     unit?: string;
     rate: number;
+}
+
+interface PaymentForm {
+    id?: string;
+    invoice_id: string;
+    booking_id?: string;
+    amount: number;
+    date: string;
+    mode: string;
+}
+interface Payment extends PaymentForm {
+    id: string;
+    invoice?: Invoice;
+    image?: Image;
+}
+interface PaymentDetail extends Payment {
+    id: string;
+    invoice_id: string;
+    booking_id?: string;
+    amount: number;
+    date: string;
+    mode: string;
+    invoice: Invoice;
+    image: Image;
+}
+interface PaginationPayment extends Pagination {
+    data: Payment[];
 }
