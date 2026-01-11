@@ -54,6 +54,7 @@ const items: DropdownMenuItem[] = [
     {
         label: 'Print invoice',
         icon: 'i-lucide-printer',
+        disabled: !props.cell.bookingInfo?.invoice?.id,
         onClick: () => {
             useRouter().push({
                 name: 'hotels-invoices-id',
@@ -109,9 +110,13 @@ onMounted(() => {
 
 <template>
     <UDropdownMenu
+        v-if="props.cell.bookingInfo"
         :items="items"
         :ui="{ content: 'w-48' }"
     >
         <slot />
     </UDropdownMenu>
+    <template v-else>
+        <slot />
+    </template>
 </template>

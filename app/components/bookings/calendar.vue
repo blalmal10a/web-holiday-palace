@@ -73,8 +73,11 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
                                 v-if="shouldRender(cellIndex, cell)"
                                 :colspan="cell.cellLength"
                                 @click="() => {
-                                    // 
-
+                                    if (!cell.bookingInfo) {
+                                        useRouter().push({
+                                            hash: '#booking'
+                                        })
+                                    }
                                 }"
                             >
                                 <BookingsCalendarMenu :cell="cell">
