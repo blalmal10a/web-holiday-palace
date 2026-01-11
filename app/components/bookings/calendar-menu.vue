@@ -29,6 +29,7 @@ const items: DropdownMenuItem[] = [
     {
         label: 'Invoice',
         icon: 'i-lucide-receipt-text',
+        disabled: !props.cell.bookingInfo?.invoice?.id,
         onClick: () => {
             if (!props.cell.bookingInfo?.invoice?.id) {
                 useToast().add({
@@ -45,10 +46,11 @@ const items: DropdownMenuItem[] = [
             })
         }
     },
-    {
-        label: 'Payments',
-        icon: 'i-lucide-hand-coins'
-    },
+    // {
+    //     label: 'Payments',
+    //     icon: 'i-lucide-hand-coins',
+    //     disabled: !props.cell.bookingInfo?.invoice?.id,
+    // },
     {
         label: 'Print invoice',
         icon: 'i-lucide-printer',
