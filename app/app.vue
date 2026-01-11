@@ -1,5 +1,13 @@
 <script setup lang="ts">
+import z from 'zod';
 
+z.config({
+	customError: (iss) => {
+		if (iss.input === undefined) {
+			return 'Field is required';
+		}
+	}
+})
 useHead({
 	title: "HOLIDAY PALACE",
 })
