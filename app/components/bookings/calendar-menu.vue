@@ -21,7 +21,9 @@ const items: DropdownMenuItem[] = [
                 bookingStore.form.check_in_date = props.cell.date;
                 bookingStore.form.checkout_date = format(addDays(props.cell.date, 1), 'yyyy-MM-dd');
             }
-            calendarStore.showBookingForm = true;
+            useRouter().push({
+                hash: '#booking',
+            })
         }
     },
     {
@@ -37,13 +39,10 @@ const items: DropdownMenuItem[] = [
                 return;
             }
             useInvoiceStore().form = props.cell.bookingInfo?.invoice;
-            useInvoiceStore().showInvoiceFormModal = true;
-            // useRouter().push({
-            //     name: 'hotels-invoices-id-form',
-            //     params: {
-            //         id: props.cell.bookingInfo?.invoice?.id
-            //     }
-            // })
+            useRouter().push({
+                name: 'hotels-calendar',
+                hash: '#invoice'
+            })
         }
     },
     {
@@ -63,6 +62,47 @@ const items: DropdownMenuItem[] = [
         }
     },
 ]
+
+// watch router hash
+watch(() => useRoute().hash, () => {
+    if (useRoute().hash == '#invoice') {
+        useInvoiceStore().showInvoiceFormModal = true;
+    }
+    if (!useRoute().hash) {
+        useInvoiceStore().showInvoiceFormModal = false;
+    }
+})
+watch(() => useRoute().hash, () => {
+    if (useRoute().hash == '#booking') {
+        calendarStore.showBookingForm = true;
+    }
+    if (!useRoute().hash) {
+        calendarStore.showBookingForm = false;
+    }
+})
+watch(() => calendarStore.showBookingForm, (current, old) => {
+    if (!current) {
+        useRouter().push({
+            name: 'hotels-calendar'
+        })
+    }
+
+})
+watch(() => useInvoiceStore().showInvoiceFormModal, (current, old) => {
+    if (!current) {
+        useRouter().push({
+            name: 'hotels-calendar'
+        })
+    }
+
+})
+onMounted(() => {
+    if (useRoute().hash) {
+        useRouter().push({
+            name: 'hotels-calendar'
+        })
+    }
+})
 </script>
 
 <template>

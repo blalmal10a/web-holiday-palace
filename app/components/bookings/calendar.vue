@@ -82,9 +82,9 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
                                 <BookingsCalendarMenu :cell="cell">
                                     <div class="p-4 border border-default">
                                         <div
-                                            class="  rounded-lg p-1 whitespace-nowrap  flex items-center h-10 relative"
+                                            class="  rounded-lg  px-2 whitespace-nowrap  flex items-center h-8 relative"
                                             :class="{
-                                                'bg-blue-500': !!cell.bookingInfo
+                                                'text-primary bg-elevated': !!cell.bookingInfo
                                             }"
                                         >
                                             {{ cell.bookingInfo?.client?.name }}
