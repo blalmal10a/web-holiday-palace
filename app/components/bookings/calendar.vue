@@ -63,7 +63,7 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
                                 class="bg-default"
                             >
                                 <div class="py-4 px-1 border border-default">
-                                    <div class="py-4 px-1 whitespace-nowrap  h-10">
+                                    <div class="py-4 px-1 whitespace-nowrap  h-10 text-xs">
                                         {{ cell.room.name }}
                                     </div>
                                 </div>
@@ -74,8 +74,15 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
                                 :colspan="cell.cellLength"
                                 @click="() => {
                                     if (!cell.bookingInfo) {
+                                        if (cell.bookingInfo) {
+                                            bookingStore.setForm(cell.bookingInfo)
+                                        } else {
+                                            bookingStore.form.room_id = cell.room.id;
+                                            bookingStore.form.check_in_date = cell.date;
+                                            bookingStore.form.checkout_date = format(addDays(cell.date, 1), 'yyyy-MM-dd');
+                                        }
                                         useRouter().push({
-                                            hash: '#booking'
+                                            hash: '#booking',
                                         })
                                     }
                                 }"

@@ -13,7 +13,7 @@ const userStore = useUserStore()
 
 const room = useRoom()
 const roomStore = useRoomStore()
-
+const openClientSelectMenu = ref(false);
 const imageFiles = ref<File[]>([])
 onMounted(async () => {
 	if (!store.form.date_list) {
@@ -56,6 +56,11 @@ onBeforeUnmount(() => {
 					name="client_id"
 				>
 					<USelectMenu
+						autofocus
+						@focus="() => {
+							openClientSelectMenu = true;
+						}"
+						v-model:open="openClientSelectMenu"
 						class="w-full"
 						v-model="store.form.client_id"
 						value-key="id"
