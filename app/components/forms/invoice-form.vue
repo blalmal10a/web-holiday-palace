@@ -23,12 +23,6 @@ onMounted(async () => {
             loadingInvoiceItems.value = false;
         }
     }
-    store.form.items.forEach(item => {
-        if (!item.booking_id) {
-            item.booking_id = store.form.booking_id
-        }
-
-    });
 })
 
 
