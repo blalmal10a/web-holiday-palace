@@ -12,7 +12,7 @@ minRows.value = (minRows.value - bookingStore.detail.invoice.items?.length);
 const invoice = ref<Invoice>(bookingStore.detail.invoice);
 </script>
 <template>
-    <div class=" bg-white text-black font-new-roman">
+    <div class="min-h-dvh bg-white text-black font-new-roman">
         <div
             class="border border-gray-200 rounded-xl invoice-container p-8"
             style=""
@@ -53,7 +53,7 @@ const invoice = ref<Invoice>(bookingStore.detail.invoice);
             </div>
             <div class="flex justify-between">
                 <div>
-                    No.: HP/2026/001
+                    No.: {{ bookingStore.detail.invoice.invoice_no }}
                 </div>
                 <div>
                     Date: {{ format(new Date(), 'd/MM/yyyy') }}
