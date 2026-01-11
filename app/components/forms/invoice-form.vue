@@ -9,12 +9,19 @@ const store = useInvoiceStore()
 const model = useInvoice()
 
 const menuItem = useMenuItem();
-await menuItem.fetchData();
 const imageFiles = ref<File[]>([])
-
+const loadingInvoiceItems = ref<boolean>(false);
 onMounted(async () => {
-    if (!props.isModal && !store.form.id && useRoute().params.id != "add") {
-        await model.fetchDetail()
+    menuItem.fetchData();
+    if (!store.form.items?.length && useRoute().params.id != "add") {
+        try {
+            loadingInvoiceItems.value = true;
+            await model.fetchDetail(store.form.id)
+        } catch (error) {
+
+        } finally {
+            loadingInvoiceItems.value = false;
+        }
     }
     store.form.items.forEach(item => {
         if (!item.booking_id) {
@@ -65,9 +72,19 @@ onBeforeUnmount(() => {
 
             </u-card>
             <UCard style="max-width: 700px; min-width: min(90vw, 700px);">
+                <InvoicesItemList v-if="!loadingInvoiceItems" />
+                <div
+                    class=""
+                    v-if="loadingInvoiceItems"
+                >
+                    <USkeleton class="h-10 " />
+                    <div class="grid gap-2 mt-3">
+                        <USkeleton class="h-8 " />
+                        <USkeleton class="h-8 " />
+                        <USkeleton class="h-8 " />
 
-                <InvoicesItemList />
-
+                    </div>
+                </div>
             </UCard>
             <UCard style="max-width: 700px; min-width: min(90vw, 700px);">
 
@@ -79,9 +96,7 @@ onBeforeUnmount(() => {
                         class=""
                         @click="
                             () => {
-                                useRouter().push({
-                                    name: 'hotels-invoices',
-                                })
+                                useInvoiceStore().showInvoiceFormModal = false;
                             }
                         "
                     >

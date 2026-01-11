@@ -28,12 +28,22 @@ const items: DropdownMenuItem[] = [
         label: 'Invoice',
         icon: 'i-lucide-receipt-text',
         onClick: () => {
-            useRouter().push({
-                name: 'hotels-invoices-id',
-                params: {
-                    id: props.cell.bookingInfo?.id
-                }
-            })
+            if (!props.cell.bookingInfo?.invoice?.id) {
+                useToast().add({
+                    title: 'Invoice not found',
+                    description: 'Invoice not found',
+                    color: 'error',
+                })
+                return;
+            }
+            useInvoiceStore().form = props.cell.bookingInfo?.invoice;
+            useInvoiceStore().showInvoiceFormModal = true;
+            // useRouter().push({
+            //     name: 'hotels-invoices-id-form',
+            //     params: {
+            //         id: props.cell.bookingInfo?.invoice?.id
+            //     }
+            // })
         }
     },
     {

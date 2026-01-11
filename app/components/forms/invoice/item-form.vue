@@ -11,7 +11,6 @@ const menuItemOptions = computed(() => {
     return menuItemStore.data.data.map(mi => mi.name)
 })
 onMounted(() => {
-    invoiceItem.form.booking_id = invoiceStore.form.booking_id;
     invoiceItem.form.invoice_id = invoiceStore.form.id as string;
 })
 

@@ -2,10 +2,6 @@
 const store = useInvoiceStore()
 function onClickAddItem() {
     store.showInvoiceItemFormModal = true;
-    // store.form.items.push({
-    //     invoice_id: store.form.id,
-    //     booking_id: store.form.booking_id,
-    // } as InvoiceItemForm)
 }
 </script>
 <template>
@@ -48,12 +44,38 @@ function onClickAddItem() {
                             {{ item.quantity }}
                         </td>
                         <td style="width: 0.01%;">
-                            <u-button
-                                icon="i-lucide-trash"
-                                variant="ghost"
-                                color="error"
-                                @click="store.form.items.splice(index, 1)"
-                            ></u-button>
+                            <div class=" flex flex-nowrap">
+                                <u-button
+                                    :style="{
+                                        opacity: !!item.booking_id ? 0.5 : 1,
+                                    }"
+                                    icon="i-lucide-edit"
+                                    :disabled="!!item.booking_id"
+                                    variant="ghost"
+                                    color="neutral"
+                                    @click="() => {
+                                        invoiceItem.form = item;
+                                        store.showInvoiceItemFormModal = true;
+                                    }"
+                                ></u-button>
+                                <u-button
+                                    :style="{
+                                        opacity: !!item.booking_id ? 0.5 : 1,
+                                    }"
+                                    :disabled="!!item.booking_id"
+                                    icon="i-lucide-trash"
+                                    variant="ghost"
+                                    color="error"
+                                    @click="() => {
+                                        if (!store.form.deleted_item_ids) {
+                                            store.form.deleted_item_ids = []
+                                        }
+                                        if (item.id)
+                                            store.form.deleted_item_ids.push(item.id)
+                                        store.form.items.splice(index, 1)
+                                    }"
+                                ></u-button>
+                            </div>
                         </td>
                     </tr>
                 </template>

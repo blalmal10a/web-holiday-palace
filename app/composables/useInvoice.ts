@@ -100,7 +100,7 @@ export const InvoiceFormSchema = () => {
             z.object({
                 id: z.string().optional(),
                 invoice_id: z.string(),
-                booking_id: z.string(),
+                booking_id: z.string().optional(),
                 description: z.string(),
                 quantity: z.number(),
                 unit: z.string().optional(), // Matches "string | null"

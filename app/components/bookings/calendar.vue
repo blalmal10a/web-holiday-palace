@@ -88,8 +88,8 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
                                                 'bg-blue-500': !!cell.bookingInfo
                                             }"
                                         >
-                                            {{ cell.bookingInfo?.client?.name }} ||
-                                            {{ bookingStore.openCalendarMenu[cellIndex] }}
+                                            {{ cell.bookingInfo?.client?.name }}
+
 
                                         </div>
                                     </div>
@@ -101,6 +101,7 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
             </table>
         </div>
         <BookingsFullScreenModal />
+        <InvoicesFullScreenModal />
     </div>
 </template>
 <style scoped>

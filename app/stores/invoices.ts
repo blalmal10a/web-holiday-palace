@@ -5,6 +5,7 @@ export const useInvoiceStore = defineStore('Invoice', {
     loadingDeleteInvoice: false,
     showInvoiceItemFormModal: false,
     showInvoicePaymentFormModal: false,
+    showInvoiceFormModal: false,
     cellIndex: null as number | null,
     openCalendarMenu: [] as boolean[],
     pagination: {

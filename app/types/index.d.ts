@@ -140,6 +140,7 @@ interface BookingForm extends Omit<Booking, 'client' | 'staff' | 'room' | 'invoi
     staff?: User;
     room?: Room;
     date_list: string[];
+    invoice?: Invoice;
 }
 
 interface PaginationBooking extends Pagination {
@@ -184,6 +185,7 @@ interface InvoiceItem {
 interface InvoiceForm extends Omit<Invoice, 'booking' | 'invoice_no'> {
     id?: string;
     items: InvoiceItemForm[];
+    deleted_item_ids?: string[];
 }
 
 interface PaginationInvoice extends Pagination {
@@ -192,7 +194,7 @@ interface PaginationInvoice extends Pagination {
 interface InvoiceItemForm extends Omit<InvoiceItem, 'invoice' | 'booking'> {
     id?: string;
     invoice_id: string;
-    booking_id: string;
+    booking_id?: string;
     description: string;
     quantity: number;
     unit?: string;
