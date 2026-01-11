@@ -53,9 +53,7 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
                     :key="rowIndex"
                 >
                     <tr>
-                        <template v-if="rowIndex == 0">
 
-                        </template>
                         <template
                             v-for="(cell, cellIndex) in row"
                             :key="cellIndex"
@@ -64,8 +62,8 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
                                 v-if="cellIndex == 0"
                                 class="bg-default"
                             >
-                                <div class="p-4 border border-default">
-                                    <div class="p-4 whitespace-nowrap  h-10">
+                                <div class="py-4 px-1 border border-default">
+                                    <div class="py-4 px-1 whitespace-nowrap  h-10">
                                         {{ cell.room.name }}
                                     </div>
                                 </div>
