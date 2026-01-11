@@ -2,8 +2,8 @@ interface User {
     id: string;
     name: string;
     email: string;
-    email_verified_at: string | null | undefined;
-    phone: string | null | undefined;
+    email_verified_at?: string;
+    phone?: string;
     roles: Role[];
 }
 interface Image {
@@ -12,7 +12,8 @@ interface Image {
     url: string;
 }
 interface UserForm extends User {
-    roles: undefined | null;
+    id?: string;
+    roles?: null;
     password: string;
     password_confirmation: string;
 }
@@ -58,16 +59,16 @@ interface Room {
     name: string;
     rate: number;
     staff_id: string;
-    staff: User | undefined;
+    staff?: User;
     images: Image[];
 }
 
 interface RoomForm {
-    id: string | null | undefined;
+    id?: string;
     name: string;
     rate: number;
     staff_id: string;
-    staff: User | undefined;
+    staff?: User;
     images: Image[];
     deleted_image_ids: string[]
     image_files: File[]
@@ -98,17 +99,17 @@ interface Expenditure {
     quantity: number;
     amount: number;
     date: string;
-    staff_id: string | undefined;
-    staff: User | undefined;
-    name: string | null | undefined;
-    phone: string | null | undefined;
+    staff_id: string;
+    staff: User;
+    name: string;
+    phone: string;
 }
 
 interface ExpenditureForm extends Omit<Expenditure, 'staff'> {
-    id?: string | undefined;
-    staff_id?: string | undefined
-    name?: string | null | undefined;
-    phone?: string | null | undefined;
+    id?: string;
+    staff_id?: string
+    name?: string;
+    phone?: string;
 }
 
 interface PaginationExpenditure extends Pagination {
@@ -133,11 +134,11 @@ interface Booking {
     invoice: Invoice;
 }
 
-interface BookingForm extends Booking {
-    id?: string | undefined;
-    client?: nullable | undefined | User;
-    staff?: nullable | undefined | User;
-    room?: nullable | undefined | Room;
+interface BookingForm extends Omit<Booking, 'client' | 'staff' | 'room' | 'invoice'> {
+    id?: string;
+    client?: User;
+    staff?: User;
+    room?: Room;
     date_list: string[];
 }
 
@@ -147,7 +148,7 @@ interface PaginationBooking extends Pagination {
 
 interface CalendarData {
     room: Room;
-    bookingInfo: BookingForm | null;
+    bookingInfo?: BookingForm;
     date: string;
     start_cell: boolean;
     end_cell: boolean;
@@ -176,12 +177,12 @@ interface InvoiceItem {
     booking: Booking;
     description: string;
     quantity: number;
-    unit: string | null;
+    unit: string;
     rate: number;
 }
 
 interface InvoiceForm extends Omit<Invoice, 'booking' | 'invoice_no'> {
-    id?: string | undefined;
+    id?: string;
     items: InvoiceItemForm[];
 }
 
@@ -189,11 +190,11 @@ interface PaginationInvoice extends Pagination {
     data: Invoice[]
 }
 interface InvoiceItemForm extends Omit<InvoiceItem, 'invoice' | 'booking'> {
-    id?: string | undefined;
+    id?: string;
     invoice_id: string;
     booking_id: string;
     description: string;
     quantity: number;
-    unit: string | null;
+    unit?: string;
     rate: number;
 }
