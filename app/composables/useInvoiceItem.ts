@@ -7,8 +7,12 @@ export const invoiceItem = reactive({
         const invoiceStore = useInvoiceStore()
         if (!form.id) {
             form.id = uuidv7();
+            invoiceStore.form.items.push(form);
+        } else {
+            let itemIndex = invoiceStore.form.items.findIndex(item => item.id == form.id)
+            invoiceStore.form.items[itemIndex] = form;
+
         }
-        invoiceStore.form.items.push(form);
         invoiceStore.showInvoiceItemFormModal = false;
     }
 })

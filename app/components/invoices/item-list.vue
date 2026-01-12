@@ -66,7 +66,7 @@ function onClickAddItem() {
                                     variant="ghost"
                                     color="neutral"
                                     @click="() => {
-                                        invoiceItem.form = item;
+                                        invoiceItem.form = { ...item };
                                         store.showInvoiceItemFormModal = true;
                                     }"
                                 ></u-button>
