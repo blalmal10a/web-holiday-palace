@@ -1,6 +1,10 @@
 <template>
 	<div class="">
-		<InvoicesPage />
+		<InvoicesPrint80mm />
+
+		<div class="mt-8">
+			<InvoicesPage />
+		</div>
 	</div>
 </template>
 <script setup lang="ts">
