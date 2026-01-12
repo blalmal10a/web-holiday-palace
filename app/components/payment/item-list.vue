@@ -53,15 +53,11 @@ function onClickAddItem() {
                         <td style="width: 0.01%;">
                             <div class=" flex flex-nowrap">
                                 <u-button
-                                    :style="{
-                                        opacity: !!item.booking_id ? 0.5 : 1,
-                                    }"
                                     icon="i-lucide-edit"
-                                    :disabled="!!item.booking_id"
                                     variant="ghost"
                                     color="neutral"
                                     @click="() => {
-                                        usePaymentStore().form = item;
+                                        usePaymentStore().form = { ...item };
                                         store.showInvoicePaymentFormModal = true;
                                     }"
                                 ></u-button>

@@ -1,6 +1,7 @@
 import z from "zod"
 import type { ColumnDef } from '@tanstack/vue-table'
 import { addDays, differenceInDays, format } from 'date-fns'
+import { uuidv7 } from "uuidv7"
 export function usePayment() {
     const store = usePaymentStore()
     const router = useRouter()
@@ -72,7 +73,14 @@ export function usePayment() {
         }
     }
     const addPayment = (payment: PaymentForm) => {
-        useInvoiceStore().form.payments.push(payment);
+        if (payment.id) {
+            // update existing payment
+            const index = useInvoiceStore().form.payments.findIndex(p => p.id === payment.id);
+            useInvoiceStore().form.payments[index] = payment;
+        } else {
+            payment.id = uuidv7();
+            useInvoiceStore().form.payments.push(payment);
+        }
         useInvoiceStore().showInvoicePaymentFormModal = false;
     }
     return {
