@@ -151,7 +151,7 @@ interface Booking extends BookingForm {
     date_list?: string[];
     invoice?: Invoice;
     new_client_name?: string;
-    new_client_email?: string;
+    new_client_phone?: string;
 }
 
 interface BookingDetail extends Booking {

@@ -13,8 +13,10 @@
 
 	const room = useRoom()
 	const roomStore = useRoomStore()
-	const openClientSelectMenu = ref(false)
+	const openSearchClient = ref(false)
+	const openSearchPhone = ref(false)
 	const newClient = ref(false)
+	const currentClient = ref<User>()
 	const imageFiles = ref<File[]>([])
 	onMounted(async () => {
 		if (!store.form.date_list) {
@@ -41,21 +43,24 @@
 		}
 	}
 	function handleClientUpdate($event: string) {
+		currentClient.value = userStore.data.data.find(
+			(user: User) => user.id === $event,
+		)
 		if (!store.form.new_client_name) return
-		const user = userStore.data.data.find((user: User) => user.id === $event)
-		if (user) {
+
+		if (currentClient.value) {
 			store.form.new_client_name = undefined
+			store.form.new_client_phone = undefined
+
+			newClient.value = false
+		} else {
+			// store.form.new_client_phone =
 		}
 	}
 	const onCreateNewClient = ($event: string) => {
 		store.form.client_id = $event
 		store.form.new_client_name = $event
-		store.form.new_client_email = `${$event.replace(
-			/[^a-z0-9]/gi,
-			"",
-		)}-${Date.now()}@holiday.palace`
-
-		openClientSelectMenu.value = false
+		openSearchClient.value = false
 		newClient.value = true
 	}
 	onBeforeUnmount(() => {
@@ -67,29 +72,37 @@
 	<div class="flex flex-col items-center">
 		<u-card style="min-width: min(400px, 90vw)">
 			<u-form
-				:schema="bookingFormSchema()"
+				:schema="bookingFormSchema(newClient)"
 				:state="store.form"
 				@submit="model.submitForm(imageFiles)"
 				class="space-y-4 w-full"
 				@error="($event) => console.log($event)"
 			>
-				<u-form-field label="Client" name="client_id">
+				<u-form-field
+					label="Client"
+					name="client_id"
+					:hint="currentClient ? `Phone: ${currentClient.phone}` : ''"
+				>
 					<USelectMenu
-						:autofocus="!store.form.id"
-						@focus="
-							() => {
-								if (!store.form.client_id) openClientSelectMenu = true
-							}
-						"
-						v-model:open="openClientSelectMenu"
+						:filter-fields="['name', 'phone']"
+						default-open
+						v-model:open="openSearchClient"
 						class="w-full"
 						v-model="store.form.client_id"
 						value-key="id"
 						label-key="name"
+						description-key="phone"
 						@update:model-value="handleClientUpdate"
 						create-item
 						@create="onCreateNewClient"
 						:items="userStore.data.data"
+					/>
+				</u-form-field>
+				<u-form-field label="Phone" name="new_client_phone" v-if="newClient">
+					<u-input
+						:disabled="!newClient"
+						v-model="store.form.new_client_phone"
+						icon="i-lucide-phone"
 					/>
 				</u-form-field>
 				<u-form-field label="Room" name="room_id">
@@ -139,13 +152,6 @@
 					/>
 				</u-form-field>
 
-				<u-form-field label="Client email" name="email" v-if="newClient">
-					<u-input
-						v-model="store.form.new_client_email"
-						icon="i-lucide-mail"
-						type="email"
-					/>
-				</u-form-field>
 				<div class="flex justify-end space-x-2">
 					<u-button
 						size="lg"

@@ -95,7 +95,7 @@ export function useBooking() {
     }
 }
 
-export const bookingFormSchema = () => {
+export const bookingFormSchema = (newClient: boolean) => {
     const baseSchema = z.object({
         id: z.string().optional(),
         client_id: z.string().min(1),
@@ -108,9 +108,15 @@ export const bookingFormSchema = () => {
         deposit: z.number(),
         date_list: z.array(z.string()),
         new_client_name: z.string().optional(),
-        new_client_email: z.string().optional(),
+        new_client_phone: z.string().optional(),
     }) satisfies z.ZodType<BookingForm>
-    return baseSchema;
+
+    return baseSchema.refine((data) => {
+        return !(newClient && !data.new_client_phone)
+    }, {
+        message: "Phone is required",
+        path: ["new_client_phone"]
+    });
 }
 
 // 2. Export Columns (Used in Table components)
