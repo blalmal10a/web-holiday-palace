@@ -9,12 +9,16 @@ export const useCalendarStore = defineStore('calendar', {
     }),
     actions: {
         // 
-        initCalendar(roomList: Room[], bookingList: Booking[]) {
+        async initCalendar(roomList: Room[], bookingList: Booking[]) {
             let startDate = format(new Date(), 'yyyy-MM-dd')
             let endDate = format(addDays(startDate, 7), 'yyyy-MM-dd');
             this.dateList = getBookingDateList(startDate, endDate)
             let mappedBookings = mapBooking(bookingList)
-
+            if (!roomList.length) {
+                console.log('no roomlist length', roomList)
+                await useRoom().fetchData();
+                roomList = useRoom().data.value.data;
+            }
             roomList.forEach(room => {
                 let currentRow: CalendarData[] = []
                 currentRow.push({
