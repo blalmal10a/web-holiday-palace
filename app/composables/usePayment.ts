@@ -95,7 +95,7 @@ export const paymentFormSchema = () => {
     return z.object({
         id: z.string().optional(),
         invoice_id: z.string(),
-        booking_id: z.string().optional(),
+        booking_id: z.string().optional().nullable(),
         amount: z.number(),
         date: z.string(),
         mode: z.string(),
