@@ -1,9 +1,9 @@
 interface User {
     id: string;
     name: string;
-    email: string;
+    email?: string;
     email_verified_at?: string;
-    phone?: string;
+    phone: string;
     roles: Role[];
 }
 interface Image {
@@ -16,6 +16,14 @@ interface UserForm extends User {
     roles?: null;
     password: string;
     password_confirmation: string;
+}
+interface UserDetail extends User {
+    id: string;
+    name: string;
+    email?: string;
+    email_verified_at?: string;
+    phone: string;
+    roles: Role[];
 }
 
 interface Role {

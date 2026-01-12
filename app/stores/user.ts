@@ -15,9 +15,15 @@ export const useUserStore = defineStore('user', {
     form: {
       name: '',
       email: '',
+      phone: '',
       password: '',
       password_confirmation: '',
     } as UserForm,
+    detail: {
+      name: '',
+      email: '',
+      phone: ''
+    } as UserDetail,
   }),
 
   actions: {

@@ -30,6 +30,7 @@ export function useUser() {
         try {
             const response = await api.get(`/users/${userId}`)
             store.setForm(response)
+            store.detail = response as UserDetail;
         } catch (error) {
             notifyError(error);
             console.error('Failed to fetch user detail', error)
@@ -86,8 +87,11 @@ export function useUser() {
 export const userFormSchema = (updatePassword: boolean) => {
     const baseSchema = z.object({
         name: z.string().min(3),
-        email: z.email(),
-    });
+        email: z.email().optional(),
+        phone: z.string(),
+        password: z.string(),
+        password_confirmation: z.string()
+    }) satisfies z.ZodType<UserForm>
 
     if (updatePassword) {
         return baseSchema.extend({
@@ -108,6 +112,6 @@ export const userFormSchema = (updatePassword: boolean) => {
 // 2. Export Columns (Used in Table components)
 export const userColumns: ColumnDef<any>[] = [
     { header: 'Name', accessorKey: 'name' },
-    { header: 'Email', accessorKey: 'email' },
+    { header: 'Phone', accessorKey: 'phone' },
     { id: 'actions' }
 ]

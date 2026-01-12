@@ -3,7 +3,7 @@ import z from "zod"
 
 export const useAuth = defineStore('auth', {
   state: () => ({
-    user: useSanctumUser<User>(),
+    user: useSanctumUser<UserDetail>(),
   }),
   actions: {
     updateUser(user: User) {
@@ -17,8 +17,9 @@ export const auth = reactive({
   loadingSubmitUpdateProfile: false,
   form: {
     name: '',
-    email: 'admin@example.email',
-    password: 'admin@example.email',
+    email: '',
+    phone: '1234567890',
+    password: 'lalrinpuii@holiday.palace',
     password_confirmation: '',
     remember: false,
   },

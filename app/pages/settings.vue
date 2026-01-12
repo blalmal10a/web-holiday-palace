@@ -8,10 +8,10 @@
 		title: "Settings",
 	})
 	onMounted(() => {
-		const user = useSanctumUser<User>().value
+		const user = useSanctumUser<UserDetail>().value
 		if (user) {
 			auth.form.name = user.name
-			auth.form.email = user.email
+			auth.form.phone = user.phone
 		}
 	})
 
