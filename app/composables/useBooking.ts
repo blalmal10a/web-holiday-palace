@@ -107,6 +107,8 @@ export const bookingFormSchema = () => {
         checkout_date: z.string(),
         deposit: z.number(),
         date_list: z.array(z.string()),
+        new_client_name: z.string().optional(),
+        new_client_email: z.string().optional(),
     }) satisfies z.ZodType<BookingForm>
     return baseSchema;
 }

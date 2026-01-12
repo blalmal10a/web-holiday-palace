@@ -142,6 +142,8 @@ interface Booking extends BookingForm {
     deposit: number;
     date_list?: string[];
     invoice?: Invoice;
+    new_client_name?: string;
+    new_client_email?: string;
 }
 
 interface BookingDetail extends Booking {
