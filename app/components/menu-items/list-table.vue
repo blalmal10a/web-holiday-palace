@@ -1,22 +1,22 @@
 <script setup lang="ts">
-	const store = useMenuItemStore()
-	const model = useMenuItem()
-	store.setPagination({
-		page: Number(useRoute().query.page) || 1,
-		pageSize: Number(useRoute().query.pageSize) || 10,
-	})
+const store = useMenuItemStore()
+const model = useMenuItem()
+store.setPagination({
+	page: Number(useRoute().query.page) || 1,
+	pageSize: Number(useRoute().query.pageSize) || 10,
+})
+model.fetchData()
+async function updatePage($event: number) {
+	store.pagination.page = $event
 	model.fetchData()
-	async function updatePage($event: number) {
-		store.pagination.page = $event
-		model.fetchData()
-		useRouter().push({
-			name: "hotels-menu-items",
-			query: {
-				page: $event,
-				pageSize: store.pagination.pageSize,
-			},
-		})
-	}
+	useRouter().push({
+		name: "hotels-menu-items",
+		query: {
+			page: $event,
+			pageSize: store.pagination.pageSize,
+		},
+	})
+}
 </script>
 <template>
 	<div class="">
@@ -35,12 +35,15 @@
 					variant="soft"
 					color="info"
 				>
-					Add expense
+					Add menu
 				</u-button>
 			</div>
 		</div>
-		<UTable :data="store.data.data" :columns="menuItemColumns">
-			<template #actions-cell="{row}">
+		<UTable
+			:data="store.data.data"
+			:columns="menuItemColumns"
+		>
+			<template #actions-cell="{ row }">
 				<div class="flex space-x-2 justify-end">
 					<u-button
 						variant="outline"
@@ -73,7 +76,7 @@
 								'MenuItem',
 								useMenuItemStore(),
 							)
-						"
+							"
 					>
 						<!-- @click="menuItem.deleteMenuItem(row.original.id)" -->
 					</u-button>

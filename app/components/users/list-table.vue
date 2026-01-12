@@ -40,7 +40,7 @@ async function updatePage($event: number) {
 					variant="soft"
 					color="info"
 				>
-					Add expense
+					Add user
 				</u-button>
 			</div>
 		</div>
