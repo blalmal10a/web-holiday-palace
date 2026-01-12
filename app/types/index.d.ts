@@ -189,6 +189,8 @@ interface InvoiceForm {
     discount_percent: number;
     items: InvoiceItemForm[];
     payments: PaymentForm[];
+    deleted_item_ids?: string[];
+    deleted_payment_ids?: string[];
 }
 interface Invoice extends InvoiceForm {
     id: string;
@@ -225,7 +227,7 @@ interface InvoiceItemForm extends Omit<InvoiceItem, 'invoice' | 'booking'> {
 interface PaymentForm {
     id?: string;
     invoice_id: string;
-    booking_id?: string;
+    booking_id?: string | null;
     amount: number;
     date: string;
     mode: string;
