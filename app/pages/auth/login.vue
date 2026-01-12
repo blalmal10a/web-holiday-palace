@@ -1,16 +1,13 @@
 <script lang="ts" setup>
-	definePageMeta({
-		layout: "auth-layout",
-	})
+definePageMeta({
+	layout: "auth-layout",
+})
 </script>
 
 <template>
-	<div
-		class="min-h-screen flex items-center justify-center p-4 sm:p-6 bg-gray-50 dark:bg-gray-900"
-	>
+	<div class="min-h-screen flex items-center justify-center p-4 sm:p-6 bg-gray-50 dark:bg-gray-900">
 		<div
-			class="w-full max-w-sm sm:max-w-4xl flex items-center justify-center sm:grid sm:grid-cols-2 sm:shadow-2xl sm:rounded-xl sm:bg-white dark:sm:bg-gray-800 overflow-hidden"
-		>
+			class="w-full max-w-sm sm:max-w-4xl flex items-center justify-center sm:grid sm:grid-cols-2 sm:shadow-2xl sm:rounded-xl sm:bg-white dark:sm:bg-gray-800 overflow-hidden">
 			<div class="hidden sm:block">
 				<div class="bg-cover bg-center flex items-center justify-center">
 					<LoginPin />
@@ -33,17 +30,23 @@
 							@submit="auth.login"
 							class="space-y-6"
 						>
-							<UFormField label="Email" name="email">
+							<UFormField
+								label="Phone"
+								name="phone"
+							>
 								<UInput
 									class="w-full"
-									v-model="auth.form.email"
+									v-model="auth.form.phone"
 									icon="i-heroicons-envelope"
-									type="email"
+									type="phone"
 									size="lg"
 								/>
 							</UFormField>
 
-							<UFormField label="Password" name="password">
+							<UFormField
+								label="Password"
+								name="password"
+							>
 								<UInput
 									class="w-full"
 									v-model="auth.form.password"
@@ -77,5 +80,5 @@
 </template>
 
 <style scoped>
-	/* Optional: Add a smooth transition for card and button effects */
+/* Optional: Add a smooth transition for card and button effects */
 </style>

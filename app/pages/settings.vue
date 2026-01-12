@@ -1,27 +1,27 @@
 <script lang="ts" setup>
-	definePageMeta({
-		layout: "main-layout",
-		pageTitle: "Settings",
-		ancestors: [],
-	})
-	useHead({
-		title: "Settings",
-	})
-	onMounted(() => {
-		const user = useSanctumUser<UserDetail>().value
-		if (user) {
-			auth.form.name = user.name
-			auth.form.phone = user.phone
-		}
-	})
-
-	const toast = useToast()
-	async function onSubmit() {
-		await auth.onSubmitUpdateProfile()
-		toast.add({
-			title: "Profile updated successfully",
-		})
+definePageMeta({
+	layout: "main-layout",
+	pageTitle: "Settings",
+	ancestors: [],
+})
+useHead({
+	title: "Settings",
+})
+onMounted(() => {
+	const user = useSanctumUser<UserDetail>().value
+	if (user) {
+		auth.form.name = user.name
+		auth.form.phone = user.phone
 	}
+})
+
+const toast = useToast()
+async function onSubmit() {
+	await auth.onSubmitUpdateProfile()
+	toast.add({
+		title: "Profile updated successfully",
+	})
+}
 </script>
 <template>
 	<div
@@ -35,17 +35,29 @@
 				@submit="onSubmit"
 				class="space-y-4 w-full"
 			>
-				<u-form-field label="name" name="name">
-					<u-input v-model="auth.form.name" icon="i-lucide-user" type="text" />
-				</u-form-field>
-				<u-form-field label="email" name="email">
+				<u-form-field
+					label="name"
+					name="name"
+				>
 					<u-input
-						v-model="auth.form.email"
-						icon="i-lucide-mail"
-						type="email"
+						v-model="auth.form.name"
+						icon="i-lucide-user"
+						type="text"
 					/>
 				</u-form-field>
-				<u-form-field label="password" name="password">
+				<u-form-field
+					label="phone"
+					name="phone"
+				>
+					<u-input
+						v-model="auth.form.phone"
+						icon="i-lucide-mail"
+					/>
+				</u-form-field>
+				<u-form-field
+					label="password"
+					name="password"
+				>
 					<u-input
 						v-model="auth.form.password"
 						icon="i-lucide-lock"
@@ -53,7 +65,10 @@
 						autocomplete="new-password"
 					/>
 				</u-form-field>
-				<u-form-field label="confirm password" name="password_confirmation">
+				<u-form-field
+					label="confirm password"
+					name="password_confirmation"
+				>
 					<u-input
 						v-model="auth.form.password_confirmation"
 						icon="i-lucide-lock"
@@ -76,7 +91,7 @@
 </template>
 
 <style scoped>
-	.relative.inline-flex.items-center {
-		width: 100%;
-	}
+.relative.inline-flex.items-center {
+	width: 100%;
+}
 </style>

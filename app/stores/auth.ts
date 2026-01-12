@@ -19,7 +19,7 @@ export const auth = reactive({
     name: '',
     email: '',
     phone: '1234567890',
-    password: 'lalrinpuii@holiday.palace',
+    password: 'rinpuii@holiday.palace',
     password_confirmation: '',
     remember: false,
   },
@@ -32,14 +32,14 @@ export const auth = reactive({
   }
 })
 export const LoginSchema = z.object({
-  email: z.email(),
+  phone: z.string(),
   password: z.string(),
   remember: z.boolean().default(false),
 })
 
 export const UpdateProfileSchema = z.object({
   name: z.string().min(3),
-  email: z.email(),
+  phone: z.string(),
   password: z.string().min(4),
   password_confirmation: z.string().min(4),
 })

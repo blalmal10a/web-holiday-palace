@@ -37,13 +37,13 @@ onMounted(() => {
 					/>
 				</u-form-field>
 				<u-form-field
-					label="email"
-					name="email"
+					label="Phone"
+					name="phone"
 				>
 					<u-input
-						v-model="store.form.email"
+						v-model="store.form.phone"
 						icon="i-lucide-mail"
-						type="email"
+						type="phone"
 					/>
 				</u-form-field>
 				<u-switch
