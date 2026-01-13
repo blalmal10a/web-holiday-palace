@@ -53,12 +53,12 @@ export function useBooking() {
             const response = await api.request(url, store.form, method,)
             store.setData(response)
             if (useRoute().name === 'hotels-calendar') {
+                useCalendarStore().$reset();
+                useCalendarStore().initCalendar(useRoomStore().data.data, useBookingStore().data.data);
                 useCalendarStore().showBookingForm = false;
             } else {
                 router.push({ name: 'hotels-bookings' })
             }
-            useCalendarStore().$reset();
-            useCalendarStore().initCalendar(useRoomStore().data.data, useBookingStore().data.data);
         } catch (error) {
             notifyError(error);
             console.error('Submission failed', error)
