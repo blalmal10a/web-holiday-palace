@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-import Index from "~/pages/index.vue"
+	import Index from "~/pages/index.vue"
 
-const store = useMenuItemStore()
-const model = useMenuItem()
-const imageFiles = ref<File[]>([])
-onMounted(async () => {
-	if (!store.form.id && useRoute().params.id != "add") {
-		await model.fetchDetail()
-	}
-	store.form.deleted_image_ids = []
-})
+	const store = useMenuItemStore()
+	const model = useMenuItem()
+	const imageFiles = ref<File[]>([])
+	onMounted(async () => {
+		if (!store.form.id && useRoute().params.id != "add") {
+			await model.fetchDetail()
+		}
+		store.form.deleted_image_ids = []
+	})
 </script>
 <template>
 	<div
@@ -23,15 +23,8 @@ onMounted(async () => {
 				@submit="model.submitForm(imageFiles)"
 				class="space-y-4 w-full"
 			>
-				<u-form-field
-					label="Item name"
-					name="name"
-				>
-					<u-input
-						v-model="store.form.name"
-						icon="i-lucide-user"
-						type="text"
-					/>
+				<u-form-field label="Item name" name="name">
+					<u-input v-model="store.form.name" icon="i-lucide-user" type="text" />
 				</u-form-field>
 				<!-- <u-form-field label="Unit" name="unit">
 					<u-input
@@ -41,10 +34,7 @@ onMounted(async () => {
 						step="0.01"
 					/>
 				</u-form-field> -->
-				<u-form-field
-					label="Unit"
-					name="unit"
-				>
+				<u-form-field label="Unit" name="unit">
 					<USelectMenu
 						class="w-full"
 						v-model="store.form.unit"
@@ -53,10 +43,7 @@ onMounted(async () => {
 						:items="menuItemUnitsList"
 					/>
 				</u-form-field>
-				<u-form-field
-					label="Rate"
-					name="rate"
-				>
+				<u-form-field label="Rate" name="rate">
 					<u-input
 						v-model="store.form.rate"
 						icon="i-lucide-indian-rupee"
@@ -64,21 +51,14 @@ onMounted(async () => {
 						step="0.01"
 					/>
 				</u-form-field>
-				<u-form-field
-					style="max-width: 400px"
-					label="Image"
-					name="images"
-				>
+				<u-form-field style="max-width: 400px" label="Image" name="images">
 					<UFileUpload
 						accept="image/jpeg,image/png"
 						v-model="imageFiles"
 						multiple
 					></UFileUpload>
 				</u-form-field>
-				<div
-					style="max-width: 400px"
-					class="grid grid-cols-3 gap-2 px-4"
-				>
+				<div style="max-width: 400px" class="grid grid-cols-3 gap-2 px-4">
 					<template v-for="(image, index) in store.form.images">
 						<div class="bg-elevated relative">
 							<UButton
@@ -93,10 +73,7 @@ onMounted(async () => {
 								class="bg-white rounded-full absolute top-0 right-0 text-black hover:bg-white"
 								style="padding: 2px"
 							>
-								<UIcon
-									size="14"
-									name="i-lucide-x"
-								/>
+								<UIcon size="14" name="i-lucide-x" />
 							</UButton>
 
 							<NuxtImg
@@ -115,7 +92,12 @@ onMounted(async () => {
 						:disabled="store.loadingSubmitMenuItemForm"
 						@click="
 							() => {
-								useInvoiceStore().showInvoiceFormModal = false;
+								if (useRoute().name == 'hotels-menu-items-id-form') {
+									useRouter().push({
+										name: 'hotels-menu-items',
+									})
+								}
+								useInvoiceStore().showInvoiceFormModal = false
 							}
 						"
 					>
@@ -136,7 +118,7 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-.relative.inline-flex.items-center {
-	width: 100%;
-}
+	.relative.inline-flex.items-center {
+		width: 100%;
+	}
 </style>

@@ -1,27 +1,25 @@
 <script lang="ts" setup>
-const store = useExpenditureStore()
-const model = useExpenditure();
-const user = useUser();
-const userStore = useUserStore();
-const selectStaffRef = ref<HTMLButtonElement>();
-const computedAmount = computed(() => {
-	store.form.amount = store.form.rate * store.form.quantity
-	return store.form.amount || 0;
-})
-const openMenu = ref(false);
-onMounted(() => {
-	if (!store.form.id && useRoute().params.id != "add") {
-		model.fetchDetail()
-	}
-	// selectStaffRef.value?.blur();
-})
-userStore.pagination.exclude_clients = true;
-user.fetchData()
-onBeforeUnmount(
-	() => {
-		userStore.pagination.exclude_clients = false;
-	}
-)
+	const store = useExpenditureStore()
+	const model = useExpenditure()
+	const user = useUser()
+	const userStore = useUserStore()
+	const selectStaffRef = ref<HTMLButtonElement>()
+	const computedAmount = computed(() => {
+		store.form.amount = store.form.rate * store.form.quantity
+		return store.form.amount || 0
+	})
+	const openMenu = ref(false)
+	onMounted(() => {
+		if (!store.form.id && useRoute().params.id != "add") {
+			model.fetchDetail()
+		}
+		// selectStaffRef.value?.blur();
+	})
+	userStore.pagination.exclude_clients = true
+	user.fetchData()
+	onBeforeUnmount(() => {
+		userStore.pagination.exclude_clients = false
+	})
 </script>
 <template>
 	<div
@@ -35,20 +33,14 @@ onBeforeUnmount(
 				@submit="model.submitForm()"
 				class="space-y-4 w-full"
 			>
-				<u-form-field
-					label="Date"
-					name="date"
-				>
+				<u-form-field label="Date" name="date">
 					<u-input
 						v-model="store.form.date"
 						icon="i-lucide-layers"
 						type="date"
 					/>
 				</u-form-field>
-				<u-form-field
-					label="Staff"
-					name="staff_id"
-				>
+				<u-form-field label="Staff" name="staff_id">
 					<USelectMenu
 						v-model:open="openMenu"
 						ref="selectStaffRef"
@@ -74,30 +66,14 @@ onBeforeUnmount(
 							)
 						}"
 					/>
-
 				</u-form-field>
-				<u-form-field
-					label="Phone"
-					name="phone"
-				>
-					<u-input
-						v-model="store.form.phone"
-						icon="i-lucide-tag"
-					/>
+				<u-form-field label="Phone" name="phone">
+					<u-input v-model="store.form.phone" icon="i-lucide-tag" />
 				</u-form-field>
-				<u-form-field
-					label="Item"
-					name="item"
-				>
-					<u-input
-						v-model="store.form.item"
-						icon="i-lucide-tag"
-					/>
+				<u-form-field label="Item" name="item">
+					<u-input v-model="store.form.item" icon="i-lucide-tag" />
 				</u-form-field>
-				<u-form-field
-					label="Rate"
-					name="rate"
-				>
+				<u-form-field label="Rate" name="rate">
 					<u-input
 						v-model="store.form.rate"
 						icon="i-lucide-indian-rupee"
@@ -105,10 +81,7 @@ onBeforeUnmount(
 						step="0.01"
 					/>
 				</u-form-field>
-				<u-form-field
-					label="Quantity"
-					name="quantity"
-				>
+				<u-form-field label="Quantity" name="quantity">
 					<u-input
 						v-model="store.form.quantity"
 						icon="i-lucide-layers"
@@ -118,9 +91,7 @@ onBeforeUnmount(
 				</u-form-field>
 
 				<div class="flex justify-between items-baseline">
-					<div class="text-xs">
-						Amount: {{ toRupees(computedAmount) }}
-					</div>
+					<div class="text-xs">Amount: {{ toRupees(computedAmount) }}</div>
 					<div class="flex justify-end space-x-2">
 						<u-button
 							size="lg"
@@ -130,7 +101,12 @@ onBeforeUnmount(
 							:disabled="store.loadingSubmitExpenditureForm"
 							@click="
 								() => {
-									useInvoiceStore().showInvoiceFormModal = false;
+									if (useRoute().name == 'hotels-expenditures-id-form') {
+										useRouter().push({
+											name: 'hotels-expenditures',
+										})
+									}
+									useInvoiceStore().showInvoiceFormModal = false
 								}
 							"
 						>
@@ -152,7 +128,7 @@ onBeforeUnmount(
 </template>
 
 <style scoped>
-.relative.inline-flex.items-center {
-	width: 100%;
-}
+	.relative.inline-flex.items-center {
+		width: 100%;
+	}
 </style>

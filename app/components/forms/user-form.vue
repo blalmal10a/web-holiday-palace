@@ -1,18 +1,16 @@
 <script lang="ts" setup>
+	const toast = useToast()
+	const store = useUserStore()
+	const model = useUser()
 
-const toast = useToast()
-const store = useUserStore()
-const model = useUser();
-
-onMounted(() => {
-	if (!store.form.id && useRoute().params.id != "add") {
-		model.fetchDetail()
-	}
-	if (useRoute().params.id == 'add') {
-		store.update_password = true;
-	}
-})
-
+	onMounted(() => {
+		if (!store.form.id && useRoute().params.id != "add") {
+			model.fetchDetail()
+		}
+		if (useRoute().params.id == "add") {
+			store.update_password = true
+		}
+	})
 </script>
 <template>
 	<div
@@ -26,20 +24,10 @@ onMounted(() => {
 				@submit="model.submitForm()"
 				class="space-y-4 w-full"
 			>
-				<u-form-field
-					label="Name"
-					name="name"
-				>
-					<u-input
-						v-model="store.form.name"
-						icon="i-lucide-user"
-						type="text"
-					/>
+				<u-form-field label="Name" name="name">
+					<u-input v-model="store.form.name" icon="i-lucide-user" type="text" />
 				</u-form-field>
-				<u-form-field
-					label="Phone"
-					name="phone"
-				>
+				<u-form-field label="Phone" name="phone">
 					<u-input
 						v-model="store.form.phone"
 						icon="i-lucide-mail"
@@ -61,13 +49,9 @@ onMounted(() => {
 					}
 					"
 				>
-
 				</u-switch>
 				<template v-if="!store.form.id || store.update_password">
-					<u-form-field
-						label="password"
-						name="password"
-					>
+					<u-form-field label="password" name="password">
 						<u-input
 							v-model="store.form.password"
 							icon="i-lucide-lock"
@@ -75,10 +59,7 @@ onMounted(() => {
 							autocomplete="new-password"
 						/>
 					</u-form-field>
-					<u-form-field
-						label="confirm password"
-						name="password_confirmation"
-					>
+					<u-form-field label="confirm password" name="password_confirmation">
 						<u-input
 							v-model="store.form.password_confirmation"
 							icon="i-lucide-lock"
@@ -96,7 +77,12 @@ onMounted(() => {
 						:disabled="store.loadingSubmitUserForm"
 						@click="
 							() => {
-								useInvoiceStore().showInvoiceFormModal = false;
+								useInvoiceStore().showInvoiceFormModal = false
+								if (useRoute().name == 'hotels-users-id-form') {
+									useRouter().push({
+										name: 'index',
+									})
+								}
 							}
 						"
 					>
@@ -117,7 +103,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.relative.inline-flex.items-center {
-	width: 100%;
-}
+	.relative.inline-flex.items-center {
+		width: 100%;
+	}
 </style>
