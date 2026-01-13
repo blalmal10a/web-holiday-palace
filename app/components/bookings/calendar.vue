@@ -92,7 +92,7 @@
 									}
 								"
 							>
-								<BookingsCalendarMenu :cell="cell">
+								<BookingsCalendarMenu v-if="cell.bookingInfo" :cell="cell">
 									<div class="p-4 border border-default">
 										<div
 											class="rounded-lg px-2 whitespace-nowrap flex items-center h-8 relative cursor-pointer"
@@ -104,6 +104,11 @@
 										</div>
 									</div>
 								</BookingsCalendarMenu>
+								<div class="p-4 border border-default" v-if="!cell.bookingInfo">
+									<div
+										class="rounded-lg px-2 whitespace-nowrap flex items-center h-8 relative cursor-pointer"
+									></div>
+								</div>
 							</td>
 						</template>
 					</tr>
