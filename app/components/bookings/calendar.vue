@@ -95,7 +95,7 @@
 								<BookingsCalendarMenu :cell="cell">
 									<div class="p-4 border border-default">
 										<div
-											class="rounded-lg px-2 whitespace-nowrap flex items-center h-8 relative"
+											class="rounded-lg px-2 whitespace-nowrap flex items-center h-8 relative cursor-pointer"
 											:class="{
 												'text-primary bg-elevated': !!cell.bookingInfo,
 											}"
