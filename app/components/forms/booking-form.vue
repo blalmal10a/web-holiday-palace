@@ -1,72 +1,73 @@
 <script lang="ts" setup>
-	const props = defineProps({
-		isModal: {
-			type: Boolean,
-			default: false,
-		},
-	})
-	const store = useBookingStore()
-	const model = useBooking()
+const props = defineProps({
+	isModal: {
+		type: Boolean,
+		default: false,
+	},
+})
+const store = useBookingStore()
+const model = useBooking()
 
-	const user = useUser()
-	const userStore = useUserStore()
+const user = useUser()
+const userStore = useUserStore()
 
-	const room = useRoom()
-	const roomStore = useRoomStore()
-	const openSearchClient = ref(false)
-	const openSearchPhone = ref(false)
-	const newClient = ref(false)
-	const currentClient = ref<User>()
-	const imageFiles = ref<File[]>([])
-	onMounted(async () => {
-		if (!store.form.date_list) {
-			store.form.date_list = []
-		}
-		if (!props.isModal && !store.form.id && useRoute().params.id != "add") {
-			await model.fetchDetail()
-		}
-		store.form.date_list = getBookingDateList(
-			store.form.check_in_date,
-			store.form.checkout_date,
-		)
-	})
-	userStore.pagination.exclude_admin = true
-	await user.fetchData()
-	await room.fetchData()
-	if (props.isModal) {
-		populateStaff(store.form.room_id)
+const room = useRoom()
+const roomStore = useRoomStore()
+roomStore.pagination.pageSize = Number.MAX_SAFE_INTEGER;
+const openSearchClient = ref(false)
+const openSearchPhone = ref(false)
+const newClient = ref(false)
+const currentClient = ref<User>()
+const imageFiles = ref<File[]>([])
+onMounted(async () => {
+	if (!store.form.date_list) {
+		store.form.date_list = []
 	}
-	function populateStaff($event: string) {
-		const room = roomStore.data.data.find((room: Room) => room.id === $event)
-		if (room) {
-			store.form.staff_id = room.staff_id
-		}
+	if (!props.isModal && !store.form.id && useRoute().params.id != "add") {
+		await model.fetchDetail()
 	}
-	function handleClientUpdate($event: string) {
-		currentClient.value = userStore.data.data.find(
-			(user: User) => user.id === $event,
-		)
-		if (!store.form.new_client_name) return
+	store.form.date_list = getBookingDateList(
+		store.form.check_in_date,
+		store.form.checkout_date,
+	)
+})
+userStore.pagination.exclude_admin = true
+await user.fetchData()
+await room.fetchData()
+if (props.isModal) {
+	populateStaff(store.form.room_id)
+}
+function populateStaff($event: string) {
+	const room = roomStore.data.data.find((room: Room) => room.id === $event)
+	if (room) {
+		store.form.staff_id = room.staff_id
+	}
+}
+function handleClientUpdate($event: string) {
+	currentClient.value = userStore.data.data.find(
+		(user: User) => user.id === $event,
+	)
+	if (!store.form.new_client_name) return
 
-		if (currentClient.value) {
-			store.form.new_client_name = undefined
-			store.form.new_client_phone = undefined
+	if (currentClient.value) {
+		store.form.new_client_name = undefined
+		store.form.new_client_phone = undefined
 
-			newClient.value = false
-		} else {
-			// store.form.new_client_phone =
-		}
+		newClient.value = false
+	} else {
+		// store.form.new_client_phone =
 	}
-	const onCreateNewClient = ($event: string) => {
-		store.form.client_id = $event
-		store.form.new_client_name = $event
-		openSearchClient.value = false
-		newClient.value = true
-	}
-	onBeforeUnmount(() => {
-		userStore.pagination.exclude_clients = false
-		store.$reset()
-	})
+}
+const onCreateNewClient = ($event: string) => {
+	store.form.client_id = $event
+	store.form.new_client_name = $event
+	openSearchClient.value = false
+	newClient.value = true
+}
+onBeforeUnmount(() => {
+	userStore.pagination.exclude_clients = false
+	store.$reset()
+})
 </script>
 <template>
 	<div class="flex flex-col items-center">
@@ -98,14 +99,21 @@
 						:items="userStore.data.data"
 					/>
 				</u-form-field>
-				<u-form-field label="Phone" name="new_client_phone" v-if="newClient">
+				<u-form-field
+					label="Phone"
+					name="new_client_phone"
+					v-if="newClient"
+				>
 					<u-input
 						:disabled="!newClient"
 						v-model="store.form.new_client_phone"
 						icon="i-lucide-phone"
 					/>
 				</u-form-field>
-				<u-form-field label="Room" name="room_id">
+				<u-form-field
+					label="Room"
+					name="room_id"
+				>
 					<USelectMenu
 						class="w-full"
 						v-model="store.form.room_id"
@@ -116,35 +124,50 @@
 					/>
 				</u-form-field>
 
-				<u-form-field label="No. of adults" name="form.no_of_adults">
+				<u-form-field
+					label="No. of adults"
+					name="form.no_of_adults"
+				>
 					<u-input
 						v-model="store.form.no_of_adults"
 						icon="i-lucide-indian-rupee"
 						type="number"
 					/>
 				</u-form-field>
-				<u-form-field label="no. of children" name="no_of_children">
+				<u-form-field
+					label="no. of children"
+					name="no_of_children"
+				>
 					<u-input
 						v-model="store.form.no_of_children"
 						icon="i-lucide-indian-rupee"
 						type="number"
 					/>
 				</u-form-field>
-				<u-form-field label="Check in date" name="check_in_date">
+				<u-form-field
+					label="Check in date"
+					name="check_in_date"
+				>
 					<u-input
 						v-model="store.form.check_in_date"
 						icon="i-lucide-layers"
 						type="date"
 					/>
 				</u-form-field>
-				<u-form-field label="Check out date" name="checkout_date">
+				<u-form-field
+					label="Check out date"
+					name="checkout_date"
+				>
 					<u-input
 						v-model="store.form.checkout_date"
 						icon="i-lucide-layers"
 						type="date"
 					/>
 				</u-form-field>
-				<u-form-field label="Deposit amount" name="deposit">
+				<u-form-field
+					label="Deposit amount"
+					name="deposit"
+				>
 					<u-input
 						v-model="store.form.deposit"
 						icon="i-lucide-indian-rupee"
@@ -184,7 +207,7 @@
 </template>
 
 <style scoped>
-	.relative.inline-flex.items-center {
-		width: 100%;
-	}
+.relative.inline-flex.items-center {
+	width: 100%;
+}
 </style>

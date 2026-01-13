@@ -12,6 +12,8 @@ const menuItem = useMenuItem();
 const imageFiles = ref<File[]>([])
 const loadingInvoiceItems = ref<boolean>(false);
 onMounted(async () => {
+    const menuItemStore = useMenuItemStore();
+    menuItemStore.pagination.pageSize = Number.MAX_SAFE_INTEGER;
     menuItem.fetchData();
     if (!store.form.items?.length && useRoute().params.id != "add") {
         try {
