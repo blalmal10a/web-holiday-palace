@@ -32,11 +32,12 @@ async function getBlacklistedUsers() {
 </script>
 <template>
     <div class="">
-        <h2 class="text-lg font-semibold">
-            Related blacklist users:
-        </h2>
-        <USeparator />
         <UCheckboxGroup
+            variant="card"
+            id="blacklist-checkbox-group"
+            indicator="end"
+            class="w-full"
+            color="warning"
             v-if="blacklistedUserList.length"
             v-model="selectedUserIds"
             :items="blacklistedUserList"
