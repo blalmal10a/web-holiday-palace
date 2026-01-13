@@ -17,9 +17,14 @@ interface UserForm extends User {
     is_blacklisted: boolean = false;
     password?: string;
     password_confirmation?: string;
+    new_blacklist_ids?: string[];
+    deleted_blacklist_ids?: string[];
+    related_blacklist_ids?: string[];
 }
 interface UserDetail extends User {
+
     roles: Role[];
+    blacklisted_users: User[];
 }
 
 interface Role {
@@ -130,6 +135,8 @@ interface BookingForm extends Omit<Booking, 'client' | 'staff' | 'room' | 'invoi
     check_in_date: string;
     checkout_date: string;
     deposit: number;
+    mark_as_blacklisted?: boolean;
+    related_client_id?: string;
 }
 interface Booking extends BookingForm {
     id: string;

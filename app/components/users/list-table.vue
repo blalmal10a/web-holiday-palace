@@ -1,13 +1,13 @@
 <script setup lang="ts">
+import { defaultUserPagination } from '~/stores/user'
+
 const store = useUserStore()
 const model = useUser()
 
 store.setPagination({
+	...defaultUserPagination,
 	page: Number(useRoute().query.page) || 1,
 	pageSize: Number(useRoute().query.pageSize) || 10,
-	exclude_clients: false,
-	exclude_admin: false,
-	exclude_staff: false,
 })
 model.fetchData()
 

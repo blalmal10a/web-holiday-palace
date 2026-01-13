@@ -1,22 +1,23 @@
 <script lang="ts" setup>
-	const toast = useToast()
-	const store = useUserStore()
-	const model = useUser()
+const toast = useToast()
+const store = useUserStore()
+const model = useUser()
 
-	onMounted(() => {
-		if (!store.form.id && useRoute().params.id != "add") {
-			model.fetchDetail()
-		}
-		if (useRoute().params.id == "add") {
-			store.update_password = true
-		}
-	})
+onMounted(() => {
+	if (!store.form.id && useRoute().params.id != "add") {
+		model.fetchDetail()
+	}
+	if (useRoute().params.id == "add") {
+		store.update_password = true
+	}
+})
 </script>
 <template>
 	<div
 		class="flex flex-col items-center"
-		style="height: calc(100dvh - 200px); overflow: visible"
+		style="min-height: calc(100dvh - 200px); overflow: visible"
 	>
+
 		<u-card style="min-width: min(400px, 90vw)">
 			<u-form
 				:schema="userFormSchema(store.update_password)"
@@ -25,10 +26,20 @@
 				class="space-y-4 w-full"
 				@error="console.log($event)"
 			>
-				<u-form-field label="Name" name="name">
-					<u-input v-model="store.form.name" icon="i-lucide-user" type="text" />
+				<u-form-field
+					label="Name"
+					name="name"
+				>
+					<u-input
+						v-model="store.form.name"
+						icon="i-lucide-user"
+						type="text"
+					/>
 				</u-form-field>
-				<u-form-field label="Phone" name="phone">
+				<u-form-field
+					label="Phone"
+					name="phone"
+				>
 					<u-input
 						v-model="store.form.phone"
 						icon="i-lucide-phone"
@@ -62,7 +73,10 @@
 				>
 				</u-switch>
 				<template v-if="!store.form.id || store.update_password">
-					<u-form-field label="password" name="password">
+					<u-form-field
+						label="password"
+						name="password"
+					>
 						<u-input
 							v-model="store.form.password"
 							icon="i-lucide-lock"
@@ -70,7 +84,10 @@
 							autocomplete="new-password"
 						/>
 					</u-form-field>
-					<u-form-field label="confirm password" name="password_confirmation">
+					<u-form-field
+						label="confirm password"
+						name="password_confirmation"
+					>
 						<u-input
 							v-model="store.form.password_confirmation"
 							icon="i-lucide-lock"
@@ -114,7 +131,7 @@
 </template>
 
 <style scoped>
-	.relative.inline-flex.items-center {
-		width: 100%;
-	}
+.relative.inline-flex.items-center {
+	width: 100%;
+}
 </style>

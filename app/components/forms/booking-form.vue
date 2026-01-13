@@ -17,13 +17,29 @@ const roomStore = useRoomStore()
 roomStore.pagination.pageSize = Number.MAX_SAFE_INTEGER
 const openSearchClient = ref(false)
 const newClient = ref(false)
-const currentClient = ref<User>()
+const currentClient = computed(() => {
+	const user = userStore.data.data.find(
+		(user: User) => user.id === store.form.client_id,
+	)
+	if (user?.is_blacklisted && store.form.id) {
+		store.form.mark_as_blacklisted = true;
+	}
+	if (user) {
+		store.selectedClient = { ...user };
+	}
+	return user;
+})
 const imageFiles = ref<File[]>([])
 userStore.pagination.exclude_admin = true
+const blackListedUserList = ref<User[]>([])
 
 const userList = computed(
 	() => {
+		blackListedUserList.value = [];
 		return userStore.data.data.map((user: User) => {
+			if (user.is_blacklisted) {
+				blackListedUserList.value.push(user)
+			}
 			return {
 				id: user.id,
 				name: user.name,
@@ -92,6 +108,7 @@ onMounted(async () => {
 	if (props.isModal) {
 		populateStaff(store.form.room_id)
 	}
+
 })
 
 
@@ -102,9 +119,6 @@ function populateStaff($event: string) {
 	}
 }
 function handleClientUpdate($event: string) {
-	currentClient.value = userStore.data.data.find(
-		(user: User) => user.id === $event,
-	)
 	if (!store.form.new_client_name) return
 
 	if (currentClient.value) {
@@ -128,9 +142,9 @@ onBeforeUnmount(() => {
 })
 </script>
 <template>
-	<div class="flex flex-col items-center">
-		<u-card style="min-width: min(400px, 90vw)">
 
+	<div class="flex flex-col items-center">
+		<u-card style="min-width: min(400px, 90vw); max-width: 90vw;">
 			<u-form
 				:schema="bookingFormSchema(newClient)"
 				:state="store.form"
@@ -170,6 +184,50 @@ onBeforeUnmount(() => {
 						icon="i-lucide-phone"
 					/>
 				</u-form-field>
+
+				<u-form-field
+					name="mark_as_blacklisted"
+					v-if="store.form.id"
+				>
+					<u-checkbox
+						color="error"
+						variant="card"
+						indicator="end"
+						v-model="store.form.mark_as_blacklisted"
+						label="Mark as blacklisted"
+						description="Mark current customer as black list"
+					/>
+				</u-form-field>
+				<u-form-field
+					label="Client"
+					name="client_id"
+					v-if="store.form.mark_as_blacklisted"
+					:hint="currentClient ? `Phone: ${currentClient.phone}` : ''"
+					:error="currentClient?.is_blacklisted ? `Client is blacklisted` : false"
+				>
+					<USelectMenu
+						:filter-fields="['name', 'phone']"
+						class="w-full"
+						v-model="store.form.related_client_id"
+						value-key="id"
+						label-key="name"
+						description-key="phone"
+						create-item
+						:items="blackListedUserList"
+					/>
+				</u-form-field>
+				<div
+					v-if="currentClient?.is_blacklisted"
+					class="text-right -mt-4"
+				>
+					<UButton
+						variant="outline"
+						color="warning"
+						size="xs"
+						@click="userStore.showBlacklistedUserModal = true"
+						label="Manage related blacklists"
+					/>
+				</div>
 				<u-form-field
 					label="Room"
 					name="room_id"
@@ -270,6 +328,7 @@ onBeforeUnmount(() => {
 				</div>
 			</u-form>
 		</u-card>
+		<UsersBlackListedUserModal />
 	</div>
 </template>
 

@@ -36,6 +36,7 @@ export function useBooking() {
 
             let bookingForm = response as BookingForm;
             store.detail = bookingForm as BookingDetail
+            console.log(store.detail)
             store.setForm(bookingForm)
         } catch (error) {
             notifyError(error);
@@ -109,6 +110,8 @@ export const bookingFormSchema = (newClient: boolean,) => {
         date_list: z.array(z.string()),
         new_client_name: z.string().optional(),
         new_client_phone: z.string().optional(),
+        mark_as_blacklisted: z.boolean().optional(),
+        related_client_id: z.string().optional(),
     }) satisfies z.ZodType<BookingForm>
 
     return baseSchema

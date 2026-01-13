@@ -12,7 +12,8 @@ export const useBookingStore = defineStore('booking', {
     data: {} as PaginationBooking,
     form: {
     } as BookingForm,
-    detail: {} as BookingDetail
+    detail: {} as BookingDetail,
+    selectedClient: {} as User
   }),
 
   actions: {

@@ -93,6 +93,7 @@ export const userFormSchema = (updatePassword: boolean) => {
         password: z.string().optional(),
         password_confirmation: z.string().optional(),
         is_blacklisted: z.boolean(),
+        related_blacklist_ids: z.array(z.string()).optional(),
     }) satisfies z.ZodType<UserForm>
 
     if (updatePassword) {

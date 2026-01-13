@@ -1,17 +1,23 @@
+export const defaultUserPagination = {
+  page: 1,
+  pageSize: 10,
+  exclude_clients: false,
+  exclude_staff: false,
+  exclude_admin: false,
+  only_blacklisted: false,
+}
 export const useUserStore = defineStore('user', {
   state: () => ({
     loadingGetUsers: false,
     loadingSubmitUserForm: false,
     loadingDeleteUser: false,
     update_password: false,
+    showBlacklistedUserModal: false,
     pagination: {
-      page: 1,
-      pageSize: 10,
-      exclude_clients: false,
-      exclude_staff: false,
-      exclude_admin: false,
+      ...defaultUserPagination
     },
     data: {} as PaginationUser,
+
     form: {
       name: '',
       phone: '',
@@ -34,7 +40,7 @@ export const useUserStore = defineStore('user', {
     setForm(payload: UserForm) {
       this.form = payload;
     },
-    setPagination(payload: { page: number; pageSize: number; exclude_clients: boolean; exclude_staff: boolean; exclude_admin: boolean }) {
+    setPagination(payload: typeof defaultUserPagination) {
       this.pagination = payload;
     },
     setLoading(key: 'loadingGetUsers' | 'loadingSubmitUserForm' | 'loadingDeleteUser', value: boolean) {
