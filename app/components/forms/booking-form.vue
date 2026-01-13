@@ -83,6 +83,7 @@
 					label="Client"
 					name="client_id"
 					:hint="currentClient ? `Phone: ${currentClient.phone}` : ''"
+					:error="currentClient?.is_blacklisted ? `Client is blacklisted` : ``"
 				>
 					<USelectMenu
 						:filter-fields="['name', 'phone']"
