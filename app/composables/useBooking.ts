@@ -95,7 +95,7 @@ export function useBooking() {
     }
 }
 
-export const bookingFormSchema = (newClient: boolean) => {
+export const bookingFormSchema = (newClient: boolean,) => {
     const baseSchema = z.object({
         id: z.string().optional(),
         client_id: z.string().min(1),
@@ -111,12 +111,27 @@ export const bookingFormSchema = (newClient: boolean) => {
         new_client_phone: z.string().optional(),
     }) satisfies z.ZodType<BookingForm>
 
-    return baseSchema.refine((data) => {
-        return !(newClient && !data.new_client_phone)
-    }, {
-        message: "Phone is required",
-        path: ["new_client_phone"]
-    });
+    return baseSchema
+        .refine((data) => {
+            return !(newClient && !data.new_client_phone)
+        }, {
+            message: "Phone is required",
+            path: ["new_client_phone"]
+        })
+        .refine((data) => {
+            const roomCost = useRoomStore().data.data.find((room: Room) => room.id === data.room_id)?.rate ?? 0;
+            const daysCount = differenceInDays(new Date(data.checkout_date), new Date(data.check_in_date)) + 1;
+            const totalRoomCost = daysCount * roomCost;
+            if (data.id) {
+                return true;
+            }
+            return data.deposit <= totalRoomCost;
+        },
+            {
+                message: 'Deposit is more than total room cost',
+                path: ['deposit']
+            }
+        )
 }
 
 // 2. Export Columns (Used in Table components)

@@ -117,7 +117,7 @@
 					/>
 				</u-form-field>
 
-				<u-form-field label="No. of adults" name="form.no_of_adults">
+				<u-form-field label="No. of adults" name="no_of_adults">
 					<u-input
 						v-model="store.form.no_of_adults"
 						icon="i-lucide-indian-rupee"
