@@ -119,12 +119,12 @@ function populateStaff($event: string) {
 	}
 }
 function handleClientUpdate($event: string) {
+	store.form.mark_as_blacklisted = false;
 	if (!store.form.new_client_name) return
 
 	if (currentClient.value) {
 		store.form.new_client_name = undefined
 		store.form.new_client_phone = undefined
-
 		newClient.value = false
 	} else {
 		// store.form.new_client_phone =
@@ -198,26 +198,8 @@ onBeforeUnmount(() => {
 						description="Mark current customer as black list"
 					/>
 				</u-form-field>
-				<u-form-field
-					label="Client"
-					name="client_id"
-					v-if="store.form.mark_as_blacklisted"
-					:hint="currentClient ? `Phone: ${currentClient.phone}` : ''"
-					:error="currentClient?.is_blacklisted ? `Client is blacklisted` : false"
-				>
-					<USelectMenu
-						:filter-fields="['name', 'phone']"
-						class="w-full"
-						v-model="store.form.related_client_id"
-						value-key="id"
-						label-key="name"
-						description-key="phone"
-						create-item
-						:items="blackListedUserList"
-					/>
-				</u-form-field>
 				<div
-					v-if="currentClient?.is_blacklisted"
+					v-if="store.form.mark_as_blacklisted"
 					class="text-right -mt-4"
 				>
 					<UButton

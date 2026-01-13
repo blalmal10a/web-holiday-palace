@@ -47,7 +47,13 @@ export function useUser() {
             }
             const response = await api.request(url, store.form, method,)
             store.setData(response)
-            router.push({ name: 'index' })
+            const route = useRoute()
+            if (route.name === 'users-id-form') {
+                router.push({ name: 'index' })
+            }
+            if (route.name === 'calendar') {
+                // 
+            }
         } catch (error) {
             notifyError(error);
             console.error('Submission failed', error)

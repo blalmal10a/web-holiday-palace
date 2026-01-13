@@ -2,7 +2,7 @@
 const store = useUserStore();
 const user = useUser()
 
-if (store.detail.id) {
+if (!store.detail.id) {
     await user.fetchDetail(useBookingStore().selectedClient.id)
 }
 const blacklistedUserList = ref<User[]>([])
@@ -18,6 +18,7 @@ async function updateRelatedBlacklist() {
     // store.form.blacklisted_user_ids
     store.form.related_blacklist_ids = selectedUserIds.value ?? [];
     await user.submitForm()
+    store.showBlacklistedUserModal = false;
 }
 async function getBlacklistedUsers() {
     const response = await api.get('users', {
