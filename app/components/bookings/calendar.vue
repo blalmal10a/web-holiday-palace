@@ -1,107 +1,115 @@
 <script setup lang="ts">
-	import {addDays, format} from "date-fns"
+import { addDays, format } from "date-fns"
 
-	const roomStore = useRoomStore()
-	const room = useRoom()
-	const booking = useBooking()
-	const bookingStore = useBookingStore()
-	const calendarStore = useCalendarStore()
-	await room.fetchData()
-	await booking.fetchData()
-	calendarStore.$reset()
-	calendarStore.initCalendar(roomStore.data.data, bookingStore.data.data)
-	function shouldRender(cellIndex: number, cell: CalendarData) {
-		let shouldRender = false
+const roomStore = useRoomStore()
+const room = useRoom()
+const booking = useBooking()
+const bookingStore = useBookingStore()
+const calendarStore = useCalendarStore()
+await room.fetchData()
+await booking.fetchData()
+calendarStore.$reset()
+calendarStore.initCalendar(roomStore.data.data, bookingStore.data.data)
+function shouldRender(cellIndex: number, cell: CalendarData) {
+	let shouldRender = false
 
-		if (cell.bookingInfo && cell.start_cell) {
-			shouldRender = true
-		}
-		if (!cell.bookingInfo) {
-			shouldRender = true
-		}
-		if (cellIndex == 0) {
-			shouldRender = false
-		}
-		return shouldRender
+	if (cell.bookingInfo && cell.start_cell) {
+		shouldRender = true
 	}
+	if (!cell.bookingInfo) {
+		shouldRender = true
+	}
+	if (cellIndex == 0) {
+		shouldRender = false
+	}
+	return shouldRender
+}
 
-	watch(
-		() => useRoute().hash,
-		() => {
-			if (useRoute().hash == "#invoice") {
-				useInvoiceStore().showInvoiceFormModal = true
-			}
-			if (!useRoute().hash) {
-				useInvoiceStore().showInvoiceFormModal = false
-			}
-		},
-	)
-	watch(
-		() => useRoute().hash,
-		() => {
-			if (useRoute().hash == "#booking") {
-				calendarStore.showBookingForm = true
-			}
-			if (!useRoute().hash) {
-				calendarStore.showBookingForm = false
-			}
-		},
-	)
-	watch(
-		() => calendarStore.showBookingForm,
-		(current, old) => {
-			if (!current) {
-				useRouter().push({
-					name: "hotels-calendar",
-				})
-			}
-		},
-	)
-	watch(
-		() => useInvoiceStore().showInvoiceFormModal,
-		(current, old) => {
-			if (!current) {
-				useRouter().push({
-					name: "hotels-calendar",
-				})
-			}
-		},
-	)
-	onMounted(() => {
-		if (useRoute().hash) {
+watch(
+	() => useRoute().hash,
+	() => {
+		if (useRoute().hash == "#invoice") {
+			useInvoiceStore().showInvoiceFormModal = true
+		}
+		if (!useRoute().hash) {
+			useInvoiceStore().showInvoiceFormModal = false
+		}
+	},
+)
+watch(
+	() => useRoute().hash,
+	() => {
+		if (useRoute().hash == "#booking") {
+			calendarStore.showBookingForm = true
+		}
+		if (!useRoute().hash) {
+			calendarStore.showBookingForm = false
+		}
+	},
+)
+watch(
+	() => calendarStore.showBookingForm,
+	(current, old) => {
+		if (!current) {
 			useRouter().push({
 				name: "hotels-calendar",
 			})
 		}
-	})
+	},
+)
+watch(
+	() => useInvoiceStore().showInvoiceFormModal,
+	(current, old) => {
+		if (!current) {
+			useRouter().push({
+				name: "hotels-calendar",
+			})
+		}
+	},
+)
+onMounted(() => {
+	if (useRoute().hash) {
+		useRouter().push({
+			name: "hotels-calendar",
+		})
+	}
+})
 </script>
 <template>
-	<div>
-		<div class="w-full overflow-auto pt-4">
+	<div id="booking">
+		<div
+			id="invoice"
+			class="w-full overflow-auto pt-4"
+		>
 			<table>
 				<thead>
 					<tr>
 						<th class="bg-default">
-							<div
-								class="h-24 flex items-center justify-center border border-default"
-							>
+							<div class="h-24 flex items-center justify-center border border-default">
 								HP
 							</div>
 						</th>
 						<template v-for="date in calendarStore.dateList">
-							<th
-								class="text-center p-4 border-default border text-sm whitespace-nowrap"
-							>
+							<th class="text-center p-4 border-default border text-sm whitespace-nowrap">
 								{{ format(date, "Do MMM") }}
 								<div>({{ format(date, "EEE") }})</div>
 							</th>
 						</template>
 					</tr>
 				</thead>
-				<template v-for="(row, rowIndex) in calendarStore.data" :key="rowIndex">
+				<template
+					v-for="(row, rowIndex) in calendarStore.data"
+					:key="rowIndex"
+				>
 					<tr>
-						<template v-for="(cell, cellIndex) in row" :key="cellIndex">
-							<td v-if="cellIndex == 0" class="bg-default">
+						<template
+							v-for="(cell, cellIndex) in row"
+							:key="cellIndex"
+						>
+							<td
+								v-if="cellIndex == 0"
+								class="bg-default"
+							>
 								<div class="py-4 px-1 border border-default">
 									<div
 										class="py-4 px-1 h-8 text-xs flex items-center max-w-24"
@@ -143,7 +151,10 @@
 									}
 								"
 							>
-								<BookingsCalendarMenu v-if="cell.bookingInfo" :cell="cell">
+								<BookingsCalendarMenu
+									v-if="cell.bookingInfo"
+									:cell="cell"
+								>
 									<div class="p-4 border border-default">
 										<div
 											class="rounded-lg px-2 whitespace-nowrap flex items-center h-8 relative cursor-pointer"
@@ -155,10 +166,13 @@
 										</div>
 									</div>
 								</BookingsCalendarMenu>
-								<div class="p-4 border border-default" v-if="!cell.bookingInfo">
+								<div
+									class="p-4 border border-default"
+									v-if="!cell.bookingInfo"
+								>
 									<div
-										class="rounded-lg px-2 whitespace-nowrap flex items-center h-8 relative cursor-pointer"
-									></div>
+										class="rounded-lg px-2 whitespace-nowrap flex items-center h-8 relative cursor-pointer">
+									</div>
 								</div>
 							</td>
 						</template>
@@ -171,14 +185,14 @@
 	</div>
 </template>
 <style scoped>
-	table {
-		border-collapse: collapse;
-	}
+table {
+	border-collapse: collapse;
+}
 
-	th:first-child,
-	td:first-child {
-		position: sticky;
-		left: 0;
-		z-index: 10;
-	}
+th:first-child,
+td:first-child {
+	position: sticky;
+	left: 0;
+	z-index: 10;
+}
 </style>
