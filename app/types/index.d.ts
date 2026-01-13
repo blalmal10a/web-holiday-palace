@@ -1,10 +1,10 @@
 interface User {
     id: string;
     name: string;
-    email?: string;
-    email_verified_at?: string;
     phone: string;
-    roles: Role[];
+    is_blacklisted: boolean;
+    email?: string | null;
+    email_verified_at?: string;
 }
 interface Image {
     id: string;
@@ -14,15 +14,11 @@ interface Image {
 interface UserForm extends User {
     id?: string;
     roles?: null;
-    password: string;
-    password_confirmation: string;
+    is_blacklisted: boolean = false;
+    password?: string;
+    password_confirmation?: string;
 }
 interface UserDetail extends User {
-    id: string;
-    name: string;
-    email?: string;
-    email_verified_at?: string;
-    phone: string;
     roles: Role[];
 }
 

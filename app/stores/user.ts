@@ -14,8 +14,9 @@ export const useUserStore = defineStore('user', {
     data: {} as PaginationUser,
     form: {
       name: '',
-      email: '',
       phone: '',
+      is_blacklisted: false,
+      email: null,
       password: '',
       password_confirmation: '',
     } as UserForm,

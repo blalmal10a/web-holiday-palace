@@ -23,6 +23,7 @@
 				:state="store.form"
 				@submit="model.submitForm()"
 				class="space-y-4 w-full"
+				@error="console.log($event)"
 			>
 				<u-form-field label="Name" name="name">
 					<u-input v-model="store.form.name" icon="i-lucide-user" type="text" />
@@ -30,8 +31,18 @@
 				<u-form-field label="Phone" name="phone">
 					<u-input
 						v-model="store.form.phone"
-						icon="i-lucide-mail"
+						icon="i-lucide-phone"
 						type="phone"
+					/>
+				</u-form-field>
+				<u-form-field name="is_blacklisted">
+					<u-checkbox
+						indicator="end"
+						variant="card"
+						label="Blacklisted"
+						description="Check if the user is blacklisted"
+						v-model="store.form.is_blacklisted"
+						type="is_blacklisted"
 					/>
 				</u-form-field>
 				<u-switch

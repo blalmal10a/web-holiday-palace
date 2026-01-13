@@ -87,10 +87,12 @@ export function useUser() {
 export const userFormSchema = (updatePassword: boolean) => {
     const baseSchema = z.object({
         name: z.string().min(3),
-        email: z.email().optional(),
+        email: z
+            .email().optional().nullable(),
         phone: z.string(),
-        password: z.string(),
-        password_confirmation: z.string()
+        password: z.string().optional(),
+        password_confirmation: z.string().optional(),
+        is_blacklisted: z.boolean(),
     }) satisfies z.ZodType<UserForm>
 
     if (updatePassword) {
