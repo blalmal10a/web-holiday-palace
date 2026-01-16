@@ -13,13 +13,15 @@ const navLinks = [
         class="fixed top-0 w-full z-50 backdrop-blur-md bg-white/70 dark:bg-neutral-900/70 border-b border-neutral-200 dark:border-neutral-800"
     >
         <nav class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
-            <div class="flex items-center gap-2">
-                <UIcon
-                    name="i-lucide-palmtree"
-                    class="w-8 h-8 text-primary-600"
-                />
-                <span class="text-2xl font-serif font-bold tracking-tight">Holiday Palace</span>
-            </div>
+            <NuxtLink href="/">
+                <div class="flex items-center gap-2">
+                    <UIcon
+                        name="i-lucide-palmtree"
+                        class="w-8 h-8 text-primary-600"
+                    />
+                    <span class="text-2xl font-serif font-bold tracking-tight">Holiday Palace</span>
+                </div>
+            </NuxtLink>
 
             <div class="hidden md:flex items-center gap-8">
                 <UButton
@@ -66,7 +68,6 @@ const navLinks = [
                         />
 
                         <!-- <USeparator class="my-2" />
-
                         <UButton
                             color="primary"
                             label="Book Now"

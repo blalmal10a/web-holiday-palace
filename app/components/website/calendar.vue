@@ -25,7 +25,10 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
 
 </script>
 <template>
-    <div id="booking">
+    <div
+        id="booking"
+        class="container mx-auto"
+    >
         <div class="p-3">
             <BookingsCalendarDateRange />
         </div>
@@ -97,7 +100,7 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
                                     <div
                                         class="rounded-lg px-2 whitespace-nowrap flex items-center h-8 relative cursor-pointer"
                                         :class="{
-                                            'text-warning bg-elevated': !!cell.bookingInfo,
+                                            'alloted-rooms text-xs': !!cell.bookingInfo,
                                         }"
                                     >
                                         Reserved
@@ -149,5 +152,10 @@ td:first-child {
     position: sticky;
     left: 0;
     z-index: 10;
+}
+
+.alloted-rooms {
+    background: #fb4f3f;
+    background: radial-gradient(circle, rgba(251, 79, 63, 1) 0%, rgba(252, 70, 107, 1) 100%);
 }
 </style>

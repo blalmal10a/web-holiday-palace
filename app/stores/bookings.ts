@@ -11,7 +11,7 @@ export const useBookingStore = defineStore('booking', {
       page: 1,
       pageSize: 10,
       start: format(new Date(), 'yyyy-MM-dd'),
-      end: format(addDays(new Date(), 7), 'yyyy-MM-dd')
+      end: format(addDays(new Date(), 30), 'yyyy-MM-dd')
     },
     data: {} as PaginationBooking,
     form: {

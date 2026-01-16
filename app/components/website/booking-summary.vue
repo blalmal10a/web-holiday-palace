@@ -25,7 +25,7 @@ const message = computed(() => {
     Check in: ${format(startCell.date, 'Do MMM, yyyy')}\n
     Check out: ${format(endCell.date, 'Do MMM, yyyy')}\n
 
-    url: \`${window.location.origin}/hotels/calendars?#booking?start_date=${startCell.date}&end_date=${endCell.date}&room_id=${startCell.room.id}\`
+    url: \`${window.location.origin}/hotels/calendar#booking?start_date=${startCell.date}&end_date=${endCell.date}&room_id=${startCell.room.id}\`
     `
     return msg;
 })

@@ -76,7 +76,10 @@ onMounted(() => {
 })
 </script>
 <template>
-	<div id="booking">
+	<div
+		id="booking"
+		class="container m-auto"
+	>
 		<div
 			id="invoice"
 			class="w-full overflow-auto pt-4"
