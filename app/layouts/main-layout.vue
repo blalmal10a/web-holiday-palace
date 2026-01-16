@@ -1,107 +1,117 @@
 <script setup lang="ts">
-	import type {NavigationMenuItem} from "@nuxt/ui"
+import type { NavigationMenuItem } from "@nuxt/ui"
 
-	const route = useRoute()
-	const toast = useToast()
+const route = useRoute()
+const toast = useToast()
 
-	const open = ref(false)
+const open = ref(false)
 
-	const links = computed(() => [
-		[
-			{
-				label: "Calendar",
-				icon: "i-lucide-calendar",
-				to: {
-					name: "hotels-calendar",
-				},
-				onSelect: () => {
-					open.value = false
-				},
-				active:
-					useRoute().name === "hotels-calendar-id-form" ||
-					useRoute().name === "hotels-calendar",
+const links = computed(() => [
+	[
+		{
+			label: "Calendar",
+			icon: "i-lucide-calendar",
+			to: {
+				name: "hotels-calendar",
 			},
-			{
-				label: "Expenditure",
-				icon: "i-lucide-indian-rupee",
-				to: {
-					name: "hotels-expenditures",
-				},
-				onSelect: () => {
-					open.value = false
-				},
-				active:
-					useRoute().name === "hotels-expenditures-id-form" ||
-					useRoute().name === "hotels-expenditures",
+			onSelect: () => {
+				open.value = false
 			},
-			// {
-			// 	label: "Forms",
-			// 	icon: "i-lucide-clipboard-list",
-			// 	defaultOpen: true,
-			// 	onSelect: () => {
-			// 		open.value = false
-			// 	},
-			// 	children: [
-			// 	],
-			// },
-		],
-		[
-			{
-				label: "Users",
-				icon: "i-lucide-house",
-				to: {
-					name: "index",
-				},
-				onSelect: () => {
-					open.value = false
-				},
-				active:
-					useRoute().name === "index" ||
-					useRoute().name === "hotels-users-id-form",
+			active:
+				useRoute().name === "hotels-calendar-id-form" ||
+				useRoute().name === "hotels-calendar",
+		},
+		{
+			label: "Expenditure",
+			icon: "i-lucide-indian-rupee",
+			to: {
+				name: "hotels-expenditures",
 			},
-			{
-				label: "Rooms",
-				icon: "i-lucide-bed",
-				to: {
-					name: "hotels-rooms",
-				},
-				onSelect: () => {
-					open.value = false
-				},
-				active:
-					useRoute().name === "hotels-rooms-id-form" ||
-					useRoute().name === "hotels-rooms",
+			onSelect: () => {
+				open.value = false
 			},
-			{
-				label: "Menu",
-				icon: "i-lucide-utensils",
-				to: {
-					name: "hotels-menu-items",
-				},
-				onSelect: () => {
-					open.value = false
-				},
-				active:
-					useRoute().name === "hotels-menu-items-id-form" ||
-					useRoute().name === "hotels-menu-items",
+			active:
+				useRoute().name === "hotels-expenditures-id-form" ||
+				useRoute().name === "hotels-expenditures",
+		},
+		// {
+		// 	label: "Forms",
+		// 	icon: "i-lucide-clipboard-list",
+		// 	defaultOpen: true,
+		// 	onSelect: () => {
+		// 		open.value = false
+		// 	},
+		// 	children: [
+		// 	],
+		// },
+	],
+	[
+		{
+			label: "Users",
+			icon: "i-lucide-user",
+			to: {
+				name: "hotels-users",
 			},
+			onSelect: () => {
+				open.value = false
+			},
+			active:
+				useRoute().name === "hotels-users" ||
+				useRoute().name === "hotels-users-id-form",
+		},
+		{
+			label: "Rooms",
+			icon: "i-lucide-bed",
+			to: {
+				name: "hotels-rooms",
+			},
+			onSelect: () => {
+				open.value = false
+			},
+			active:
+				useRoute().name === "hotels-rooms-id-form" ||
+				useRoute().name === "hotels-rooms",
+		},
+		{
+			label: "Menu",
+			icon: "i-lucide-utensils",
+			to: {
+				name: "hotels-menu-items",
+			},
+			onSelect: () => {
+				open.value = false
+			},
+			active:
+				useRoute().name === "hotels-menu-items-id-form" ||
+				useRoute().name === "hotels-menu-items",
+		},
 
-			{
-				label: "Bookings",
-				icon: "i-lucide-list-todo",
-				to: {
-					name: "hotels-bookings",
-				},
-				onSelect: () => {
-					open.value = false
-				},
-				active:
-					useRoute().name === "hotels-bookings-id-form" ||
-					useRoute().name === "hotels-bookings",
+		{
+			label: "Bookings",
+			icon: "i-lucide-list-todo",
+			to: {
+				name: "hotels-bookings",
 			},
-		],
-	])
-	onMounted(async () => {})
+			onSelect: () => {
+				open.value = false
+			},
+			active:
+				useRoute().name === "hotels-bookings-id-form" ||
+				useRoute().name === "hotels-bookings",
+		},
+		{
+			label: "Home",
+			icon: "i-lucide-house",
+			to: {
+				name: "index",
+			},
+			onSelect: () => {
+				open.value = false
+			},
+		},
+	],
+])
+onMounted(async () => { })
 </script>
 
 <template>
@@ -113,9 +123,9 @@
 				collapsible
 				resizable
 				class="bg-elevated/25"
-				:ui="{footer: 'lg:border-t lg:border-default'}"
+				:ui="{ footer: 'lg:border-t lg:border-default' }"
 			>
-				<template #header="{collapsed}">
+				<template #header="{ collapsed }">
 					<NuxtLink
 						class="flex w-full items-center"
 						:class="{
@@ -139,7 +149,7 @@
 						</h3>
 					</NuxtLink>
 				</template>
-				<template #default="{collapsed}">
+				<template #default="{ collapsed }">
 					<UNavigationMenu
 						:collapsed="collapsed"
 						:items="links[0]"
@@ -156,12 +166,15 @@
 						class="mt-auto"
 					/>
 				</template>
-				<template #footer="{collapsed}">
+				<template #footer="{ collapsed }">
 					<MainUserMenu :collapsed="collapsed" />
 				</template>
 			</UDashboardSidebar>
 
-			<UDashboardPanel id="home" :ui="{body: ''}">
+			<UDashboardPanel
+				id="home"
+				:ui="{ body: '' }"
+			>
 				<template #header>
 					<UDashboardNavbar :title="`${useRoute().meta.pageTitle ?? ''}`">
 						<template #leading>
