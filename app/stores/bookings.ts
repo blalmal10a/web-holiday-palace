@@ -1,3 +1,5 @@
+import { addDays, format } from "date-fns";
+
 export const useBookingStore = defineStore('booking', {
   state: () => ({
     loadingGetBookings: false,
@@ -8,6 +10,8 @@ export const useBookingStore = defineStore('booking', {
     pagination: {
       page: 1,
       pageSize: 10,
+      start: format(new Date(), 'yyyy-MM-dd'),
+      end: format(addDays(new Date(), 7), 'yyyy-MM-dd')
     },
     data: {} as PaginationBooking,
     form: {
@@ -20,7 +24,7 @@ export const useBookingStore = defineStore('booking', {
     setData(payload: PaginationBooking) {
       this.data = payload;
     },
-    setPagination(payload: { page: number; pageSize: number }) {
+    setPagination(payload: typeof this.pagination) {
       this.pagination = payload;
     },
     setForm(payload: BookingForm) {

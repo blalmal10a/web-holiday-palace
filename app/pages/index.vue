@@ -1,9 +1,16 @@
 <script setup lang="ts">
+import { uuidv7 } from 'uuidv7';
+
 /**
  * Holiday Palace Landing Page
  * Features: Nuxt UI Carousel, Room Showcase, Restaurant Menu, and Contact Section.
  */
-
+const room = useRoom();
+const roomStore = useRoomStore();
+await room.fetchData();
+const menuItem = useMenuItem();
+const menuItemStore = useMenuItemStore();
+await menuItem.fetchData();
 // HERO SLIDESHOW DATA
 const carouselItems = [
 	{
@@ -24,29 +31,7 @@ const carouselItems = [
 ]
 
 // HOTEL ROOMS DATA
-const rooms = [
-	{
-		name: 'Presidential Suite',
-		price: '$850',
-		description: 'Breathtaking ocean views with a private terrace and personal butler service.',
-		features: ['King Bed', 'Ocean View', 'Private Pool'],
-		image: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&q=80&w=800'
-	},
-	{
-		name: 'Executive Deluxe',
-		price: '$420',
-		description: 'Modern elegance meeting comfort, perfect for business or leisure travelers.',
-		features: ['Queen Bed', 'City View', 'Work Station'],
-		image: 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&q=80&w=800'
-	},
-	{
-		name: 'Family Sanctuary',
-		price: '$550',
-		description: 'Spacious interconnected rooms designed for ultimate family bonding.',
-		features: ['2 Bedrooms', 'Garden View', 'Kitchenette'],
-		image: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&q=80&w=800'
-	}
-]
+
 
 // RESTAURANT MENU DATA
 const menuCategories = [
@@ -78,51 +63,7 @@ const menuCategories = [
 	<div class="min-h-screen bg-neutral-50 dark:bg-neutral-950 font-sans selection:bg-primary-500/30">
 
 		<!-- Navigation -->
-		<header
-			class="fixed top-0 w-full z-50 backdrop-blur-md bg-white/70 dark:bg-neutral-900/70 border-b border-neutral-200 dark:border-neutral-800"
-		>
-			<nav class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
-				<div class="flex items-center gap-2">
-					<UIcon
-						name="i-lucide-palmtree"
-						class="w-8 h-8 text-primary-600"
-					/>
-					<span class="text-2xl font-serif font-bold tracking-tight">Holiday Palace</span>
-				</div>
-
-				<div class="hidden md:flex items-center gap-8">
-					<UButton
-						variant="ghost"
-						color="neutral"
-						label="Rooms"
-						to="#rooms"
-					/>
-					<UButton
-						variant="ghost"
-						color="neutral"
-						label="Dining"
-						to="#dining"
-					/>
-					<UButton
-						variant="ghost"
-						color="neutral"
-						label="Contact"
-						to="#contact"
-					/>
-					<UButton
-						color="primary"
-						label="Book Now"
-						size="lg"
-					/>
-				</div>
-
-				<UButton
-					icon="i-heroicons-bars-3"
-					variant="ghost"
-					class="md:hidden"
-				/>
-			</nav>
-		</header>
+		<WebsiteHeader />
 
 		<!-- Hero Slideshow -->
 		<section class="relative h-screen overflow-hidden">
@@ -164,62 +105,7 @@ const menuCategories = [
 			</UCarousel>
 		</section>
 
-		<!-- Hotel Rooms Section -->
-		<section
-			id="rooms"
-			class="py-24 max-w-7xl mx-auto px-4"
-		>
-			<div class="text-center mb-16 space-y-4">
-				<h2 class="text-4xl font-serif font-bold text-neutral-900 dark:text-white">World-Class Accommodations
-				</h2>
-				<p class="text-neutral-500 max-w-2xl mx-auto italic text-lg">Every room is a masterpiece of design and
-					comfort.</p>
-			</div>
-
-			<div class="grid md:grid-cols-3 gap-8">
-				<UCard
-					v-for="room in rooms"
-					:key="room.name"
-					class="overflow-hidden group border-none shadow-xl hover:shadow-2xl transition-all duration-300 ring-1 ring-neutral-200 dark:ring-neutral-800"
-				>
-					<div class="relative overflow-hidden aspect-[4/3]">
-						<NuxtImg
-							:src="room.image"
-							class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-							alt="Room image"
-						/>
-						<div
-							class="absolute top-4 right-4 bg-white/90 dark:bg-neutral-900/90 px-3 py-1 rounded-full text-sm font-bold shadow-sm">
-							From {{ room.price }} / Night
-						</div>
-					</div>
-
-					<div class="p-6 space-y-3">
-						<h3 class="text-xl font-bold">{{ room.name }}</h3>
-						<p class="text-sm text-neutral-500 leading-relaxed">{{ room.description }}</p>
-						<div class="flex flex-wrap gap-2 pt-2">
-							<UBadge
-								v-for="feat in room.features"
-								:key="feat"
-								variant="subtle"
-								color="neutral"
-								size="sm"
-							>
-								{{ feat }}
-							</UBadge>
-						</div>
-					</div>
-
-					<template #footer>
-						<UButton
-							block
-							label="Check Availability"
-							trailing-icon="i-heroicons-arrow-right"
-						/>
-					</template>
-				</UCard>
-			</div>
-		</section>
+		<WebsiteRoom :rooms="roomStore.data.data" />
 
 		<!-- Dining Section (The Palace Kitchen) -->
 		<section
@@ -293,12 +179,12 @@ const menuCategories = [
 		>
 			<div class="max-w-7xl mx-auto px-4 grid md:grid-cols-4 gap-12 mb-16">
 				<div class="space-y-6">
-					<div class="flex items-center gap-2">
-						<UIcon
+					<div class="flex items-center gap-2 ">
+						<!-- <UIcon
 							name="i-lucide-palmtree"
 							class="w-8 h-8 text-primary-500"
-						/>
-						<span class="text-2xl font-serif font-bold">Holiday Palace</span>
+						/> -->
+						<span class="text-2xl font-serif font-bold">Paradise</span>
 					</div>
 					<p class="text-neutral-400 text-sm leading-relaxed">
 						Located in the heart of the Amalfi Coast, offering unparalleled luxury since 1924.
@@ -374,11 +260,19 @@ const menuCategories = [
 				</div>
 			</div>
 		</footer>
+		<UModal
+			v-model:open="useCalendarStore().openWebsiteCalendar"
+			fullscreen
+		>
+			<template #body>
+				<WebsiteCalendar />
 
+			</template>
+		</UModal>
 	</div>
 </template>
 
-<style scoped>
+<style>
 /* Custom Serif Font handling (Optional: if you want a specific feeling) */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 

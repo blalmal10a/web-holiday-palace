@@ -11,6 +11,7 @@ export function useBooking() {
 
     const fetchData = async () => {
         store.setLoading('loadingGetBookings', true)
+        console.log('log before api.get', store.pagination);
         try {
             const response = await api.get('/bookings', {
                 params: {

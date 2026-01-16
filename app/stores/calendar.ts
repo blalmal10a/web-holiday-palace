@@ -2,6 +2,7 @@ import { addDays, differenceInDays, format, isBefore } from "date-fns";
 
 export const useCalendarStore = defineStore('calendar', {
     state: () => ({
+        openWebsiteCalendar: false,
         data: [
         ] as CalendarData[][],
         dateList: [] as string[],
@@ -10,8 +11,11 @@ export const useCalendarStore = defineStore('calendar', {
     actions: {
         // 
         async initCalendar(roomList: Room[], bookingList: Booking[]) {
-            let startDate = format(new Date(), 'yyyy-MM-dd')
-            let endDate = format(addDays(startDate, 7), 'yyyy-MM-dd');
+            let websiteCalendarModal = this.openWebsiteCalendar;
+            this.$reset();
+            this.openWebsiteCalendar = websiteCalendarModal;
+            let startDate = useBookingStore().pagination.start;
+            let endDate = useBookingStore().pagination.end;
             this.dateList = getBookingDateList(startDate, endDate)
             let mappedBookings = mapBooking(bookingList)
             if (!roomList.length) {
@@ -55,6 +59,7 @@ export const useCalendarStore = defineStore('calendar', {
                 this.data.push(currentRow)
                 // 
             })
-        }
+        },
+        // reRenderCalendar()
     }
 });
