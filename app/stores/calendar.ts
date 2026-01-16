@@ -1,12 +1,14 @@
-import { addDays, differenceInDays, format, isBefore } from "date-fns";
+import { addDays, differenceInDays, format, isBefore, isWithinInterval, max, min, toDate } from "date-fns";
 
 export const useCalendarStore = defineStore('calendar', {
     state: () => ({
         openWebsiteCalendar: false,
+        currentHoverCell: undefined as CalendarData | undefined,
         data: [
         ] as CalendarData[][],
         dateList: [] as string[],
         showBookingForm: false,
+        selectedCells: [] as CalendarData[],
     }),
     actions: {
         // 
@@ -60,6 +62,33 @@ export const useCalendarStore = defineStore('calendar', {
                 // 
             })
         },
-        // reRenderCalendar()
+        addSelectedCell(cell: CalendarData) {
+            this.selectedCells.push(cell)
+            if (this.selectedCells.length == 2) {
+                this.selectedCells.splice(0, 2);
+            }
+        },
+        isCellSelected(cell: CalendarData) {
+            return this.selectedCells.some(selectedCell => selectedCell.room.id === cell.room.id && selectedCell.date === cell.date)
+        },
+        isDateBetween(cell: CalendarData) {
+            const selectedCell = this.selectedCells[0];
+            if (!selectedCell) return false;
+
+            if (cell.room.id !== selectedCell.room.id) return false;
+            if (selectedCell?.room.id != this.currentHoverCell?.room.id) return false;
+
+            const hoverCell = this.currentHoverCell;
+            if (!hoverCell) return false;
+
+            const currentDate = toDate(cell.date);
+            const selectedDate = toDate(selectedCell.date);
+            const hoverDate = toDate(hoverCell.date);
+
+            const start = min([selectedDate, hoverDate]);
+            const end = max([selectedDate, hoverDate]);
+
+            return isWithinInterval(currentDate, { start, end });
+        }
     }
 });

@@ -82,6 +82,12 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
                             <td
                                 v-if="shouldRender(cellIndex, cell)"
                                 :colspan="cell.cellLength"
+                                @mouseover="() => {
+                                    calendarStore.currentHoverCell = cell;
+                                }"
+                                @mouseleave="() => {
+                                    calendarStore.currentHoverCell = undefined;
+                                }"
                             >
 
                                 <div
@@ -98,11 +104,28 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
                                     </div>
                                 </div>
                                 <div
-                                    class="p-4 border border-default"
+                                    class="py-1 border border-default "
                                     v-if="!cell.bookingInfo"
+                                    @click="useCalendarStore().addSelectedCell(cell)"
                                 >
                                     <div
-                                        class="rounded-lg px-2 whitespace-nowrap flex items-center h-8 relative cursor-pointer">
+                                        class="px-1"
+                                        :class="{
+                                            'bg-elevated': useCalendarStore().isDateBetween(cell),
+                                        }"
+                                    >
+                                        <div
+                                            class="p-3 rounded-xl "
+                                            :class="{
+                                                'bg-elevated outline-2 outline-primary': useCalendarStore().isCellSelected(cell),
+                                                'hover:bg-elevated hover:outline-1 hover:outline-primary': !useCalendarStore().isCellSelected(cell),
+                                            }"
+                                        >
+                                            <div
+                                                class="rounded-lg px-2 whitespace-nowrap flex items-center h-8 relative cursor-pointer ">
+
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </td>
