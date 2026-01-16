@@ -21,3 +21,8 @@ useHead({
 		</NuxtLayout>
 	</UApp>
 </template>
+<style>
+html {
+	scrollbar-gutter: stable;
+}
+</style>
