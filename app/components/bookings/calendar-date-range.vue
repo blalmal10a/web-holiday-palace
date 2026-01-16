@@ -6,10 +6,7 @@ const df = new DateFormatter('en-IN', {
     dateStyle: 'medium'
 })
 
-const modelValue = shallowRef({
-    start: new CalendarDate(2022, 1, 20),
-    end: new CalendarDate(2022, 2, 10)
-})
+const openCalendar = ref(false)
 const booking = useBooking();
 const bookingStore = useBookingStore();
 function updateCalendar() {
@@ -23,25 +20,16 @@ function updateCalendar() {
 </script>
 
 <template>
-    <UPopover>
+    <UPopover v-model:open="openCalendar">
 
         <UButton
             color="neutral"
             variant="subtle"
             icon="i-lucide-calendar"
         >
-            <template v-if="true">
-                <template v-if="bookingStore.pagination.start && bookingStore.pagination.end">
-                    {{ df.format(new Date(bookingStore.pagination.start)) }} - {{
-                        df.format(new Date(bookingStore.pagination.end)) }}
-                </template>
-
-                <template v-else>
-                    {{ df.format(modelValue.start.toDate(getLocalTimeZone())) }}
-                </template>
-            </template>
-            <template v-else>
-                Pick a date
+            <template v-if="bookingStore.pagination.start && bookingStore.pagination.end">
+                {{ df.format(new Date(bookingStore.pagination.start)) }} - {{
+                    df.format(new Date(bookingStore.pagination.end)) }}
             </template>
         </UButton>
 
@@ -64,6 +52,7 @@ function updateCalendar() {
                         bookingStore.pagination.end = $event.end?.toString();
 
                     $nextTick(() => updateCalendar())
+                    openCalendar = false;
                 }"
             />
         </template>
