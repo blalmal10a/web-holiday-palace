@@ -3,6 +3,7 @@ import { addDays, differenceInDays, format, isBefore, isWithinInterval, max, min
 export const useCalendarStore = defineStore('calendar', {
     state: () => ({
         openWebsiteCalendar: false,
+        showBookingSummary: false,
         currentHoverCell: undefined as CalendarData | undefined,
         data: [
         ] as CalendarData[][],
@@ -63,9 +64,16 @@ export const useCalendarStore = defineStore('calendar', {
             })
         },
         addSelectedCell(cell: CalendarData) {
+            if (this.selectedCells[0]) {
+                if (this.selectedCells[0].room.id != cell.room.id) {
+                    this.selectedCells = []
+                }
+            }
             this.selectedCells.push(cell)
+
             if (this.selectedCells.length == 2) {
-                this.selectedCells.splice(0, 2);
+                // if they are not in the same cell
+                this.showBookingSummary = true;
             }
         },
         isCellSelected(cell: CalendarData) {
@@ -89,6 +97,19 @@ export const useCalendarStore = defineStore('calendar', {
             const end = max([selectedDate, hoverDate]);
 
             return isWithinInterval(currentDate, { start, end });
+        },
+        isBetweenSelectedDates(cell: CalendarData) {
+            const selectedCell1 = this.selectedCells[0];
+            const selectedCell2 = this.selectedCells[1];
+            const targetDate = cell.date;
+            // check if target date is between two selected cells
+            if (!selectedCell1 || !selectedCell2) return false;
+            if (cell.room.id != selectedCell1.room.id) return false;
+            return isWithinInterval(targetDate, {
+                start: min([toDate(selectedCell1.date), toDate(selectedCell2.date)]),
+                end: max([toDate(selectedCell1.date), toDate(selectedCell2.date)]),
+            })
+
         }
     }
 });

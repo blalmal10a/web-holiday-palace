@@ -112,6 +112,8 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
                                         class="px-1"
                                         :class="{
                                             'bg-elevated': useCalendarStore().isDateBetween(cell),
+                                            'bg-accented': useCalendarStore().isBetweenSelectedDates(cell),
+
                                         }"
                                     >
                                         <div
@@ -135,6 +137,7 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
             </table>
         </div>
     </div>
+    <WebsiteBookingSummary />
 </template>
 <style scoped>
 table {
