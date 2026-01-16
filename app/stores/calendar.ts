@@ -2,7 +2,7 @@ import { addDays, differenceInDays, format, isBefore, isWithinInterval, max, min
 
 export const useCalendarStore = defineStore('calendar', {
     state: () => ({
-        openWebsiteCalendar: false,
+        showWebsiteCalendar: false,
         showBookingSummary: false,
         currentHoverCell: undefined as CalendarData | undefined,
         data: [
@@ -14,9 +14,9 @@ export const useCalendarStore = defineStore('calendar', {
     actions: {
         // 
         async initCalendar(roomList: Room[], bookingList: Booking[]) {
-            let websiteCalendarModal = this.openWebsiteCalendar;
+            let websiteCalendarModal = this.showWebsiteCalendar;
             this.$reset();
-            this.openWebsiteCalendar = websiteCalendarModal;
+            this.showWebsiteCalendar = websiteCalendarModal;
             let startDate = useBookingStore().pagination.start;
             let endDate = useBookingStore().pagination.end;
             this.dateList = getBookingDateList(startDate, endDate)

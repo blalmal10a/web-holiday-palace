@@ -261,7 +261,7 @@ const menuCategories = [
 			</div>
 		</footer>
 		<UModal
-			v-model:open="useCalendarStore().openWebsiteCalendar"
+			v-model:open="useCalendarStore().showWebsiteCalendar"
 			fullscreen
 		>
 			<template #body>

@@ -5,6 +5,13 @@ const props = defineProps({
 
     }
 })
+// useCalendarStore().showWebsiteCalendar
+watch(
+    () => useRoute().fullPath,
+    (value) => {
+        useCalendarStore().showWebsiteCalendar = false
+    }
+)
 </script>
 <template>
     <section
@@ -71,6 +78,7 @@ const props = defineProps({
                 <template #footer>
                     <UButton
                         block
+                        @click="useCalendarStore().showWebsiteCalendar = true"
                         label="Check Availability"
                         trailing-icon="i-heroicons-arrow-right"
                     />

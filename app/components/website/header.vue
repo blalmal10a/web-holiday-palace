@@ -34,7 +34,7 @@ const navLinks = [
                     color="primary"
                     label="Book Now"
                     size="lg"
-                    @click="useCalendarStore().openWebsiteCalendar = true"
+                    @click="useCalendarStore().showWebsiteCalendar = true"
                 />
             </div>
 
