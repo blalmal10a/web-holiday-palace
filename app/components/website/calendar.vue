@@ -1,14 +1,31 @@
 <script setup lang="ts">
-import { addDays, format } from "date-fns"
+import { format } from "date-fns"
 
 const roomStore = useRoomStore()
 const room = useRoom()
 const booking = useBooking()
 const bookingStore = useBookingStore()
 const calendarStore = useCalendarStore()
+const user = useUser();
+const userStore = useUserStore();
 await room.fetchData()
 await booking.fetchData()
 calendarStore.initCalendar(roomStore.data.data, bookingStore.data.data)
+const findUserByPhone = useDebounceFn(
+    async (phone: string) => {
+        userStore.params.phone = phone;
+        calendarStore.clientData.name = '';
+        await user.findUserByPhone();
+        if (userStore.detail.id) {
+            calendarStore.clientData = userStore.form;
+            calendarStore.enableClientCalendar = true;
+        } else {
+            // userStore.
+        }
+        calendarStore.showClientNameField = true;
+    },
+    500
+)
 function shouldRender(cellIndex: number, cell: CalendarData) {
     let shouldRender = false
     if (cell.bookingInfo && cell.start_cell) {
@@ -22,7 +39,6 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
     }
     return shouldRender
 }
-
 </script>
 <template>
     <div
@@ -31,12 +47,40 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
     >
         <div class="p-3">
             <BookingsCalendarDateRange />
+            <div class="grid gap-2 mt-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                <UInput
+                    autofocus
+                    v-model="calendarStore.clientData.phone"
+                    placeholder="Phone"
+                    :loading="useUserStore().loadingGetDetails"
+                    @update:model-value="$nextTick(
+                        () => {
+                            findUserByPhone($event)
+                        }
+                    )"
+                />
+                <UInput
+                    v-if="calendarStore.showClientNameField"
+                    v-model="calendarStore.clientData.name"
+                    placeholder="Name"
+                    @update:model-value="($event: string) => {
+                        if ($event)
+                            calendarStore.enableClientCalendar = true;
+                        else
+                            calendarStore.enableClientCalendar = false;
+                    }"
+                />
+            </div>
         </div>
         <div
             id="invoice"
             class="w-full overflow-auto pt-4"
         >
-            <table>
+            <table
+                class=""
+                :class="{
+                }"
+            >
                 <thead>
                     <tr>
                         <th class="bg-default">

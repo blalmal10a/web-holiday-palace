@@ -4,12 +4,18 @@ export const useCalendarStore = defineStore('calendar', {
     state: () => ({
         showWebsiteCalendar: false,
         showBookingSummary: false,
+        showClientNameField: false,
+        enableClientCalendar: false,
         currentHoverCell: undefined as CalendarData | undefined,
         data: [
         ] as CalendarData[][],
         dateList: [] as string[],
         showBookingForm: false,
         selectedCells: [] as CalendarData[],
+        clientData: {
+        } as UserForm,
+
+
     }),
     actions: {
         // 

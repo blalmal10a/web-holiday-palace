@@ -24,16 +24,40 @@ export function useUser() {
             store.setLoading('loadingGetUsers', false)
         }
     }
+    const findUserByPhone = async () => {
+        try {
+            store.setLoading('loadingGetDetails', true)
+            const data = await api.get('find-user-by-phone', {
+                params: {
+                    phone: store.params.phone
+                }
+            })
+            store.detail = data as UserDetail;
+            store.form = data as UserForm;
 
+        } catch (error) {
+            notifyError(error);
+        } finally {
+            store.setLoading('loadingGetDetails', false)
+
+        }
+    }
     const fetchDetail = async (id?: string) => {
         const userId = id || route.params.id as string
         try {
-            const response = await api.get(`/users/${userId}`)
+            store.setLoading('loadingGetDetails', true)
+            const response = await api.get(`/users/${userId}`, {
+                params: {
+                    ...store.params
+                }
+            })
             store.setForm(response)
             store.detail = response as UserDetail;
         } catch (error) {
             notifyError(error);
             console.error('Failed to fetch user detail', error)
+        } finally {
+            store.setLoading('loadingGetDetails', false)
         }
     }
 
@@ -86,7 +110,8 @@ export function useUser() {
         fetchData,
         fetchDetail,
         submitForm,
-        deleteUser
+        deleteUser,
+        findUserByPhone
     }
 }
 

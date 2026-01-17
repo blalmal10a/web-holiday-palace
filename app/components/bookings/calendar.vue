@@ -68,10 +68,43 @@ watch(
 	},
 )
 onMounted(() => {
-	if (useRoute().hash) {
+	const route = useRoute();
+	if (typeof route.query.start_date === 'string' && typeof route.query.end_date === 'string' && typeof route.query.room_id === 'string') {
+
+		// if (props.cell.bookingInfo) {
+		// 	bookingStore.setForm({ ...props.cell.bookingInfo })
+		// } else {
+		// 	bookingStore.form.room_id = props.cell.room.id
+		// 	bookingStore.form.check_in_date = props.cell.date
+		// 	bookingStore.form.checkout_date = format(
+		// 		addDays(props.cell.date, 1),
+		// 		"yyyy-MM-dd",
+		// 	)
+		// }
+
+		bookingStore.form.room_id = route.query.room_id
+		bookingStore.form.check_in_date = route.query.start_date
+		bookingStore.form.checkout_date = route.query.end_date
+		calendarStore.showBookingForm = true;
+		if (route.query.client_id) {
+			bookingStore.form.client_id = route.query.client_id as string;
+		} else {
+			bookingStore.form.client_id = route.query.client_name as string;;
+			bookingStore.form.new_client_name = route.query.client_name as string;;
+			bookingStore.form.new_client_phone = route.query.client_phone as string;;
+		}
+		console.log('here')
+		useRouter().push({
+			hash: "#booking",
+			query: {
+				...route.query,
+			}
+		})
+	} else {
 		useRouter().push({
 			name: "hotels-calendar",
 		})
+		console.log('else')
 	}
 })
 </script>

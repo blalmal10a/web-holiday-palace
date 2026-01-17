@@ -9,6 +9,7 @@ export const defaultUserPagination = {
 export const useUserStore = defineStore('user', {
   state: () => ({
     loadingGetUsers: false,
+    loadingGetDetails: false,
     loadingSubmitUserForm: false,
     loadingDeleteUser: false,
     update_password: false,
@@ -31,6 +32,9 @@ export const useUserStore = defineStore('user', {
       email: '',
       phone: ''
     } as UserDetail,
+    params: {
+      phone: undefined as string | undefined,
+    }
   }),
 
   actions: {
@@ -43,7 +47,7 @@ export const useUserStore = defineStore('user', {
     setPagination(payload: typeof defaultUserPagination) {
       this.pagination = payload;
     },
-    setLoading(key: 'loadingGetUsers' | 'loadingSubmitUserForm' | 'loadingDeleteUser', value: boolean) {
+    setLoading(key: 'loadingGetUsers' | 'loadingSubmitUserForm' | 'loadingDeleteUser' | 'loadingGetDetails', value: boolean) {
       this[key] = value;
     },
     setUpdatePassword(value: boolean) {

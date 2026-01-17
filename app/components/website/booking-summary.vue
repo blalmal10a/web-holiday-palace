@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { format } from 'date-fns';
+import BookingStepper from './booking-stepper.vue';
 
 const calendarStore = useCalendarStore();
 const totalCost = computed(
@@ -25,7 +26,7 @@ const message = computed(() => {
     Check in: ${format(startCell.date, 'Do MMM, yyyy')}\n
     Check out: ${format(endCell.date, 'Do MMM, yyyy')}\n
 
-    url: \`${window.location.origin}/hotels/calendar#booking?start_date=${startCell.date}&end_date=${endCell.date}&room_id=${startCell.room.id}\`
+    url: \`${window.location.origin}/hotels/calendar?start_date=${startCell.date}&end_date=${endCell.date}&room_id=${startCell.room.id}&client_id=${calendarStore.clientData.id}&client_name=${calendarStore.clientData.name}&client_phone=${calendarStore.clientData.phone}\`
     `
     return msg;
 })
@@ -37,9 +38,10 @@ const message = computed(() => {
         @after:leave="calendarStore.selectedCells.splice(0, 2)"
     >
         <template #title>
-            Booking summary
+            Booking
         </template>
         <template #body>
+            <BookingStepper />
             <table>
                 <tr v-if="calendarStore.selectedCells[0]">
                     <td>Room</td>
