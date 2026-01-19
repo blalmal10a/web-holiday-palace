@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const imageList = ref<string[]>([])
 const carouselItems = [
     "/assets/images/website/welcome-tiles.jpg",
     "/assets/images/website/basketball-court.jpg",
@@ -13,13 +14,23 @@ const another = [
     'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=1920',
     'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&q=80&w=1920',
 ]
+const toggle = ref(false)
+onMounted(() => {
+    // imageList.value = another;
+})
 </script>
 <template>
 
     <section class="relative h-screen overflow-hidden">
+        <div class="absolute bottom-0 left-0  z-10 p-1">
+            <USwitch
+                v-model="toggle"
+                label="Use holiday palace images"
+            />
+        </div>
         <UCarousel
             v-slot="{ item }"
-            :items="carouselItems"
+            :items="toggle ? carouselItems : another"
             :ui="{ item: 'basis-full' }"
             class="h-full"
             indicators
