@@ -101,8 +101,8 @@ export const roomFormSchema = () => {
             path: z.string(),
             url: z.string(),
         })),
-        deleted_image_ids: z.array(z.string()),
-        image_files: z.array(z.instanceof(File)),
+        deleted_image_ids: z.array(z.string()).optional(),
+        image_files: z.array(z.instanceof(File)).optional(),
     }) satisfies z.ZodType<RoomForm>
     return baseSchema;
 }

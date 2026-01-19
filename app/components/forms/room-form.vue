@@ -92,7 +92,7 @@
 						label="Dorm"
 					/>
 				</u-form-field>
-				<u-form-field label="Capacity" name="capacity">
+				<u-form-field label="Capacity" name="capacity" type="number">
 					<u-input
 						v-model="store.form.capacity"
 						icon="i-lucide-user"
@@ -122,6 +122,7 @@
 						@update:model-value="calculateCapacity"
 					/>
 				</u-form-field>
+
 				<u-form-field label="Description" name="description">
 					<div class="flex space-x-1.5 items-center">
 						<div class="flex-1">

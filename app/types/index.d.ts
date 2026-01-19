@@ -77,8 +77,8 @@ interface RoomForm {
     staff_id: string;
     staff?: User;
     images: Image[];
-    deleted_image_ids: string[]
-    image_files: File[]
+    deleted_image_ids?: string[]
+    image_files?: File[]
 }
 interface Room extends RoomForm {
     id: string;
