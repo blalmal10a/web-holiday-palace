@@ -172,6 +172,9 @@
 							<UButton
 								@click="
 									() => {
+										if (!store.form.deleted_image_ids) {
+											store.form.deleted_image_ids = []
+										}
 										store.form.deleted_image_ids.push(image.id)
 										store.form.images.splice(index, 1)
 									}
