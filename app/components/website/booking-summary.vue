@@ -16,20 +16,7 @@ const totalCost = computed(
         return totalCost;
     }
 )
-const message = computed(() => {
-    const startCell = calendarStore.selectedCells[0]!
-    const endCell = calendarStore.selectedCells[1]!
 
-    let msg = `Hello, i would like to make booking
-
-    Room: ${startCell.room.name}\n
-    Check in: ${format(startCell.date, 'Do MMM, yyyy')}\n
-    Check out: ${format(endCell.date, 'Do MMM, yyyy')}\n
-
-    url: \`${window.location.origin}/hotels/calendar?start_date=${startCell.date}&end_date=${endCell.date}&room_id=${startCell.room.id}&client_id=${calendarStore.clientData.id}&client_name=${calendarStore.clientData.name}&client_phone=${calendarStore.clientData.phone}\`
-    `
-    return msg;
-})
 
 </script>
 <template>
@@ -42,45 +29,9 @@ const message = computed(() => {
         </template>
         <template #body>
             <BookingStepper />
-            <table>
-                <tr v-if="calendarStore.selectedCells[0]">
-                    <td>Room</td>
-                    <td>{{ calendarStore.selectedCells[0].room.name }}</td>
-                </tr>
-                <tr v-if="calendarStore.selectedCells[0]">
-                    <td>Check in</td>
-                    <td>{{ format(calendarStore.selectedCells[0].date, 'Do MMM, yyyy') }}</td>
-                </tr>
-                <tr v-if="calendarStore.selectedCells[1]">
-                    <td>Check out</td>
-                    <td>{{ format(calendarStore.selectedCells[1].date, 'Do MMM, yyyy') }}</td>
-                </tr>
-                <tr v-if="calendarStore.selectedCells[0] && calendarStore.selectedCells[1]">
-                    <td>Expected cost</td>
-                    <td>
-                        {{ toRupees(totalCost) }}
-                    </td>
-                </tr>
-            </table>
+
         </template>
-        <template #footer>
-            <div class="w-full flex justify-end space-x-2">
-                <UButton
-                    color="neutral"
-                    variant="soft"
-                    @click="useCalendarStore().showBookingSummary = false"
-                >
-                    Cancel
-                </UButton>
-                <UButton
-                    color="primary"
-                    variant="soft"
-                    @click="openWhatsapp(message, '9774888724')"
-                >
-                    Make whatsapp booking
-                </UButton>
-            </div>
-        </template>
+
     </UModal>
 </template>
 <style scoped>

@@ -291,3 +291,11 @@ interface PaymentDetail extends Payment {
 interface PaginationPayment extends Pagination {
     data: Payment[];
 }
+
+interface WebsiteBookingForm {
+    id?: string | null;
+    name: string;
+    phone: string;
+    no_of_adults: number;
+    no_of_children?: number | null;
+}
