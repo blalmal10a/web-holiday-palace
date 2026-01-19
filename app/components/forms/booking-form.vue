@@ -1,41 +1,40 @@
 <script lang="ts" setup>
-import type { SelectMenuItem } from '@nuxt/ui'
+	import type {SelectMenuItem} from "@nuxt/ui"
 
-const props = defineProps({
-	isModal: {
-		type: Boolean,
-		default: false,
-	},
-})
-const store = useBookingStore()
-const model = useBooking()
-const user = useUser()
-const userStore = useUserStore()
-const room = useRoom()
-const roomStore = useRoomStore()
+	const props = defineProps({
+		isModal: {
+			type: Boolean,
+			default: false,
+		},
+	})
+	const store = useBookingStore()
+	const model = useBooking()
+	const user = useUser()
+	const userStore = useUserStore()
+	const room = useRoom()
+	const roomStore = useRoomStore()
 
-roomStore.pagination.pageSize = Number.MAX_SAFE_INTEGER
-const openSearchClient = ref(false)
-const newClient = ref(false)
-const currentClient = computed(() => {
-	const user = userStore.data.data.find(
-		(user: User) => user.id === store.form.client_id,
-	)
-	if (user?.is_blacklisted && store.form.id) {
-		store.form.mark_as_blacklisted = true;
-	}
-	if (user) {
-		store.selectedClient = { ...user };
-	}
-	return user;
-})
-const imageFiles = ref<File[]>([])
-userStore.pagination.exclude_admin = true
-const blackListedUserList = ref<User[]>([])
+	roomStore.pagination.pageSize = Number.MAX_SAFE_INTEGER
+	const openSearchClient = ref(false)
+	const newClient = ref(false)
+	const currentClient = computed(() => {
+		const user = userStore.data.data.find(
+			(user: User) => user.id === store.form.client_id,
+		)
+		if (user?.is_blacklisted && store.form.id) {
+			store.form.mark_as_blacklisted = true
+		}
+		if (user) {
+			store.selectedClient = {...user}
+		}
+		return user
+	})
+	const imageFiles = ref<File[]>([])
+	userStore.pagination.exclude_admin = true
+	const blackListedUserList = ref<User[]>([])
 
-const userList = computed(
-	() => {
-		blackListedUserList.value = [];
+	const userList = computed(() => {
+		blackListedUserList.value = []
 		return userStore.data.data.map((user: User) => {
 			if (user.is_blacklisted) {
 				blackListedUserList.value.push(user)
@@ -47,31 +46,28 @@ const userList = computed(
 				is_blacklisted: user.is_blacklisted,
 				avatar: {
 					class: {
-						'bg-red-500 text-white': user.is_blacklisted
+						"bg-red-500 text-white": user.is_blacklisted,
 					},
-					icon: user.is_blacklisted ? 'i-lucide-user-x' : 'i-lucide-user',
-
-				}
+					icon: user.is_blacklisted ? "i-lucide-user-x" : "i-lucide-user",
+				},
 			} satisfies SelectMenuItem
 		})
-	}
-)
-const isOverPaid = computed(
-	() => {
-		// 
+	})
+	const isOverPaid = computed(() => {
+		//
 		let total = 0
-		let roomCost = 0;
-		let paidAmount = 0;
+		let roomCost = 0
+		let paidAmount = 0
 		if (store.detail.id) {
 			total = store.detail.invoice.items.reduce((total, item) => {
-				return total + (item.rate * item.quantity);
-			}, 0);
+				return total + item.rate * item.quantity
+			}, 0)
 			try {
 				paidAmount = store.detail.invoice.payments.reduce((total, payment) => {
-					return total + payment.amount;
-				}, 0);
+					return total + payment.amount
+				}, 0)
 			} catch (error) {
-				console.log('calculate total paid amount error')
+				console.log("calculate total paid amount error")
 			}
 		} else {
 			const dateList = getBookingDateList(
@@ -80,71 +76,67 @@ const isOverPaid = computed(
 			)
 			if (store.form.room_id) {
 				const selectedRoom = roomStore.data.data.find(
-					(room) => room.id === store.form.room_id
+					(room) => room.id === store.form.room_id,
 				)
 				if (selectedRoom) {
 					roomCost = selectedRoom.rate * dateList?.length
 				}
 			}
 			total = roomCost
-			paidAmount = store.form.deposit ?? 0;
+			paidAmount = store.form.deposit ?? 0
 		}
-		return paidAmount > total;
-	}
-)
-await user.fetchData()
-await room.fetchData()
-onMounted(async () => {
-	if (!store.form.date_list) {
-		store.form.date_list = []
-	}
-	if (!props.isModal && !store.form.id && useRoute().params.id != "add") {
-		await model.fetchDetail()
-	}
-	store.form.date_list = getBookingDateList(
-		store.form.check_in_date,
-		store.form.checkout_date,
-	)
-	if (props.isModal) {
-		populateStaff(store.form.room_id)
-	}
+		return paidAmount > total
+	})
+	await user.fetchData()
+	await room.fetchData()
+	onMounted(async () => {
+		if (!store.form.date_list) {
+			store.form.date_list = []
+		}
+		if (!props.isModal && !store.form.id && useRoute().params.id != "add") {
+			await model.fetchDetail()
+		}
+		store.form.date_list = getBookingDateList(
+			store.form.check_in_date,
+			store.form.checkout_date,
+		)
+		if (props.isModal) {
+			populateStaff(store.form.room_id)
+		}
+	})
 
-})
-
-
-function populateStaff($event: string) {
-	const room = roomStore.data.data.find((room: Room) => room.id === $event)
-	if (room) {
-		store.form.staff_id = room.staff_id
+	function populateStaff($event: string) {
+		const room = roomStore.data.data.find((room: Room) => room.id === $event)
+		if (room) {
+			store.form.staff_id = room.staff_id
+		}
 	}
-}
-function handleClientUpdate($event: string) {
-	store.form.mark_as_blacklisted = false;
-	if (!store.form.new_client_name) return
+	function handleClientUpdate($event: string) {
+		store.form.mark_as_blacklisted = false
+		if (!store.form.new_client_name) return
 
-	if (currentClient.value) {
-		store.form.new_client_name = undefined
-		store.form.new_client_phone = undefined
-		newClient.value = false
-	} else {
-		// store.form.new_client_phone =
+		if (currentClient.value) {
+			store.form.new_client_name = undefined
+			store.form.new_client_phone = undefined
+			newClient.value = false
+		} else {
+			// store.form.new_client_phone =
+		}
 	}
-}
-const onCreateNewClient = ($event: string) => {
-	store.form.client_id = $event
-	store.form.new_client_name = $event
-	openSearchClient.value = false
-	newClient.value = true
-}
-onBeforeUnmount(() => {
-	userStore.pagination.exclude_clients = false
-	store.$reset()
-})
+	const onCreateNewClient = ($event: string) => {
+		store.form.client_id = $event
+		store.form.new_client_name = $event
+		openSearchClient.value = false
+		newClient.value = true
+	}
+	onBeforeUnmount(() => {
+		userStore.pagination.exclude_clients = false
+		store.$reset()
+	})
 </script>
 <template>
-
 	<div class="flex flex-col items-center">
-		<u-card style="min-width: min(400px, 90vw); max-width: 90vw;">
+		<u-card style="min-width: min(400px, 90vw); max-width: 90vw">
 			<u-form
 				:schema="bookingFormSchema(newClient)"
 				:state="store.form"
@@ -156,7 +148,9 @@ onBeforeUnmount(() => {
 					label="Client"
 					name="client_id"
 					:hint="currentClient ? `Phone: ${currentClient.phone}` : ''"
-					:error="currentClient?.is_blacklisted ? `Client is blacklisted` : false"
+					:error="
+						currentClient?.is_blacklisted ? `Client is blacklisted` : false
+					"
 				>
 					<USelectMenu
 						:filter-fields="['name', 'phone']"
@@ -173,11 +167,7 @@ onBeforeUnmount(() => {
 						:items="userList"
 					/>
 				</u-form-field>
-				<u-form-field
-					label="Phone"
-					name="new_client_phone"
-					v-if="newClient"
-				>
+				<u-form-field label="Phone" name="new_client_phone" v-if="newClient">
 					<u-input
 						:disabled="!newClient"
 						v-model="store.form.new_client_phone"
@@ -185,10 +175,7 @@ onBeforeUnmount(() => {
 					/>
 				</u-form-field>
 
-				<u-form-field
-					name="mark_as_blacklisted"
-					v-if="store.form.id"
-				>
+				<u-form-field name="mark_as_blacklisted" v-if="store.form.id">
 					<u-checkbox
 						color="error"
 						variant="card"
@@ -198,10 +185,7 @@ onBeforeUnmount(() => {
 						description="Mark current customer as black list"
 					/>
 				</u-form-field>
-				<div
-					v-if="store.form.mark_as_blacklisted"
-					class="text-right -mt-4"
-				>
+				<div v-if="store.form.mark_as_blacklisted" class="text-right -mt-4">
 					<UButton
 						variant="outline"
 						color="warning"
@@ -210,54 +194,40 @@ onBeforeUnmount(() => {
 						label="Manage related blacklists"
 					/>
 				</div>
-				<u-form-field
-					label="Room"
-					name="room_id"
-				>
+				<u-form-field label="Room" name="room_id">
 					<USelectMenu
 						class="w-full"
 						v-model="store.form.room_id"
 						@update:model-value="populateStaff"
 						value-key="id"
-						label-key="name"
+						label-key="number"
+						description-key="description"
 						:items="roomStore.data.data"
 					/>
 				</u-form-field>
 
-				<u-form-field
-					label="No. of adults"
-					name="no_of_adults"
-				>
+				<u-form-field label="No. of adults" name="no_of_adults">
 					<u-input
 						v-model="store.form.no_of_adults"
 						icon="i-lucide-indian-rupee"
 						type="number"
 					/>
 				</u-form-field>
-				<u-form-field
-					label="no. of children"
-					name="no_of_children"
-				>
+				<u-form-field label="no. of children" name="no_of_children">
 					<u-input
 						v-model="store.form.no_of_children"
 						icon="i-lucide-indian-rupee"
 						type="number"
 					/>
 				</u-form-field>
-				<u-form-field
-					label="Check in date"
-					name="check_in_date"
-				>
+				<u-form-field label="Check in date" name="check_in_date">
 					<u-input
 						v-model="store.form.check_in_date"
 						icon="i-lucide-layers"
 						type="date"
 					/>
 				</u-form-field>
-				<u-form-field
-					label="Check out date"
-					name="checkout_date"
-				>
+				<u-form-field label="Check out date" name="checkout_date">
 					<u-input
 						v-model="store.form.checkout_date"
 						icon="i-lucide-layers"
@@ -315,7 +285,7 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-.relative.inline-flex.items-center {
-	width: 100%;
-}
+	.relative.inline-flex.items-center {
+		width: 100%;
+	}
 </style>
