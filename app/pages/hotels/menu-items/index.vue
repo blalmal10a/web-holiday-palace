@@ -1,9 +1,9 @@
 <script setup lang="ts">
-definePageMeta({
-    layout: "main-layout",
-    pageTitle: "Menu",
-})
+	definePageMeta({
+		layout: "main-layout",
+		pageTitle: "Menu",
+	})
 </script>
 <template>
-    <MenuItemsListTable />
+	<MenuItemsListTable />
 </template>

@@ -2,8 +2,10 @@
 	const store = useMenuItemStore()
 	const model = useMenuItem()
 	const openCategoryMenu = ref(false)
+	const openUnitMenu = ref(false)
 	const imageFiles = ref<File[]>([])
 	const menuItemCategoryList = ref<string[]>([])
+	const menuItemUnitList = ref<string[]>([])
 	onMounted(async () => {
 		getCategoryList()
 		if (!store.form.id && useRoute().params.id != "add") {
@@ -37,9 +39,14 @@
 					<USelectMenu
 						class="w-full"
 						v-model="store.form.unit"
-						value-key="value"
-						label-key="label"
-						:items="menuItemUnitsList"
+						:items="menuItemUnitList"
+						@create="
+							($event: string) => {
+								store.form.unit = $event
+								menuItemCategoryList.push($event)
+								openUnitMenu = false
+							}
+						"
 					/>
 				</u-form-field>
 				<u-form-field label="Category" name="category">

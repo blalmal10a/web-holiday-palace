@@ -19,20 +19,20 @@ export function useMenuItem() {
             store.setData(response)
         } catch (error) {
             notifyError(error);
-            console.error('Failed to fetch amenities', error)
+            console.error('Failed to fetch menu items', error)
         } finally {
             store.setLoading('loadingGetMenuItems', false)
         }
     }
 
     const fetchDetail = async (id?: string) => {
-        const amenityId = id || route.params.id as string
+        const menuItemId = id || route.params.id as string
         try {
-            const response = await api.get(`/menu-items/${amenityId}`)
+            const response = await api.get(`/menu-items/${menuItemId}`)
             store.setForm(response)
         } catch (error) {
             notifyError(error);
-            console.error('Failed to fetch amenity detail', error)
+            console.error('Failed to fetch menuItem detail', error)
         }
     }
 
@@ -89,7 +89,7 @@ export function useMenuItem() {
     }
 }
 
-export const amenityFormSchema = () => {
+export const menuItemFormSchema = () => {
     const baseSchema = z.object({
         name: z.string().min(3),
         rate: z.number().min(1),
@@ -109,7 +109,7 @@ export const amenityFormSchema = () => {
 }
 
 // 2. Export Columns (Used in Table components)
-export const amenityColumns: ColumnDef<MenuItem>[] = [
+export const menuItemColumns: ColumnDef<MenuItem>[] = [
     { header: 'Item', accessorKey: 'name' },
     {
         header: 'Rate',
@@ -117,12 +117,12 @@ export const amenityColumns: ColumnDef<MenuItem>[] = [
     },
     {
         header: 'Unit',
-        accessorFn: (row) => amenityUnits[row.unit] ?? 'N/A',
+        accessorFn: (row) => menuItemUnits[row.unit] ?? 'N/A',
     },
     { id: 'actions' }
 ]
 
-export const amenityUnits: Record<string, string> = {
+export const menuItemUnits: Record<string, string> = {
     'plate': 'Plate',
     'cup': 'Cup',
     'bowl': 'Bowl',
