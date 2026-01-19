@@ -94,7 +94,16 @@ export const menuItemFormSchema = () => {
         name: z.string().min(3),
         rate: z.number().min(1),
         unit: z.string(),
-    })
+        description: z.string().optional().nullable(),
+        category: z.string(),
+        images: z.array(z.object({
+            id: z.string(),
+            path: z.string(),
+            url: z.string(),
+        })).optional(),
+        deleted_image_ids: z.array(z.string()).optional(),
+        image_files: z.array(z.instanceof(File)).optional(),
+    }) satisfies z.ZodType<MenuItemForm>
 
     return baseSchema;
 }

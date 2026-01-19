@@ -1,15 +1,22 @@
 <script lang="ts" setup>
-	import Index from "~/pages/index.vue"
-
 	const store = useMenuItemStore()
 	const model = useMenuItem()
+	const openCategoryMenu = ref(false)
 	const imageFiles = ref<File[]>([])
+	const menuItemCategoryList = ref<string[]>([])
 	onMounted(async () => {
+		getCategoryList()
 		if (!store.form.id && useRoute().params.id != "add") {
 			await model.fetchDetail()
 		}
 		store.form.deleted_image_ids = []
 	})
+	async function getCategoryList() {
+		try {
+			const data = await api.get("menu-item-categories")
+			menuItemCategoryList.value = data
+		} catch (error) {}
+	}
 </script>
 <template>
 	<div
@@ -26,14 +33,6 @@
 				<u-form-field label="Item name" name="name">
 					<u-input v-model="store.form.name" icon="i-lucide-user" type="text" />
 				</u-form-field>
-				<!-- <u-form-field label="Unit" name="unit">
-					<u-input
-						v-model="store.form.unit"
-						icon="i-lucide-scale"
-						type="number"
-						step="0.01"
-					/>
-				</u-form-field> -->
 				<u-form-field label="Unit" name="unit">
 					<USelectMenu
 						class="w-full"
@@ -43,12 +42,36 @@
 						:items="menuItemUnitsList"
 					/>
 				</u-form-field>
+				<u-form-field label="Category" name="category">
+					<USelectMenu
+						v-if="menuItemCategoryList.length > 0"
+						class="w-full"
+						v-model="store.form.category"
+						v-model:open="openCategoryMenu"
+						create-item
+						@create="
+							($event: string) => {
+								store.form.category = $event
+								menuItemCategoryList.push($event)
+								openCategoryMenu = false
+							}
+						"
+						:items="menuItemCategoryList"
+					/>
+				</u-form-field>
 				<u-form-field label="Rate" name="rate">
 					<u-input
 						v-model="store.form.rate"
 						icon="i-lucide-indian-rupee"
 						type="number"
 						step="0.01"
+					/>
+				</u-form-field>
+				<u-form-field label="Description" name="description">
+					<u-textarea
+						v-model="store.form.description"
+						icon="i-lucide-user"
+						type="text"
 					/>
 				</u-form-field>
 				<u-form-field style="max-width: 400px" label="Image" name="images">
