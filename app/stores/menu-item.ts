@@ -6,6 +6,8 @@ export const useMenuItemStore = defineStore('menuItem', {
     pagination: {
       page: 1,
       pageSize: 10,
+      only_accommodations: false,
+      exclude_accommodations: false,
     },
     data: {} as PaginationMenuItem,
     form: {
@@ -16,7 +18,7 @@ export const useMenuItemStore = defineStore('menuItem', {
     setData(payload: PaginationMenuItem) {
       this.data = payload;
     },
-    setPagination(payload: { page: number; pageSize: number }) {
+    setPagination(payload: typeof this.pagination) {
       this.pagination = payload;
     },
     setForm(payload: MenuItem) {

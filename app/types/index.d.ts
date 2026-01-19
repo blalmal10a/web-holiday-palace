@@ -114,6 +114,31 @@ interface PaginationMenuItem extends Pagination {
     data: MenuItem[]
 }
 
+interface AmenityForm {
+    id?: string;
+    name: string;
+    category: string;
+    description?: string | null;
+    category: string;
+    rate: number;
+    unit: string;
+    images?: Image[]
+    new_files?: File[]
+    deleted_image_ids?: string[]
+}
+interface Amenity extends Omit<AmenityForm, 'new_files' | 'deleted_image_ids'> {
+    id: string;
+    name: string;
+    rate: number;
+    unit: string;
+    images: Image[]
+    deleted_image_ids: string[]
+}
+
+interface PaginationAmenity extends Pagination {
+    data: Amenity[]
+}
+
 interface Expenditure {
     id: string;
     item: string;

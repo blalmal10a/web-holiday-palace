@@ -1,6 +1,6 @@
 <script setup lang="ts">
-	const store = useMenuItemStore()
-	const model = useMenuItem()
+	const store = useAmenityStore()
+	const model = useAmenity()
 	store.setPagination({
 		...store.pagination,
 		page: Number(useRoute().query.page) || 1,
@@ -12,7 +12,7 @@
 		store.pagination.only_accommodations = true
 		model.fetchData()
 		useRouter().push({
-			name: "hotels-menu-items",
+			name: "hotels-amenities",
 			query: {
 				page: $event,
 				pageSize: store.pagination.pageSize,
@@ -27,7 +27,7 @@
 			<div>
 				<u-button
 					:to="{
-						name: 'hotels-menu-items-id-form',
+						name: 'hotels-amenities-id-form',
 						params: {
 							id: 'add',
 						},
@@ -41,7 +41,7 @@
 				</u-button>
 			</div>
 		</div>
-		<UTable :data="store.data.data" :columns="menuItemColumns">
+		<UTable :data="store.data.data" :columns="AmenityColumns">
 			<template #actions-cell="{row}">
 				<div class="flex space-x-2 justify-end">
 					<u-button
@@ -50,9 +50,9 @@
 						color="neutral"
 						@click="
 							() => {
-								useMenuItemStore().setForm(row.original)
+								useAmenityStore().setForm(row.original)
 								useRouter().push({
-									name: 'hotels-menu-items-id-form',
+									name: 'hotels-amenities-id-form',
 									params: {
 										id: row.original.id,
 									},
@@ -70,14 +70,14 @@
 						@click="
 							useConfirmDeleteStore().open(
 								row.original.name,
-								'/menu-items',
+								'/amenities',
 								row.original.id,
-								'MenuItem',
-								useMenuItemStore(),
+								'Amenity',
+								useAmenityStore(),
 							)
 						"
 					>
-						<!-- @click="menuItem.deleteMenuItem(row.original.id)" -->
+						<!-- @click="AmenityColumns(row.original.id)" -->
 					</u-button>
 				</div>
 			</template>
@@ -96,7 +96,7 @@
 						})
 						model.fetchData()
 						useRouter().push({
-							name: 'menu-items',
+							name: 'amenities',
 							query: {
 								page: store.pagination.page,
 								pageSize: $event,
