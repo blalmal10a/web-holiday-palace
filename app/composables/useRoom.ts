@@ -85,16 +85,32 @@ export function useRoom() {
 
 export const roomFormSchema = () => {
     const baseSchema = z.object({
-        name: z.string().min(1),
+        id: z.string().optional(),
+        number: z.string(),
         rate: z.number().min(1),
+        description: z.string(),
+        is_ac: z.boolean(),
+        is_dormatory: z.boolean(),
+        capacity: z.number().optional(),
+        max_capacity: z.number().optional(),
+        double_bed_count: z.number(),
+        single_bed_count: z.number(),
         staff_id: z.string(),
-    })
+        images: z.array(z.object({
+            id: z.string(),
+            path: z.string(),
+            url: z.string(),
+        })),
+        deleted_image_ids: z.array(z.string()),
+        image_files: z.array(z.instanceof(File)),
+    }) satisfies z.ZodType<RoomForm>
     return baseSchema;
 }
 
 // 2. Export Columns (Used in Table components)
 export const roomColumns: ColumnDef<any>[] = [
-    { header: 'Room no.', accessorKey: 'name' },
+    { header: 'Room no.', accessorKey: 'number' },
+    { header: 'Description', accessorKey: 'description' },
     {
         header: 'Staff',
         accessorFn: (row) => row.staff?.name ?? 'N/A',

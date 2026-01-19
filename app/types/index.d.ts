@@ -63,37 +63,49 @@ interface PaginationUser extends Pagination {
     data: User[]
 }
 
-interface Room {
-    id: string;
-    name: string;
-    rate: number;
-    staff_id: string;
-    staff?: User;
-    images: Image[];
-}
-
 interface RoomForm {
     id?: string;
-    name: string;
+    number: string;
     rate: number;
+    description: string;
+    is_ac: boolean;
+    is_dormatory: boolean;
+    capacity?: number;
+    max_capacity?: number;
+    double_bed_count: number;
+    single_bed_count: number;
     staff_id: string;
     staff?: User;
     images: Image[];
     deleted_image_ids: string[]
     image_files: File[]
 }
+interface Room extends RoomForm {
+    id: string;
+}
+
 
 interface PaginationRoom extends Pagination {
     data: Room[]
 }
 
-interface MenuItem {
+interface MenuItemForm {
+    id?: string;
+    name: string;
+    category: string;
+    description: string;
+    rate: number;
+    unit: string;
+    images: Image[]
+    new_files: File[]
+    deleted_image_ids: string[]
+}
+interface MenuItem extends Omit<MenuItemForm, 'new_files' | 'deleted_image_ids'> {
     id: string;
     name: string;
     rate: number;
     unit: string;
     images: Image[]
-    new_files: File[]
     deleted_image_ids: string[]
 }
 
