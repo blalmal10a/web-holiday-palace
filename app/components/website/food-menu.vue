@@ -103,7 +103,9 @@
 				<!-- Menu Content: List + Preview -->
 				<div class="grid md:grid-cols-2 gap-8 lg:gap-12">
 					<!-- Menu List (Left Side) -->
-					<div class="space-y-4 md:max-h-[80vh] md:overflow-y-auto md:pr-4">
+					<div
+						class="space-y-4 md:max-h-[calc(100dvh - 156px)] md:overflow-y-auto md:pr-4"
+					>
 						<div
 							v-for="item in filteredMenuItems"
 							:key="item.name"
@@ -147,18 +149,6 @@
 											₹{{ item.rate }}
 										</span>
 									</div>
-									<!-- <p
-										v-if="item.category"
-										class="text-xs text-neutral-500 dark:text-neutral-400 uppercase tracking-wide"
-									>
-										{{ item.category }}
-									</p>
-									<p
-										v-if="item.description"
-										class="text-sm text-neutral-600 dark:text-neutral-400 mt-2 line-clamp-2"
-									>
-										{{ item.description }}
-									</p> -->
 								</div>
 							</div>
 						</div>
@@ -175,7 +165,7 @@
 					</div>
 
 					<!-- Preview Panel (Right Side - Hidden on Mobile) -->
-					<div v-if="selectedItem" class="hidden md:block sticky top-8 h-fit">
+					<div v-if="selectedItem" class="hidden md:block sticky top-24 h-fit">
 						<div
 							class="bg-white dark:bg-neutral-800 rounded-2xl shadow-lg overflow-hidden"
 						>
@@ -246,14 +236,14 @@
 									{{ selectedItem.description }}
 								</p>
 
-								<UButton
+								<!-- <UButton
 									label="Order Now"
 									color="primary"
 									size="lg"
 									block
 									trailing-icon="i-heroicons-shopping-cart"
 									class="mt-6"
-								/>
+								/> -->
 							</div>
 						</div>
 					</div>
