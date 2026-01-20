@@ -12,6 +12,7 @@ export const useMenuItemStore = defineStore('menuItem', {
     data: {} as PaginationMenuItem,
     form: {
     } as MenuItem,
+    categories: [] as string[],
   }),
 
   actions: {

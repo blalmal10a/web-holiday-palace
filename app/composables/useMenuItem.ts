@@ -36,6 +36,15 @@ export function useMenuItem() {
         }
     }
 
+    const fetchMenuItemCategories = async () => {
+        try {
+            const data = await api.get('menu-item-categories');
+            store.categories = data;
+        } catch (error) {
+
+        }
+    }
+
     const submitForm = async (imageFiles: File[]) => {
         store.setLoading('loadingSubmitMenuItemForm', true)
         try {
@@ -85,7 +94,8 @@ export function useMenuItem() {
         fetchData,
         fetchDetail,
         submitForm,
-        deleteMenuItem
+        deleteMenuItem,
+        fetchMenuItemCategories
     }
 }
 
