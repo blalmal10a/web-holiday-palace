@@ -41,32 +41,6 @@
 	<div id="booking" class="container mx-auto">
 		<div class="p-3">
 			<BookingsCalendarDateRange />
-			<div
-				class="grid gap-2 mt-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
-			>
-				<UInput
-					autofocus
-					v-model="calendarStore.clientData.phone"
-					placeholder="Phone"
-					:loading="useUserStore().loadingGetDetails"
-					@update:model-value="
-						$nextTick(() => {
-							findUserByPhone($event)
-						})
-					"
-				/>
-				<UInput
-					v-if="calendarStore.showClientNameField"
-					v-model="calendarStore.clientData.name"
-					placeholder="Name"
-					@update:model-value="
-						($event: string) => {
-							if ($event) calendarStore.enableClientCalendar = true
-							else calendarStore.enableClientCalendar = false
-						}
-					"
-				/>
-			</div>
 		</div>
 		<div id="invoice" class="w-full overflow-auto pt-4">
 			<table class="" :class="{}">
