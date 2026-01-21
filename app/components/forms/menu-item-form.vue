@@ -21,10 +21,7 @@
 	}
 </script>
 <template>
-	<div
-		class="flex flex-col items-center"
-		style="height: calc(100dvh - 200px); overflow: visible"
-	>
+	<div class="flex flex-col items-center">
 		<u-card style="min-width: min(400px, 90vw)">
 			<u-form
 				:schema="menuItemFormSchema()"

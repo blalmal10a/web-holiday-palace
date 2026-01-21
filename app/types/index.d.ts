@@ -8,7 +8,7 @@ interface User {
 }
 interface Image {
     id: string;
-    path: string;
+    path: string | null;
     url: string;
 }
 interface UserForm extends User {

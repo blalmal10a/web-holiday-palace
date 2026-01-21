@@ -108,7 +108,7 @@ export const menuItemFormSchema = () => {
         category: z.string(),
         images: z.array(z.object({
             id: z.string(),
-            path: z.string(),
+            path: z.string().nullable(),
             url: z.string(),
         })).optional(),
         deleted_image_ids: z.array(z.string()).optional(),
