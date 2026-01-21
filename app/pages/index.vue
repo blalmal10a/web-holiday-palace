@@ -61,6 +61,7 @@ await room.fetchData();
 						<li class="hover:text-primary-400 transition-colors"><a href="#">Events & Weddings</a></li>
 						<li class="hover:text-primary-400 transition-colors"><a href="#">Local Attractions</a></li>
 						<li class="hover:text-primary-400 transition-colors"><a href="#">Membership</a></li>
+						<li class="hover:text-primary-400 transition-colors"><a href="/hotels/calendar">Admin</a></li>
 					</ul>
 				</div>
 
