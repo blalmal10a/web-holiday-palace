@@ -258,7 +258,7 @@ interface PaginationInvoice extends Pagination {
 interface InvoiceItemForm extends Omit<InvoiceItem, 'invoice' | 'booking'> {
     id?: string;
     invoice_id: string;
-    booking_id?: string;
+    booking_id?: string | null;
     description: string;
     quantity: number;
     unit?: string;
