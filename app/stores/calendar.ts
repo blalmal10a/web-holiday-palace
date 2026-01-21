@@ -23,8 +23,14 @@ export const useCalendarStore = defineStore('calendar', {
             let websiteCalendarModal = this.showWebsiteCalendar;
             this.$reset();
             this.showWebsiteCalendar = websiteCalendarModal;
-            let startDate = useBookingStore().pagination.start;
-            let endDate = useBookingStore().pagination.end;
+            const bookingStore = useBookingStore();
+            if (!bookingStore.pagination.start || !bookingStore.pagination.end) {
+                bookingStore.pagination.start = format(new Date(), 'yyyy-MM-dd');
+                bookingStore.pagination.end = format(addDays(new Date(), 7), 'yyyy-MM-dd');
+            }
+            let startDate = bookingStore.pagination.start;
+            let endDate = bookingStore.pagination.end;
+
             this.dateList = getBookingDateList(startDate, endDate)
             let mappedBookings = mapBooking(bookingList)
             if (!roomList.length) {
