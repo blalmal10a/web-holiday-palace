@@ -11,7 +11,7 @@ export const useAmenityStore = defineStore('amenity', {
     },
     data: {} as PaginationAmenity,
     form: {
-    } as Amenity,
+    } as AmenityForm,
   }),
 
   actions: {
