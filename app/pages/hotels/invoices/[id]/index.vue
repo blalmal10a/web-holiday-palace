@@ -21,7 +21,6 @@
 				const invoiceImageContainer = document.getElementById(
 					"invoice-image-container",
 				)
-				console.log(invoiceImageContainer)
 				if (invoiceImageContainer) {
 					canvas.style.width = "100%"
 					canvas.style.maxWidth = "210mm"

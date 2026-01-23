@@ -13,6 +13,7 @@ export const useMenuItemStore = defineStore('menuItem', {
     form: {
     } as MenuItem,
     categories: [] as string[],
+    units: [] as string[],
   }),
 
   actions: {

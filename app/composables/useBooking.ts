@@ -36,7 +36,7 @@ export function useBooking() {
 
             let bookingForm = response as BookingForm;
             store.detail = bookingForm as BookingDetail
-            console.log(store.detail)
+
             store.setForm(bookingForm)
         } catch (error) {
             notifyError(error);

@@ -45,6 +45,15 @@ export function useMenuItem() {
         }
     }
 
+    const fetchMenuItemUnits = async () => {
+        try {
+            const data = await api.get('menu-item-units');
+            store.categories = data;
+        } catch (error) {
+
+        }
+    }
+
     const submitForm = async (imageFiles: File[]) => {
         store.setLoading('loadingSubmitMenuItemForm', true)
         try {
@@ -83,6 +92,8 @@ export function useMenuItem() {
         }
     }
 
+    // 
+
     return {
         // State
         data,
@@ -95,7 +106,8 @@ export function useMenuItem() {
         fetchDetail,
         submitForm,
         deleteMenuItem,
-        fetchMenuItemCategories
+        fetchMenuItemCategories,
+        fetchMenuItemUnits
     }
 }
 
@@ -127,16 +139,9 @@ export const menuItemColumns: ColumnDef<MenuItem>[] = [
     },
     {
         header: 'Unit',
-        accessorFn: (row) => menuItemUnits[row.unit] ?? 'N/A',
+        accessorFn: (row) => {
+            // return useMenuItemStore().units[row.unit] ?? 'N/A';
+        },
     },
     { id: 'actions' }
 ]
-
-export const menuItemUnits: Record<string, string> = {
-    'plate': 'Plate',
-    'cup': 'Cup',
-    'bowl': 'Bowl',
-    'box': 'Box',
-    'piece': 'Piece',
-    'bottle': 'Bottle',
-}
