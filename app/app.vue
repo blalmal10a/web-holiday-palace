@@ -3,12 +3,14 @@ import z from "zod"
 
 z.config({
 	customError: (iss) => {
-		console.log(iss)
 		if (iss.input === undefined) {
 			return "Field is required"
 		}
 		if (iss.input === "") {
 			return "Field is required"
+		}
+		if (iss.input) {
+			console.log(iss);
 		}
 	},
 })
