@@ -76,10 +76,13 @@ interface RoomForm {
     single_bed_count: number;
     staff_id: string;
     staff?: User;
+    beds: Bed[];
+    deleted_bed_ids?: string[];
     images: Image[];
     deleted_image_ids?: string[]
     image_files?: File[]
 }
+
 interface Room extends RoomForm {
     id: string;
 }
@@ -88,6 +91,21 @@ interface Room extends RoomForm {
 interface PaginationRoom extends Pagination {
     data: Room[]
 }
+
+interface BedForm {
+    id?: string;
+    number: string;
+    type: string;
+    room_id: string;
+    capacity: number;
+    max_capacity: number;
+}
+
+interface Bed extends BedForm {
+    id: string;
+    room: Room;
+}
+
 
 interface MenuItemForm {
     id?: string;
