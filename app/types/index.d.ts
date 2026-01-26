@@ -70,13 +70,9 @@ interface RoomForm {
     description: string;
     is_ac: boolean;
     is_dormatory: boolean;
-    capacity?: number;
-    max_capacity?: number;
-    double_bed_count: number;
-    single_bed_count: number;
     staff_id: string;
     staff?: User;
-    beds: Bed[];
+    beds: BedForm[];
     deleted_bed_ids?: string[];
     images: Image[];
     deleted_image_ids?: string[]
@@ -96,7 +92,7 @@ interface BedForm {
     id?: string;
     number: string;
     type: string;
-    room_id: string;
+    room_id?: string;
     capacity: number;
     max_capacity: number;
 }

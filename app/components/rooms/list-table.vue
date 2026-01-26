@@ -1,23 +1,23 @@
 <script setup lang="ts">
-	const store = useRoomStore()
-	const model = useRoom()
-	store.setPagination({
-		page: Number(useRoute().query.page) || 1,
-		pageSize: Number(useRoute().query.pageSize) || 10,
-	})
-	model.fetchData()
+const store = useRoomStore()
+const model = useRoom()
+store.setPagination({
+	page: Number(useRoute().query.page) || 1,
+	pageSize: Number(useRoute().query.pageSize) || 10,
+})
+model.fetchData()
 
-	async function updatePage($event: number) {
-		store.pagination.page = $event
-		model.fetchData()
-		useRouter().push({
-			name: "index",
-			query: {
-				page: $event,
-				pageSize: store.pagination.pageSize,
-			},
-		})
-	}
+async function updatePage($event: number) {
+	store.pagination.page = $event
+	model.fetchData()
+	useRouter().push({
+		name: "index",
+		query: {
+			page: $event,
+			pageSize: store.pagination.pageSize,
+		},
+	})
+}
 </script>
 <template>
 	<div class="">
@@ -40,8 +40,11 @@
 				</u-button>
 			</div>
 		</div>
-		<UTable :data="store.data.data" :columns="roomColumns">
-			<template #actions-cell="{row}">
+		<UTable
+			:data="store.data.data"
+			:columns="roomColumns"
+		>
+			<template #actions-cell="{ row }">
 				<div class="flex space-x-2 justify-end">
 					<u-button
 						variant="outline"
@@ -49,6 +52,7 @@
 						color="neutral"
 						@click="
 							() => {
+								console.log(row.original)
 								useRoomStore().setForm(row.original)
 								useRouter().push({
 									name: 'hotels-rooms-id-form',
@@ -74,7 +78,7 @@
 								'Room',
 								useRoomStore(),
 							)
-						"
+							"
 					>
 						<!-- @click="room.deleteRoom(row.original.id)" -->
 					</u-button>
