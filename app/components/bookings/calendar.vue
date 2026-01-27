@@ -118,7 +118,7 @@ onMounted(() => {
 						</th>
 						<template v-for="date in calendarStore.dateList">
 							<th class="text-center p-4 border-default border text-sm whitespace-nowrap">
-								{{ format(date, "Do MMM") }}
+								{{ format(date, "do MMM") }}
 								<div>({{ format(date, "EEE") }})</div>
 							</th>
 						</template>
