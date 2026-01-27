@@ -32,7 +32,14 @@
 	const imageFiles = ref<File[]>([])
 	userStore.pagination.exclude_admin = true
 	const blackListedUserList = ref<User[]>([])
-
+	const bedOptionList = computed<BedForm[]>(() => {
+		const listData = [] as BedForm[]
+		store.form.beds?.forEach((bed) => {
+			listData.push(bed)
+		})
+		store.availableBedList.forEach((bed) => listData.push(bed))
+		return listData
+	})
 	const userList = computed(() => {
 		blackListedUserList.value = []
 		return userStore.data.data.map((user: User) => {
@@ -103,6 +110,20 @@
 		if (props.isModal) {
 			populateStaff(store.form.room_id)
 		}
+		if (store.form.beds?.length) {
+			if (store.form.beds.length) {
+				store.form.beds.forEach((bed) => {
+					if (!store.form.selected_bed_ids) {
+						store.form.selected_bed_ids = [] as string[]
+					}
+					if (bed.id) {
+						store.form.selected_bed_ids.push(bed.id)
+					}
+					//
+				})
+			}
+		}
+		model.fetchAvailableBedList()
 	})
 
 	function populateStaff($event: string) {
@@ -246,6 +267,16 @@
 					/>
 				</u-form-field>
 
+				<UFormField label="Beds" name="selected_bed_ids">
+					<UCheckboxGroup
+						variant="card"
+						v-model="store.form.selected_bed_ids"
+						name="beds"
+						label-key="number"
+						value-key="id"
+						:items="bedOptionList"
+					></UCheckboxGroup>
+				</UFormField>
 				<div class="flex justify-end space-x-2">
 					<u-button
 						size="lg"

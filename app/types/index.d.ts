@@ -177,6 +177,11 @@ interface PaginationExpenditure extends Pagination {
     data: Expenditure[]
 }
 
+interface BedOption {
+    label: string;
+    value: BedForm;
+}
+
 interface BookingForm extends Omit<Booking, 'client' | 'staff' | 'room' | 'invoice'> {
     id?: string;
     client_id: string;
@@ -189,6 +194,8 @@ interface BookingForm extends Omit<Booking, 'client' | 'staff' | 'room' | 'invoi
     deposit: number;
     mark_as_blacklisted?: boolean;
     related_client_id?: string;
+    beds?: BedForm[];
+    selected_bed_ids: string[];
 }
 interface Booking extends BookingForm {
     id: string;

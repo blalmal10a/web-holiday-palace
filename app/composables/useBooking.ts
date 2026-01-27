@@ -81,6 +81,21 @@ export function useBooking() {
         }
     }
 
+    const fetchAvailableBedList = async () => {
+        const room = useRoomStore().data.data.find(room => room.id === store.form.room_id);
+        console.log(room);
+
+        if (!room?.is_dormatory) return;
+        const data = await api.get('available-beds', {
+            params: {
+                room_id: store.form.room_id,
+                start: store.form.check_in_date,
+                end: store.form.checkout_date,
+            }
+        })
+        store.availableBedList = data;
+    }
+
     return {
         // State
         data,
@@ -93,6 +108,7 @@ export function useBooking() {
         fetchDetail,
         submitForm,
         deleteBooking,
+        fetchAvailableBedList
     }
 }
 
@@ -112,6 +128,8 @@ export const bookingFormSchema = (newClient: boolean,) => {
         new_client_phone: z.string().optional(),
         mark_as_blacklisted: z.boolean().optional(),
         related_client_id: z.string().optional(),
+        beds: z.array(bedFormSchema()).optional(),
+        selected_bed_ids: z.array(z.string()),
     }) satisfies z.ZodType<BookingForm>
 
     return baseSchema

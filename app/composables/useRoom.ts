@@ -92,14 +92,7 @@ export const roomFormSchema = () => {
         is_ac: z.boolean(),
         is_dormatory: z.boolean(),
         staff_id: z.string(),
-        beds: z.array(z.object({
-            id: z.string().optional(),
-            number: z.string(),
-            type: z.string(),
-            room_id: z.string().optional(),
-            capacity: z.number(),
-            max_capacity: z.number(),
-        })),
+        beds: z.array(bedFormSchema()),
         deleted_bed_ids: z.array(z.string()).optional(),
         images: z.array(z.object({
             id: z.string(),
@@ -109,6 +102,18 @@ export const roomFormSchema = () => {
         deleted_image_ids: z.array(z.string()).optional(),
         image_files: z.array(z.instanceof(File)).optional(),
     }) satisfies z.ZodType<RoomForm>
+    return baseSchema;
+}
+
+export const bedFormSchema = () => {
+    const baseSchema = z.object({
+        id: z.string().optional(),
+        number: z.string(),
+        type: z.string(),
+        room_id: z.string().optional(),
+        capacity: z.number(),
+        max_capacity: z.number(),
+    }) satisfies z.ZodType<BedForm>
     return baseSchema;
 }
 

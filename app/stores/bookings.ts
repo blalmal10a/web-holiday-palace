@@ -17,7 +17,8 @@ export const useBookingStore = defineStore('booking', {
     form: {
     } as BookingForm,
     detail: {} as BookingDetail,
-    selectedClient: {} as User
+    selectedClient: {} as User,
+    availableBedList: [] as Bed[],
   }),
 
   actions: {
