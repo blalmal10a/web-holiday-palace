@@ -89,10 +89,16 @@
 				</u-form-field>
 				<div class="grid grid-cols-2 gap-2">
 					<u-form-field name="is_ac">
-						<u-checkbox variant="card" v-model="store.form.is_ac" label="AC" />
+						<u-checkbox
+							@update:model-value="generateDescription"
+							variant="card"
+							v-model="store.form.is_ac"
+							label="AC"
+						/>
 					</u-form-field>
 					<u-form-field name="is_dormatory">
 						<u-checkbox
+							@update:model-value="generateDescription"
 							variant="card"
 							v-model="store.form.is_dormatory"
 							label="Dorm"
