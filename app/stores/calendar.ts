@@ -14,8 +14,6 @@ export const useCalendarStore = defineStore('calendar', {
         selectedCells: [] as CalendarData[],
         clientData: {
         } as UserForm,
-
-
     }),
     actions: {
         // 
@@ -26,7 +24,7 @@ export const useCalendarStore = defineStore('calendar', {
             const bookingStore = useBookingStore();
             if (!bookingStore.pagination.start || !bookingStore.pagination.end) {
                 bookingStore.pagination.start = format(new Date(), 'yyyy-MM-dd');
-                bookingStore.pagination.end = format(addDays(new Date(), 7), 'yyyy-MM-dd');
+                bookingStore.pagination.end = format(addDays(new Date(), 2), 'yyyy-MM-dd');
             }
             let startDate = bookingStore.pagination.start;
             let endDate = bookingStore.pagination.end;
@@ -34,7 +32,6 @@ export const useCalendarStore = defineStore('calendar', {
             this.dateList = getBookingDateList(startDate, endDate)
             let mappedBookings = mapBooking(bookingList)
             if (!roomList.length) {
-                console.log('no roomlist length', roomList)
                 await useRoom().fetchData();
                 roomList = useRoom().data.value.data;
             }
@@ -52,6 +49,7 @@ export const useCalendarStore = defineStore('calendar', {
                     let cellLength = 1;
 
                     let cellStartDate = mappedBookings[key]?.check_in_date
+                    let cellEndDate = mappedBookings[key]?.checkout_date
                     if (mappedBookings[key]) {
                         cellStartDate = mappedBookings[key]?.check_in_date
                         cellStartDate = isBefore(cellStartDate, startDate) ? startDate : cellStartDate
@@ -60,19 +58,26 @@ export const useCalendarStore = defineStore('calendar', {
                             cellLength = this.dateList.length;
                         }
                     }
-
                     currentRow.push({
                         room: room,
                         bookingInfo: mappedBookings[key],
                         date: currentDate,
                         start_cell: currentDate == cellStartDate,
-                        end_cell: index === cellLength,
+                        end_cell: currentDate == cellEndDate,
                         cellLength,
-
                     });
+                    if (currentDate == cellEndDate && mappedBookings[key]) {
+                        //extra cell without bookingInfo for end cell, because we dont render the checkout date
+                        currentRow.push({
+                            room: room,
+                            date: currentDate,
+                            start_cell: false,
+                            end_cell: false,
+                            cellLength: 1,
+                        });
+                    }
                 });
                 this.data.push(currentRow)
-                // 
             })
         },
         addSelectedCell(cell: CalendarData) {
