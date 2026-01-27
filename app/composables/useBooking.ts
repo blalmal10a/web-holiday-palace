@@ -129,7 +129,7 @@ export const bookingFormSchema = (newClient: boolean,) => {
         mark_as_blacklisted: z.boolean().optional(),
         related_client_id: z.string().optional(),
         beds: z.array(bedFormSchema()).optional(),
-        selected_bed_ids: z.array(z.string()),
+        selected_bed_ids: z.array(z.string()).optional(),
     }) satisfies z.ZodType<BookingForm>
 
     return baseSchema

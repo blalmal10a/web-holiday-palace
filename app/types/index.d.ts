@@ -195,7 +195,7 @@ interface BookingForm extends Omit<Booking, 'client' | 'staff' | 'room' | 'invoi
     mark_as_blacklisted?: boolean;
     related_client_id?: string;
     beds?: BedForm[];
-    selected_bed_ids: string[];
+    selected_bed_ids?: string[];
 }
 interface Booking extends BookingForm {
     id: string;
