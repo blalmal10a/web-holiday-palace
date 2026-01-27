@@ -83,14 +83,13 @@ export function useBooking() {
 
     const fetchAvailableBedList = async () => {
         const room = useRoomStore().data.data.find(room => room.id === store.form.room_id);
-        console.log(room);
-
         if (!room?.is_dormatory) return;
         const data = await api.get('available-beds', {
             params: {
                 room_id: store.form.room_id,
                 start: store.form.check_in_date,
                 end: store.form.checkout_date,
+                booking_id: store.form.id ?? undefined
             }
         })
         store.availableBedList = data;
