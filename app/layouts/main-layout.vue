@@ -22,6 +22,17 @@
 					useRoute().name === "hotels-calendar",
 			},
 			{
+				label: "Dorm",
+				icon: "i-lucide-brick-wall",
+				to: {
+					name: "hotels-dorm",
+				},
+				onSelect: () => {
+					open.value = false
+				},
+				active: useRoute().name === "hotels-calendar",
+			},
+			{
 				label: "Expenditure",
 				icon: "i-lucide-indian-rupee",
 				to: {
