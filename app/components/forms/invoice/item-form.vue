@@ -65,6 +65,12 @@
 
 					<UFormField name="unit">
 						<u-input-menu
+							create-item
+							@create="
+								($event) => {
+									invoiceItem.form.unit = $event
+								}
+							"
 							placeholder="Unit"
 							@focus="
 								($event: FocusEvent) => {
