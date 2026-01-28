@@ -13,6 +13,7 @@ export const useBookingStore = defineStore('booking', {
       start: format(new Date(), 'yyyy-MM-dd'),
       end: format(addDays(new Date(), 30), 'yyyy-MM-dd'),
       where: [] as Record<string, string | number | boolean>[] | null | undefined,
+      is_dormatory: undefined as boolean | undefined,
     },
     data: {} as PaginationBooking,
     form: {

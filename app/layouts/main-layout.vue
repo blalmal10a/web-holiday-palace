@@ -30,7 +30,7 @@
 				onSelect: () => {
 					open.value = false
 				},
-				active: useRoute().name === "hotels-calendar",
+				active: useRoute().name === "hotels-dorm",
 			},
 			{
 				label: "Expenditure",

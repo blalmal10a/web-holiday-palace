@@ -14,6 +14,7 @@ export const useCalendarStore = defineStore('calendar', {
         selectedCells: [] as CalendarData[],
         clientData: {
         } as UserForm,
+        dorm: {} as DormCalendar[][],
     }),
     actions: {
         // 

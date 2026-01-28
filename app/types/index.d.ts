@@ -81,8 +81,12 @@ interface RoomForm {
 
 interface Room extends RoomForm {
     id: string;
+    beds: Bed[];
 }
 
+interface RoomDetail extends Room {
+    beds: Bed[];
+}
 
 interface PaginationRoom extends Pagination {
     data: Room[]
@@ -222,8 +226,12 @@ interface BookingDetail extends Booking {
     room: Room;
     invoice: Invoice;
     date_list: string[];
+    beds?: Bed[];
 }
 
+interface DormBookingDetail extends BookingDetail {
+    beds: Bed[];
+}
 
 
 interface PaginationBooking extends Pagination {
@@ -232,6 +240,15 @@ interface PaginationBooking extends Pagination {
 
 interface CalendarData {
     room: Room;
+    bookingInfo?: BookingDetail;
+    date: string;
+    start_cell: boolean;
+    end_cell: boolean;
+    cellLength: number;
+}
+
+interface DormCalendar {
+    bed: Bed;
     bookingInfo?: BookingDetail;
     date: string;
     start_cell: boolean;
