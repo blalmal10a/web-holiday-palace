@@ -2,10 +2,15 @@
     import BookingForm from '../forms/booking-form.vue';
 
     const calendarStore = useCalendarStore();
+    const modalOpen = computed(
+        () => {
+            return !!useRoute().query.booking;
+        }
+    )
 </script>
     <template>
         <UModal
-            v-model:open="calendarStore.showBookingForm"
+            v-model:open="modalOpen"
             fullscreen
         >
             <template #title>Booking Form</template>

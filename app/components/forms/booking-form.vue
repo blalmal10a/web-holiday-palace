@@ -371,7 +371,7 @@ async function bedsUpdate() {
 									})
 								} else {
 									useRouter().push({
-										name: 'hotels-calendar',
+										name: useRoute().name,
 									})
 								}
 							}
