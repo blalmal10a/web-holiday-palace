@@ -6,9 +6,12 @@ const room = useRoom()
 const booking = useBooking()
 const bookingStore = useBookingStore()
 const calendarStore = useCalendarStore()
+if (bookingStore.data.data.length)
+	bookingStore.$reset();
+if (roomStore.data.data.length)
+	roomStore.$reset();
 await room.fetchData()
 await booking.fetchData()
-calendarStore.$reset()
 await calendarStore.initCalendar(roomStore.data.data, bookingStore.data.data)
 
 function shouldRender(cellIndex: number, cell: CalendarData) {
@@ -67,7 +70,14 @@ watch(
 		}
 	},
 )
-onMounted(() => {
+onMounted(async () => {
+	// if (!roomStore.data.data?.length || !bookingStore.data.data.length) {
+	// 	await room.fetchData()
+	// 	await booking.fetchData()
+	// 	await calendarStore.initCalendar(roomStore.data.data, bookingStore.data.data)
+	// }
+
+
 	const route = useRoute()
 	if (
 		typeof route.query.start_date === "string" &&
@@ -103,6 +113,7 @@ onMounted(() => {
 	<div
 		id="booking"
 		class="container m-auto"
+		:key="calendarStore.data.length"
 	>
 		<div
 			id="invoice"
