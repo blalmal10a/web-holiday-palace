@@ -27,49 +27,6 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
 	}
 	return shouldRender
 }
-
-watch(
-	() => useRoute().hash,
-	() => {
-		if (useRoute().hash == "#invoice") {
-			useInvoiceStore().showInvoiceFormModal = true
-		}
-		if (!useRoute().hash) {
-			useInvoiceStore().showInvoiceFormModal = false
-		}
-	},
-)
-watch(
-	() => useRoute().hash,
-	() => {
-		if (useRoute().hash == "#booking") {
-			calendarStore.showBookingForm = true
-		}
-		if (!useRoute().hash) {
-			calendarStore.showBookingForm = false
-		}
-	},
-)
-watch(
-	() => calendarStore.showBookingForm,
-	(current, old) => {
-		if (!current) {
-			useRouter().push({
-				name: "hotels-calendar",
-			})
-		}
-	},
-)
-watch(
-	() => useInvoiceStore().showInvoiceFormModal,
-	(current, old) => {
-		if (!current) {
-			useRouter().push({
-				name: "hotels-calendar",
-			})
-		}
-	},
-)
 onMounted(async () => {
 	// if (!roomStore.data.data?.length || !bookingStore.data.data.length) {
 	// 	await room.fetchData()
@@ -97,7 +54,6 @@ onMounted(async () => {
 		}
 
 		useRouter().push({
-			hash: "#booking",
 			query: {
 				...route.query,
 			},
@@ -180,7 +136,9 @@ onMounted(async () => {
 											}
 											useRouter().push({
 												name: 'hotels-calendar',
-												hash: '#booking',
+												query: {
+													booking: 1,
+												}
 											})
 										}
 									}
