@@ -6,9 +6,9 @@ const room = useRoom()
 const booking = useBooking()
 const bookingStore = useBookingStore()
 const calendarStore = useCalendarStore()
-if (bookingStore.data.data.length)
+if (bookingStore.data.data?.length)
 	bookingStore.$reset();
-if (roomStore.data.data.length)
+if (roomStore.data.data?.length)
 	roomStore.$reset();
 await room.fetchData()
 await booking.fetchData()
