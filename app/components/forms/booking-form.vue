@@ -32,14 +32,6 @@ const currentClient = computed(() => {
 const imageFiles = ref<File[]>([])
 userStore.pagination.exclude_admin = true
 const blackListedUserList = ref<User[]>([])
-// const bedOptionList = computed<BedForm[]>(() => {
-// 	const listData = [] as BedForm[]
-// 	store.form.beds?.forEach((bed) => {
-// 		listData.push(bed)
-// 	})
-// 	store.availableBedList.forEach((bed) => listData.push(bed))
-// 	return listData
-// })
 const userList = computed(() => {
 	blackListedUserList.value = []
 	return userStore.data.data.map((user: User) => {
@@ -391,9 +383,6 @@ async function bedsUpdate() {
 			</u-form>
 		</u-card>
 		<UsersBlackListedUserModal />
-		<pre>
-			{{ store.form.selected_bed_ids }}
-		</pre>
 	</div>
 </template>
 
