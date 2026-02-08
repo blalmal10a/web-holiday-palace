@@ -250,6 +250,7 @@ interface CalendarData {
 interface DormCalendar {
     bed: Bed;
     bookingInfo?: BookingDetail;
+    room?: Room;
     date: string;
     start_cell: boolean;
     end_cell: boolean;
