@@ -3,7 +3,7 @@ import type { DropdownMenuItem } from "@nuxt/ui"
 import { addDays, format } from "date-fns"
 const props = defineProps({
 	cell: {
-		default: {} as CalendarData,
+		default: {} as DormCalendar | CalendarData,
 		required: true,
 	},
 })
@@ -17,7 +17,9 @@ const items: DropdownMenuItem[] = [
 			if (props.cell.bookingInfo) {
 				bookingStore.setForm({ ...props.cell.bookingInfo })
 			} else {
-				bookingStore.form.room_id = props.cell.room.id
+				if (props.cell.room) {
+					bookingStore.form.room_id = props.cell.room.id
+				}
 				bookingStore.form.check_in_date = props.cell.date
 				bookingStore.form.checkout_date = format(
 					addDays(props.cell.date, 1),
@@ -25,7 +27,9 @@ const items: DropdownMenuItem[] = [
 				)
 			}
 			useRouter().push({
-				hash: "#booking",
+				query: {
+					booking: 1,
+				}
 			})
 		},
 	},
