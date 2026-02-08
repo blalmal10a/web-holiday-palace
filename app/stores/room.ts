@@ -67,7 +67,7 @@ export function formatDorm(dorm: Room, bookings: DormBookingDetail[]) {
   const startDate = useBookingStore().pagination.start;
   const endDate = useBookingStore().pagination.end;
   const dateList = getBookingDateList(startDate, endDate);
-
+  useCalendarStore().dateList = [...dateList]
   // Create a map for quick booking lookup: key = `${date}-${bed_id}`
   const bookingMap = new Map<string, DormBookingDetail>();
 
