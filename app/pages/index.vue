@@ -41,7 +41,7 @@ await room.fetchData();
 			id="contact"
 			class="bg-neutral-900 text-white pt-20 pb-10"
 		>
-			<div class="max-w-7xl mx-auto px-4 grid md:grid-cols-4 gap-12 mb-16">
+			<div class="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-12 mb-16">
 				<div class="space-y-6">
 					<div class="flex items-center gap-2 ">
 						<!-- <UIcon
@@ -58,10 +58,10 @@ await room.fetchData();
 				<div>
 					<h4 class="font-bold mb-6">Explore</h4>
 					<ul class="space-y-4 text-neutral-400 text-sm">
-						<li class="hover:text-primary-400 transition-colors"><a href="#">Spa & Wellness</a></li>
+						<!-- <li class="hover:text-primary-400 transition-colors"><a href="#">Spa & Wellness</a></li>
 						<li class="hover:text-primary-400 transition-colors"><a href="#">Events & Weddings</a></li>
 						<li class="hover:text-primary-400 transition-colors"><a href="#">Local Attractions</a></li>
-						<li class="hover:text-primary-400 transition-colors"><a href="#">Membership</a></li>
+						<li class="hover:text-primary-400 transition-colors"><a href="#">Membership</a></li> -->
 						<li class="hover:text-primary-400 transition-colors"><a href="/hotels/calendar">Admin</a></li>
 					</ul>
 				</div>
@@ -74,26 +74,26 @@ await room.fetchData();
 								name="i-heroicons-map-pin"
 								class="text-primary-500"
 							/>
-							123 Royal Terrace, Amalfi, Italy
+							Sihhmui, Sairang
 						</li>
 						<li class="flex items-center gap-3">
 							<UIcon
 								name="i-heroicons-phone"
 								class="text-primary-500"
 							/>
-							+39 089 123 4567
+							+91 94361 54813/ +91 88373 82366
 						</li>
 						<li class="flex items-center gap-3">
 							<UIcon
 								name="i-heroicons-envelope"
 								class="text-primary-500"
 							/>
-							reservations@holidaypalace.com
+							rinpuii@gmail.com
 						</li>
 					</ul>
 				</div>
 
-				<div>
+				<!-- <div>
 					<h4 class="font-bold mb-6">Newsletter</h4>
 					<div class="flex gap-2">
 						<UInput
@@ -107,12 +107,12 @@ await room.fetchData();
 					</div>
 					<p class="text-[10px] text-neutral-500 mt-4 uppercase tracking-widest font-bold">Join the palace
 						circle</p>
-				</div>
+				</div> -->
 			</div>
 
 			<div
 				class="max-w-7xl mx-auto px-4 border-t border-neutral-800 pt-8 flex flex-col md:row justify-between items-center text-neutral-500 text-xs gap-4">
-				<p>© {{ new Date().getFullYear() }} Holiday Palace Resort & Spa. All rights reserved.</p>
+				<p>© {{ new Date().getFullYear() }} Holiday Palace Hotel. All rights reserved.</p>
 				<div class="flex gap-6">
 					<a
 						href="#"

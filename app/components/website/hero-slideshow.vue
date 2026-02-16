@@ -51,15 +51,15 @@ onMounted(() => {
                             <UButton
                                 size="xl"
                                 color="primary"
-                                label="Explore Suites"
+                                label="Explore rooms"
                                 to="#rooms"
                             />
-                            <UButton
+                            <!-- <UButton
                                 size="xl"
                                 variant="outline"
                                 class="text-white border-white hover:bg-white/20"
                                 label="Virtual Tour"
-                            />
+                            /> -->
                         </div>
                     </div>
                 </div>
