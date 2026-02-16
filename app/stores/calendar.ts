@@ -32,7 +32,7 @@ export const useCalendarStore = defineStore('calendar', {
 
             this.dateList = getBookingDateList(startDate, endDate)
             let mappedBookings = mapBooking(bookingList)
-            console.log(mappedBookings);
+
             if (!roomList.length) {
                 await useRoom().fetchData();
                 roomList = useRoom().data.value.data;
