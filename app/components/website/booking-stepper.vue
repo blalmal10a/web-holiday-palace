@@ -41,7 +41,11 @@ const totalCost = computed(
 const message = computed(() => {
     const startCell = calendarStore.selectedCells[0]!
     const endCell = calendarStore.selectedCells[1]!
-
+    let url = `${window.location.origin}/hotels/calendar?start_date=${startCell.date}&end_date=${endCell.date}&room_id=${startCell.room.id}`
+    if (calendarStore.clientData.id) {
+        url += `&client_id=${calendarStore.clientData.id}`
+    }
+    url += `&client_name=${bookingStore.booking_form.name}&client_phone=${bookingStore.booking_form.phone}`
     let msg = `Hello, i would like to make booking
 
 Name: ${bookingStore.booking_form.name}
@@ -52,7 +56,7 @@ Room: ${startCell.room.number}
 Check in: ${format(startCell.date, 'Do MMM, yyyy')}
 Check out: ${format(endCell.date, 'Do MMM, yyyy')}
 
-url: \`${window.location.origin}/hotels/calendar?start_date=${startCell.date}&end_date=${endCell.date}&room_id=${startCell.room.id}&client_id=${calendarStore.clientData.id}&client_name=${calendarStore.clientData.name}&client_phone=${calendarStore.clientData.phone}\`
+url: ${url.replaceAll(' ', '+')}
     `
     return msg;
 })
@@ -123,18 +127,38 @@ function onSubmitForm() {
                 <table>
                     <tr v-if="calendarStore.selectedCells[0]">
                         <td>Room</td>
+                        <td>
+                            <div class="px-2">
+                                :
+                            </div>
+                        </td>
                         <td>{{ calendarStore.selectedCells[0].room.number }}</td>
                     </tr>
                     <tr v-if="calendarStore.selectedCells[0]">
                         <td>Check in</td>
+                        <td>
+                            <div class="px-2">
+                                :
+                            </div>
+                        </td>
                         <td>{{ format(calendarStore.selectedCells[0].date, 'Do MMM, yyyy') }}</td>
                     </tr>
                     <tr v-if="calendarStore.selectedCells[1]">
                         <td>Check out</td>
+                        <td>
+                            <div class="px-2">
+                                :
+                            </div>
+                        </td>
                         <td>{{ format(calendarStore.selectedCells[1].date, 'Do MMM, yyyy') }}</td>
                     </tr>
                     <tr v-if="calendarStore.selectedCells[0] && calendarStore.selectedCells[1]">
                         <td>Expected cost</td>
+                        <td>
+                            <div class="px-2">
+                                :
+                            </div>
+                        </td>
                         <td>
                             {{ toRupees(totalCost) }}
                         </td>
