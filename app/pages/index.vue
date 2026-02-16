@@ -7,6 +7,7 @@ import { uuidv7 } from 'uuidv7';
  */
 const room = useRoom();
 const roomStore = useRoomStore();
+const calendarStore = useCalendarStore();
 await room.fetchData();
 // const menuItem = useMenuItem();
 // const menuItemStore = useMenuItemStore();
@@ -125,12 +126,15 @@ await room.fetchData();
 			</div>
 		</footer>
 		<UModal
-			v-model:open="useCalendarStore().showWebsiteCalendar"
+			v-model:open="calendarStore.showWebsiteCalendar"
 			fullscreen
 		>
+			<template #title>
+				Book a room
+			</template>
+			<template #description></template>
 			<template #body>
-				<WebsiteCalendar />
-
+				<BookingsCalendar />
 			</template>
 		</UModal>
 	</div>
