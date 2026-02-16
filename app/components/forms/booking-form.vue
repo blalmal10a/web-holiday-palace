@@ -104,13 +104,6 @@ watch(
 			if (store.form.room_id && store.form.check_in_date && store.form.checkout_date) {
 				bedsUpdate();
 			}
-
-			console.log('is dormatory: ', isDormatory)
-			console.log('room changed: ', isRoomChanged);
-			console.log('check in date changed: ', checkInDateChanged);
-			console.log('check out date changed: ', checkOutDateChanged);
-		} else {
-			console.log('not fetch')
 		}
 
 	},
