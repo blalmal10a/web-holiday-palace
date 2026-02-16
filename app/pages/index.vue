@@ -137,6 +137,7 @@ await room.fetchData();
 				<BookingsCalendar />
 			</template>
 		</UModal>
+		<WebsiteBookingSummary />
 	</div>
 </template>
 

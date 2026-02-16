@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { addDays, format } from "date-fns"
+import CalendarCell from "./calendar-cell.vue"
 
 const roomStore = useRoomStore()
 const room = useRoom()
@@ -28,12 +29,6 @@ function shouldRender(cellIndex: number, cell: CalendarData) {
 	return shouldRender
 }
 onMounted(async () => {
-	// if (!roomStore.data.data?.length || !bookingStore.data.data.length) {
-	// 	await room.fetchData()
-	// 	await booking.fetchData()
-	// 	await calendarStore.initCalendar(roomStore.data.data, bookingStore.data.data)
-	// }
-
 
 	const route = useRoute()
 	if (
@@ -58,12 +53,33 @@ onMounted(async () => {
 				...route.query,
 			},
 		})
-	} else {
-		useRouter().push({
-			name: "hotels-calendar",
-		})
 	}
 })
+
+async function onClickCell(cell: CalendarData) {
+	if (useRoute().name === 'index') {
+		return;
+	};
+	if (!cell.bookingInfo) {
+		if (cell.bookingInfo) {
+			bookingStore.setForm(cell.bookingInfo)
+		} else {
+			bookingStore.form.room_id = cell.room.id
+			bookingStore.form.check_in_date = cell.date
+			bookingStore.form.checkout_date = format(
+				addDays(cell.date, 1),
+				'yyyy-MM-dd',
+			)
+		}
+
+		useRouter().push({
+			name: useRoute().name,
+			query: {
+				booking: 1,
+			}
+		})
+	}
+}
 </script>
 <template>
 	<div
@@ -121,54 +137,20 @@ onMounted(async () => {
 							<td
 								v-if="shouldRender(cellIndex, cell)"
 								:colspan="cell.cellLength - 1"
-								@click="
-									() => {
-										if (!cell.bookingInfo) {
-											if (cell.bookingInfo) {
-												bookingStore.setForm(cell.bookingInfo)
-											} else {
-												bookingStore.form.room_id = cell.room.id
-												bookingStore.form.check_in_date = cell.date
-												bookingStore.form.checkout_date = format(
-													addDays(cell.date, 1),
-													'yyyy-MM-dd',
-												)
-											}
-											useRouter().push({
-												name: 'hotels-calendar',
-												query: {
-													booking: 1,
-												}
-											})
-										}
-									}
-								"
+								@click="onClickCell(cell)"
 							>
-								<BookingsCalendarMenu
-									v-if="cell.bookingInfo"
+
+								<CalendarCell
+									v-if="useRoute().name == 'hotels-calendar'"
+									:cell="cell"
+								/>
+
+								<WebsiteCalendarCell
+									v-if="useRoute().name == 'index'"
 									:cell="cell"
 								>
-									<div class="p-4 border border-default ">
-										<div class="-mr-10 ml-4">
-											<div
-												class="rounded-lg px-2 whitespace-nowrap flex items-center h-8 relative cursor-pointer"
-												:class="{
-													'text-primary bg-elevated': !!cell.bookingInfo,
-												}"
-											>
-												{{ cell.bookingInfo?.client?.name }}
-											</div>
-										</div>
-									</div>
-								</BookingsCalendarMenu>
-								<div
-									class="p-4 border border-default"
-									v-if="!cell.bookingInfo"
-								>
-									<div
-										class="rounded-lg px-2 whitespace-nowrap flex items-center h-8 relative cursor-pointer">
-									</div>
-								</div>
+								</WebsiteCalendarCell>
+
 							</td>
 
 						</template>
